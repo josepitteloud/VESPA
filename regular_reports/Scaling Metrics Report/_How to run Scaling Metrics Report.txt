@@ -1,0 +1,14 @@
+1) Install procedures in your own schema from all scripts ("Scaling Metrics Report - 01 Metadata.sql" through to "Scaling Metrics Report - 20 Clean up.sql")
+2) Run two queries at the top from "Scaling Metrics Report - RUN.sql"
+3) Set values for @varStartDate and @varEndDate:
+    - typically, value from the first query (+1 day) is assigned to @varStartDate
+    - value from the second query is assigned to @varEndDate
+   Note 1: although nothing will break, to maximise efficiency report should not be run for more that one full week worth of data
+   Note 2: some pages of the report are based on Sky weeks, so ideally the report should be run for full Sky weeks, i.e. calendar dates between Friday and Thursday
+4) Once the report has been run, open the report (Excel spreadsheet) and refresh all data tables (Data -> Refresh All)
+   Note: if ODBC connection to Sybase is called differently than "DCSLOPSKPRD5", a pop up will be shown where a relevant connection must be selected
+
+
+
+
+

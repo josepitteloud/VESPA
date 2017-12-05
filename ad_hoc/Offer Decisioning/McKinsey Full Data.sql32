@@ -1,0 +1,101 @@
+-- FULL CUSTOMER HISTORY
+
+select a.account_number,
+       a.subscription_id,
+       a.currency_code,
+       a.subscription_sub_type,
+       a.effective_from_dt,
+       a.effective_to_dt,
+       a.status_code_changed,
+       a.status_code,
+       a.prev_status_code,
+       a.ent_cat_prod_changed,
+       a.current_product_description,
+       b.prem_movies,
+       b.prem_sports
+       into MCKINSEY_FULL_ACTIVE_OFFER_BASE
+       from cust_subs_hist a
+       left join cust_entitlement_lookup b
+       on a.current_short_description = b.short_description
+       group by
+        a.account_number,
+        a.subscription_id,
+        a.currency_code,
+        a.subscription_sub_type,
+        a.effective_from_dt,
+        a.effective_to_dt,
+        a.status_code_changed,
+        a.prev_status_code,
+        a.status_code,
+        a.ent_cat_prod_changed,
+        a.current_product_description,
+        b.prem_movies,
+        b.prem_sports
+        
+       
+ -- EXPERIAN CONSUMERVIEW
+ 
+ select top 100 * from experian_consumerview
+ 
+ -- SIMPLE SEGMENT HISTORY
+ 
+ select top 100 * from simple_segments_history
+ 
+ -- BILLS
+ 
+ select top 100 * from cust_bills
+ 
+-- CALLS
+select a.account_number,
+       cast(created_date as date) As Event_Date,
+       count(*) as Calls,
+       'IC' as TypeOfEvent
+       into MCKINSEY_FULL_CONTACT_HIST
+       from cust_contact a
+       where cast(created_date as date) >= '2011-01-01'
+       and contact_channel = 'I PHONE COMMUNICATION'
+       and contact_grouping_identity is not null
+       group by a.account_number, event_date
+
+       union
+
+select a.account_number,
+       event_dt as Event_Date,
+       sum(total_calls) as Calls,
+       'TA' as TypeOfEvent
+       from cust_calls_hist a
+
+       where typeofevent = 'TA'
+       and event_dt >= '2011-01-01'
+       group by a.account_number, event_date
+
+union
+
+select a.account_number,
+       event_dt as Event_Date,
+       sum(total_calls) as Calls,
+       'PAT' as TypeOfEvent
+       from cust_calls_hist a
+             where typeofevent = 'PAT'
+       and event_dt >= '2011-01-01'
+       group by a.account_number, event_date;
+
+--CONTRACTS
+
+select top 100 * from cust_contract_agreements
+
+
+-- OFFERS
+
+select top 100 * from citeam.offer_usage_all;
+
+-- ONDEMAND
+
+select top 100 * from cust_anytime_plus_downloads
+
+-- SET TOP BOX
+
+select top 100 * from cust_set_top_box
+
+
+ 

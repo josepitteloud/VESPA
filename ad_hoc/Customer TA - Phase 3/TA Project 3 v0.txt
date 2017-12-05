@@ -1,0 +1,2785 @@
+
+
+/*------------------------------------------------------------------------------
+        Project: Optimising Customer Turnaround: Phase III
+        Version: v10.0
+        Created: 17/10/2012 (Created by Harry Gill, Developed by H. Starmer, D. Rombaoa)
+        Lead: Tom Khabaza
+        Analyst: Don Rombaoa (worked on TA Phase 3 March 27, 2013)
+        SK Prod: 5
+
+
+        Version Updates: This version of the code builds on the code from Phase II part 1 v0.4
+                        That version of the code was the first scoring exercise (viewing deciles aross 7 different measures: pvr, premiumn etc.)_
+                        This version of the code is more crude and intends to just allocate deciles and create a table with all customers and
+                        thier deciles to be uploaded onto prod 4, then merlin for use in the pilot.
+						--Note from DON--there was only slight changes from this project to previous ones. Pay-Free Indicator needed to be revised and taken from M. Neighbours. 
+						Data tables and variables showed good resemblance to previous studies in terms of populations for various key variables.
+						Date Period for the study was the two weeks between 2012-11-26 to 2012-12-09
+						In terms of changes to teh code, I kept about 99% of the code. 
+						Look for comments such as 'Dr/Done!' which indicates I completed section. 
+						Another thing to look for is 'Dr/DONE! Change!' for changes made and additional comments on that change. 
+						--UPDATE 10-Apr-2013 --IMPORTANT!!! Tony K. sent an email on 09-Apr-2013 to remove specific accounts from analysis.
+The email stated "
+
+	We have identified a problem with some of the accounts within the viewing data that we hold which means that, until further notice, we need to 		exclude these accounts from ALL current and future analysis that we undertake.
+
+	I have created an exclusion table for you to use when running your analysis, vespa_analysts.accounts_to_exclude and have granted access to the vespa 		security group.  
+
+	Can you please take the time to modify your code to utilise this exclusion table so that we are following all necessary requirements.  If you cannot 		access this table please let me know and I will add you individually to the list of those users who can select from this table."
+Response from Analyst with support from Lead Analyst Alan Barber is to remove the accounts from the final output for time saving. This will result in a drop of 2,952 accounts for the models and is a miniscule .7% impact on the research population. DR, instructed by AB, to update the code to remove those troublesome accounts for future analysts.DR has gone through the code to add the following WHERE clause 'account_number NOT IN (Select * FROM vespa_analysts.accounts_to_exclude' whereever relevan but QA checks on numbers may not line up with an updated run as DR did not update many early QA notes or results. The original master table (DO_NOT_DELETE_NBA_SCORING_20130404) was copied into a new table (DO_NOT_DELETE_NBA_SCORING_20130411) which removed the Excludeable Accounts.
+
+
+
+
+------------------------------------------------------------------------------
+
+        Purpose -- same as before
+        -------
+
+        The goal is to size the oppertunity for content discovery & right sizing as per the brief.
+
+        This code will collect, scale and cap viewing data. It will create scaled deciles across the panel for the UK base for share of viewing
+        and minutes viewed across: FTA movies, FTA sport, Premium usage (sport and movies packages), HD, PVR, exclucive (Atlantic).
+
+        Counts are to be provided for the above deciles across TA outcomes: callers/non-callers, saves/non-saves and offer attachment???
+
+        --        Also we require for each customer top 10: overal,pay and free channels, genres and types of sport watched (sub-genre)
+
+-------------------------------------------------------------------------------
+
+        SECTIONS
+        --------
+
+        Set-Up   -
+
+        PART A   -
+             A01 - IDENTIFY PRIMARY BOXES RETURNING DATA
+             A02 - GET THE VIEWING DATA
+
+
+        PART B   -
+             B01 - ADD PACK TO THE VIEWING DATA
+             B02 - ADD HS AND SKY+ FLAG
+
+        PART C   - SCALING
+             C01 - CREATE A BASE TABLE
+             C02 - CALCULATE THE NORMALISED WEIGHT
+
+        PART D - AVERAGE VIEWING PER DAY (MINUTES)
+             D01 - SUMMERISE VIEWING FOR EACH CUSTOMER
+             D02 - CALCULATE AVERAGE MINBUTES FOR EACH PACKAGE - BASED ON THE UK BASE
+             D03 - CALCULATE EACH CUSTOMERS DEVIATION FROM THE PACKAGE  MEAN
+             D04 - ALLOCATE EACH ACCOUNT TO THE RELEVANT DECILE
+
+        PART E - SHARE OF VIEWING
+             E01 - SUMMERISE SHARE OF VIEWING FOR EACH CUSTOMER
+             E02 - CALCULATE SHARE OF VIEWING AVERAGE FOR EACH PACKAGE - BASED ON THE UK BASE
+             E03 - CALCULATE EACH CUSTOMERS DEVIATION FROM THE PACKAGE  MEAN
+             E04 - ALLOCATE EACH ACCOUNT TO THE RELEVANT DECILE
+
+
+        Ouput Tables:   DO_NOT_DELETE_NBA_SCORING_2012XXXX -- THIS TABLE CONTAINS ALL SCORING for each customer
+        -------
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+--------------------------------------------------------------------------------
+-- SET UP.
+--------------------------------------------------------------------------------
+-- create and populate variables
+CREATE VARIABLE @var_period_start       datetime;
+CREATE VARIABLE @var_period_end         datetime;
+CREATE VARIABLE @mid_date               date;
+
+CREATE VARIABLE @var_sql                varchar(15000);
+CREATE VARIABLE @var_cntr               smallint;
+CREATE VARIABLE @i                      integer;
+
+-- Scaling Variables
+Create variable @target_date            date;
+Create variable @sky_total              numeric(28,20);
+Create variable @Sample_total           numeric(28,20);
+Create variable @weightings_total       numeric(28,20);
+Create variable @scaling_factor         numeric(28,20);
+
+
+SET @var_period_start           = '2012-11-26 00:00:00.000';
+SET @var_period_end             = '2012-12-09 23:59:00.000'; 
+SET @mid_date                   = '2012-12-02'; -- used for scaling
+
+
+
+/*--------------------------------------------------------------------------------
+-- SECTION 2: PART A -
+--------------------------------------------------------------------------------
+
+             A01 - IDENTIFY PRIMARY BOXES RETURNING DATA
+             A02 - GET THE VIEWING DATA
+
+--------------------------------------------------------------------------------*/
+
+
+--------------------------------------------------------------------------------
+--  A01 - identify boxes returning data over the period
+--------------------------------------------------------------------------------
+
+
+--identify boxes that returned data
+
+--IF object_id('the_boxes') IS NOT NULL DROP TABLE the_boxes;
+
+
+select max (broadcast_start_date_time_utc)
+--     ,account_number
+--into the_boxes
+FROM describe table sk_prod.VESPA_EVENTS_ALL 
+WHERE broadcast_start_date_time_utc between @var_period_start  and  @var_period_end
+        and (reported_playback_speed is null or reported_playback_speed = 2)
+        and duration > 0
+        and panel_id IN (12,4);
+	AND account_number NOT IN (Select * FROM vespa_analysts.accounts_to_exclude ) -- IMPORTANT!!!! This was added as of 09-Apr-2013. T. Kinnaird via email instructed not to use accounts in that table as they were leading to problems.
+dk_broadcast_start_datehour_dim
+
+dk_broadcast_start_datehour_dim
+
+/*
+
+select top 100 * from the_boxes
+select count(*) from the_boxes
+select count(distinct(account_number)) from the_boxes -- 316k
+
+select count(*) from the_boxes where subscriber_id is null
+-- 1600 nulls
+
+*/
+
+
+----------------------------------------------------------------------------------
+-- Add a primary box flag as we are only interested in the primary box for this analysis - to keep it fair.
+----------------------------------------------------------------------------------
+
+
+alter table the_boxes
+ add primary_flag as int default 0;
+
+ update the_boxes
+ set rbs.primary_flag = case when sbv.ps_flag = 'P' then 1 else 0 end -- this can be adjusted to make it more thorough! -- ps olive
+ from the_boxes as rbs
+ left join vespa_analysts.vespa_single_box_view as sbv
+ on rbs.subscriber_id = sbv.subscriber_id ;-- this should be done at subscriber_id level
+
+
+--  delete any subscriber Id's that are not associated to the primary box:
+delete from the_boxes
+where primary_flag <> 1; -- 75958 Row(s) affected
+
+
+
+-- QA check-----------------------------
+/*
+select hd_box_subs, count(*) from the_boxes group by hd_box_subs
+select pvr, count(*) from the_boxes group by pvr
+select prem_sports, count(*) from the_boxes group by prem_sports --0,1,2
+select prem_movies, count(*) from the_boxes group by prem_movies --0,1,2 -- dont need this much detail i guess??
+select count(distinct account_number) from the_boxes where primary_flag = 1
+select count(distinct subscriber_id) from the_boxes where primary_flag = 1
+*/
+----------------------------------------------------------------------------
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+-- get viewing data from vespa_events_viewed_all
+--------------------------------------------------------------------------------------------------------------------------------------------------
+--IF object_id('Viewing_Table') IS NOT NULL DROP TABLE  Viewing_Table;
+
+
+SELECT
+  account_number
+, pk_viewing_prog_instance_fact -- cb_row_ID
+, broadcast_start_date_time_utc
+, dk_programme_instance_dim  -- programme_trans_sk
+, cb_key_family
+, cb_key_household
+, cb_key_individual
+--, dk_viewing_event_dim
+, duration
+, programme_instance_duration
+, reported_playback_speed -- replaces play_back_speed
+, subscriber_id  -- needed to match to SBV for primary secondery
+, type_of_viewing_event
+--, bss_name
+, channel_name
+--, event_start_date_time_utc
+--, product_code
+, pay_free_indicator
+INTO  Viewing_Table
+FROM sk_prod.VESPA_EVENTS_ALL 
+WHERE event_start_date_time_utc between @var_period_start  and  @var_period_end -- was previously broadcast_start_date_time_utc
+        and (reported_playback_speed is null or reported_playback_speed = 2)
+        and DATEdiff(second,instance_start_date_time_utc, instance_end_date_time_utc) >0 --replaces x_programme_viewed_duration > 0
+        and panel_id IN (12,4) -- DAILY PANEL ONLY
+        and subscriber_id in (select subscriber_id from the_boxes)
+	AND account_number NOT IN (Select * FROM vespa_analysts.accounts_to_exclude ) -- IMPORTANT!!!! This was added as of 09-Apr-2013. T. Kinnaird via email instructed not to use accounts in that table as they were leading to problems.
+;
+-- 286908317 Row(s) affected
+
+select Top 1000* FROM Viewing_Table
+
+--select top 10 * from  Viewing_Table
+--select top 10 * from sk_prod.VESPA_EVENTS_VIEWED_ALL
+
+
+create hg index idx1 on Viewing_Table(dk_programme_instance_dim);
+create hg index idx2 on Viewing_Table(account_number);
+create index tk_tst_idx1 on  Viewing_Table (pk_viewing_prog_instance_fact);
+
+
+
+
+
+
+-- workaround to remove duplicate data just look at Live viewing
+-- delete from Viewing_Table
+-- where reported_playback_speed = 2;
+
+-- JUST ADD A WHERE CLAUSE FOR LIVE VIEWING -- OR REMOVE THE DUPLICATES
+
+
+
+------------------------------------------------------------------
+-- Step 1: identify the programs that we are interested in
+------------------------------------------------------------------
+--IF object_id('Program_details') IS NOT NULL DROP TABLE Program_details;
+
+select
+       dk_programme_instance_dim
+      ,pay_free_indicator
+      ,cast(broadcast_start_date_time_utc as date) as program_air_date
+      ,broadcast_start_date_time_utc as program_air_datetime
+      ,genre_description
+      ,sub_genre_description
+      ,channel_name
+  into Program_details -- drop table vespa_Program_details
+  from sk_prod.vespa_programme_schedule
+ where broadcast_start_date_time_utc >= dateadd(month, -7, @var_period_start)   -- 6 months before the analysis
+   and broadcast_start_date_time_utc <= @var_period_end
+;
+--3325439 Row(s) affected
+select distinct pay_free_indicator FROM sk_prod.vespa_programme_schedule
+create unique hg index idx1 on Program_details(dk_programme_instance_dim);
+
+delete from Viewing_Table
+WHERE dk_programme_instance_dim NOT IN (SELECT dk_programme_instance_dim
+                                        FROM sk_prod.vespa_programme_schedule);
+-- if the above is reasonable then delete any programming that is not in the epg
+
+------------ just checks
+select * FROM sk_prod.vespa_programme_schedule
+
+--------------------------------------------------------------
+-- capping data
+--------------------------------------------------------------
+
+
+/*IF object_id('TA_viewing_capped') IS NOT NULL DROP TABLE TA_viewing_capped;*/
+
+create table TA_viewing_capped (
+         account_number                                  varchar(20) not null
+        ,pk_viewing_prog_instance_fact                   bigint      not null --primary key                  -- cb_row_ID
+        ,broadcast_start_date_time_utc                   datetime
+        ,dk_programme_instance_dim                       bigint                                            -- programme_trans_sk
+        ,cb_key_family                                   bigint
+        ,cb_key_household                                bigint
+        ,cb_key_individual                               bigint
+        ,duration                                        decimal(10,0)
+        ,programme_instance_duration                     decimal(10,0)
+        ,reported_playback_speed                         decimal(4,0)                                      -- replaces play_back_speed
+        ,subscriber_id                                   integer                                           -- needed to match to SBV for primary secondery
+        ,type_of_viewing_event                           varchar(31)
+        ,daily_table_date                                date                                              -- dateadd(day, @var_cntr, @var_period_start)
+        ,live                                            integer                                           -- case when reported_playback_speed is null then 1 else 0 end as live
+        ,pay_free_indicator                              varchar(10)
+        ,program_air_date                                date
+        ,program_air_datetime                            timestamp
+        ,genre_description                               varchar(20)
+        ,sub_genre_description                           varchar(20)
+        ,channel_name                                    varchar(20)
+        ,viewing_starts                                  timestamp
+        ,viewing_stops                                   timestamp
+        ,capped_event_end_time                           datetime                                          -- with capping applied
+        ,viewing_duration                                bigint                                           -- in seconds, with capping applied
+        ,scaling_segment_id                              bigint                                            -- To help with the MBM proc builds (NYIP) -- these are all null??
+        ,capped_flag                                     tinyint                                           -- 0 -> event not capped, 1 -> event capped but doesn't effect viewing, 2 -> event capped & shortens viewing
+        );
+
+
+
+-- Populate the table
+SET @var_sql = '
+    insert into TA_viewing_capped
+    select   vt.account_number
+            ,vt.pk_viewing_prog_instance_fact
+            ,vt.broadcast_start_date_time_utc
+            ,vt.dk_programme_instance_dim
+            ,vt.cb_key_family
+            ,vt.cb_key_household
+            ,vt.cb_key_individual
+            ,vt.duration
+            ,vt.programme_instance_duration
+            ,vt.reported_playback_speed
+            ,vt.subscriber_id
+            ,vt.type_of_viewing_event
+            ,dateadd(day, @var_cntr, @var_period_start) -- what is this for?
+            ,case when reported_playback_speed is null then 1 else 0 end as live
+            ,prog.pay_free_indicator
+            ,prog.program_air_date
+            ,prog.program_air_datetime
+            ,prog.genre_description
+            ,prog.sub_genre_description
+            ,prog.channel_name
+            ,cap.viewing_starts
+            ,cap.viewing_stops
+            ,cap.capped_event_end_time
+            ,cap.viewing_duration
+            ,cap.scaling_segment_id
+            ,cap.capped_flag
+     from vespa_analysts.Vespa_daily_augs_##^^*^*## as cap
+        inner join Viewing_Table as vt
+        on cap.cb_row_id = vt.pk_viewing_prog_instance_fact
+                        inner join Program_details as prog
+                        on vt.dk_programme_instance_dim = prog.dk_programme_instance_dim
+     where vt.subscriber_id in (select tb.subscriber_id from the_boxes as tb) -- accounts from lthe universe that returned >50% of period
+       and  (reported_playback_speed is null or reported_playback_speed = 2)
+	AND account_number NOT IN (Select * FROM vespa_analysts.accounts_to_exclude ) -- IMPORTANT!!! Accounts need to be removed from analysis as per Tony Kinnaird email 09-Apr-2013
+     '
+     ;
+
+--GRANT SELECT ON  Viewing_Table TO PUBLIC;
+
+-- loop through the time period to get all relevant viewing events
+SET @var_cntr = 0;
+SET @i=datediff(dd,@var_period_start,@var_period_end);
+
+WHILE @var_cntr <= @i
+        BEGIN
+         EXECUTE(replace(@var_sql,'##^^*^*##',dateformat(dateadd(day, @var_cntr, @var_period_start), 'yyyymmdd')))-- the previous day
+      --      EXECUTE(replace(@var_sql,'!!^^*^*!!',dateformat(dateadd(month, @var_cntr, @var_period_start), 'yyyymmdd')))-- for vieiwng events -- add this to table name  !!^^*^*!!
+        COMMIT          -- above you may need to cast the var period start date
+
+         SET @var_cntr = @var_cntr + 1
+END;
+--23218772 row(s) affected, Execution time: 5079.727 seconds
+
+GRANT SELECT ON  TA_viewing_capped TO PUBLIC;
+
+--*******Issue with Pay_Free_Indicator not complete********
+--Count of Pay_Free_Indicator Values distribution across the two week period. Shows Null as GIGANTIC Group!
+--select pay_free_indicator, count(*) from TA_viewing_capped group by pay_free_indicator
+--pay_free_indicator,count()
+--'NULL' ,228717084
+--'FREE TV',30521174
+--'PAY TV',24793583
+--'RADIO',243174
+
+------------------------------------------------------------------Pay-Free Indicator Fix: Martin's Table Queries to merge with TA-----------------------------------------------------------
+--Apply FIX. We will place in the service key from the EVENTS ALL table and then merge in the pay_free_indicator from Marting Neighbour's table using service key.
+--Add service keys to our working table
+ALTER TABLE ta_viewing_capped ADD service_key integer;
+
+UPDATE ta_viewing_capped
+SET ta.service_key=events.service_key
+FROM ta_viewing_capped AS ta
+INNER JOIN sk_prod.VESPA_EVENTS_ALL AS events 
+ON ta.pk_viewing_prog_instance_fact=events.pk_viewing_prog_instance_fact;
+
+create hg index idx1_servicekey on ta_viewing_capped (service_key);
+
+--Martin's Table
+--We need to update Martin's Table. First we need to get a list of the channels and service keys that were active within our research period.
+SELECT DISTINCT Service_key, FULL_NAME, PAY_FREE_INDICATOR, EFFECTIVE_TO 
+INTO Channel_map_arc_service_key_attributes_dr_revised
+    FROM( 
+    SELECT Service_key, FULL_NAME, PAY_FREE_INDICATOR, EFFECTIVE_TO, RANK() OVER (PARTITION BY Service_key ORDER BY EFFECTIVE_TO desc) AS rank
+    FROM describe table neighbom.Channel_map_arc_service_key_attributes
+    WHERE EFFECTIVE_TO >= '2012-11-26' 
+        AND EFFECTIVE_FROM <'2012-12-10'
+        AND FULL_NAME is NOT NULL
+        AND Service_key IS NOT NULL
+        AND PAY_FREE_INDICATOR IS NOT NULL
+        AND TRIM(PAY_FREE_INDICATOR)<>' ') as t
+WHERE rank=1;
+--746 rows
+
+--We need to Add a second field on Pay-Free Indicator to flag that it is Martin's and not from the capping tables. 
+--We will call this the 'pay_free_indicator2'. 
+--This is what will be used instead of the regular Pay-Free INdcator for the rest of the study.
+ALTER TABLE ta_viewing_capped ADD pay_free_indicator2 varchar(4);
+
+--Update our main working table with our new Pay-Free Indicator
+UPDATE ta_viewing_capped
+SET pay_free_indicator2=chnl.PAY_FREE_INDICATOR
+FROM ta_viewing_capped AS ta
+LEFT JOIN rombaoad.Channel_map_arc_service_key_attributes_dr_revised AS chnl 
+ON ta.service_key=chnl.Service_key;
+COMMIT;
+
+--QA and to FInd out how many channels have no pay_free_indicator
+--select distinct channel_name--, channel_name, pay_free_indicator2
+--FROM TA_viewing_capped as base where pay_free_indicator2 is null
+
+
+--Pay - Free Indicator MIssing 
+--Update about 10 channels that show no pay_free_indicator. Used online search and TV search to identify whether pay or free. There are a few channels that I have no information on.
+--Anytime
+UPDATE TA_viewing_capped
+SET pay_free_indicator2='Pay'
+FROM TA_viewing_capped
+WHERE channel_name='Anytime'
+
+--Bio+1
+UPDATE TA_viewing_capped
+SET pay_free_indicator2='Pay'
+FROM TA_viewing_capped
+WHERE channel_name='Bio+1'
+
+--Sky Sports 1
+UPDATE TA_viewing_capped
+SET pay_free_indicator2='Pay'
+FROM TA_viewing_capped
+WHERE channel_name='Sky Sports 1'
+
+--Sky Atlantic
+UPDATE TA_viewing_capped
+SET pay_free_indicator2='Pay'
+FROM TA_viewing_capped
+WHERE channel_name='Sky Atlantic'
+
+--Sky Living
+UPDATE TA_viewing_capped
+SET pay_free_indicator2='Pay'
+FROM TA_viewing_capped
+WHERE channel_name='Sky Living'
+
+--Sky1
+UPDATE TA_viewing_capped
+SET pay_free_indicator2='Pay'
+FROM TA_viewing_capped
+WHERE channel_name='Sky1'
+
+--TRACE Sports
+UPDATE TA_viewing_capped
+SET pay_free_indicator2='Pay'
+FROM TA_viewing_capped
+WHERE channel_name='TRACE Sports'
+
+--alibi HD
+UPDATE TA_viewing_capped
+SET pay_free_indicator2='Pay'
+FROM TA_viewing_capped
+WHERE channel_name='alibi HD'
+
+--MTV Live
+UPDATE TA_viewing_capped
+SET pay_free_indicator2='Pay'
+FROM TA_viewing_capped
+WHERE channel_name='MTV Live'
+
+--Kiss
+UPDATE TA_viewing_capped
+SET pay_free_indicator2='Pay'
+FROM TA_viewing_capped
+WHERE channel_name='Kiss'
+
+--RTE TWO HD
+UPDATE TA_viewing_capped
+SET pay_free_indicator2='Pay'
+FROM TA_viewing_capped
+WHERE channel_name='RTE TWO HD'
+
+--Capital TV
+UPDATE TA_viewing_capped
+SET pay_free_indicator2='FTA'
+FROM TA_viewing_capped
+WHERE channel_name='Capital TV'
+
+--BBC 1 East (W)
+UPDATE TA_viewing_capped
+SET pay_free_indicator2='FTA'
+FROM TA_viewing_capped
+WHERE channel_name='BBC 1 East (W)'
+
+--NTV
+UPDATE TA_viewing_capped
+SET pay_free_indicator2='Pay'
+FROM TA_viewing_capped
+WHERE channel_name='NTV'
+
+--Sky
+UPDATE TA_viewing_capped
+SET pay_free_indicator2='Pay'
+FROM TA_viewing_capped
+WHERE channel_name='Sky'
+
+
+----------------------------------------------------------------End of Fix DR/Done! Change!---------------------------------------------------------------------------------------------------
+
+
+create hg index idx1_viewing_capped_dupes on viewing_capped_dupes(pk_viewing_prog_instance_fact);
+create lf index idx2_viewing_capped_dupes on viewing_capped_dupes(daily_table_date);
+create lf index idx2_TA_viewing_capped on TA_viewing_capped(daily_table_date);
+create hg index subscriber_id_indexx  on TA_viewing_capped (subscriber_id);
+create hg index account_number_indexx on TA_viewing_capped (account_number);
+--DR/DONE!
+---------------------------
+--- Remove Duplicates -- caused by BSS file affecting PVR (from Harry's code). Duplicates not found (note from Don).
+---------------------------
+---create table to house dupes
+drop table viewing_capped_dupes;
+create table viewing_capped_dupes
+(pk_viewing_prog_instance_fact bigint -- this is cb_row_ID
+,daily_table_date date -- why?
+,rank int);
+
+
+--insert those records that are duplicated with the pk and date that you want to delete
+
+insert into viewing_capped_dupes
+        select * from
+        (select pk_viewing_prog_instance_fact, daily_table_date,                                        --why the daily table date?
+        rank () over (partition by pk_viewing_prog_instance_fact order by daily_table_date) rank
+from TA_viewing_capped) t
+where rank > 1;
+
+commit;
+
+---- QA CHECKS -----
+/*
+select count(*) from viewing_capped_dupes -- 2,357,069 - thats alot!, delete all records or only the duplicates??
+
+select top 10 * from viewing_capped_dupes --
+
+select daily_table_date, count(*) from viewing_capped_dupes group by daily_table_date - CONSISTENT DUPES EVRYDAY
+*/
+
+---delete from table
+delete from TA_viewing_capped
+        from TA_viewing_capped a, viewing_capped_dupes b
+where a.pk_viewing_prog_instance_fact = b.pk_viewing_prog_instance_fact
+and a.daily_table_date = b.daily_table_date; -- 2,357,069 Row(s) affected
+commit;
+
+
+--numbers should match meaning that the dupes are now gone....
+select count(1)
+from TA_viewing_capped
+union all
+select count(distinct pk_viewing_prog_instance_fact) from TA_viewing_capped;
+-- count(1) 279,181,408
+
+--drop table when done
+drop table viewing_capped_dupes;
+
+
+/*
+--------------------------------------------------------------------------------
+-- PART B - Add Additional Feilds to the Viewing data for roll ups
+--------------------------------------------------------------------------------
+
+         B01 - Add Package - based on the start of the period of analysis:
+         B02 - Add HD and Sky+
+
+-------------------------------------------------------------------------------
+*/
+
+
+--------------------------------------------------------------------------------
+-- B01 - Add current pack
+--------------------------------------------------------------------------------
+drop table tvpackage;
+SELECT          csh.account_number
+                ,max(case when cel.prem_sports + cel.prem_movies  = 4   then 'Top Tier'
+                     when cel.prem_sports = 2 and cel.prem_movies = 1   then 'Dual Sports Single Movies'
+                     when cel.prem_sports = 2 and cel.prem_movies = 0   then 'Dual Sports'
+                     when cel.prem_sports = 1 and cel.prem_movies = 2   then 'Single Sports Dual Movies'
+                     when cel.prem_sports = 0 and cel.prem_movies = 2   then 'Dual Movies'
+                     when cel.prem_sports = 1 and cel.prem_movies = 1   then 'Single Sports Single Movies'
+                     when cel.prem_sports = 1 and cel.prem_movies = 0   then 'Single Sports'
+                     when cel.prem_sports = 0 and cel.prem_movies = 1   then 'Single Movies'
+                     when cel.prem_sports + cel.prem_movies = 0         then 'Basic'
+                     else                                                    'Unknown'
+                end) as tv_premiums,
+                max(case when (music = 0 AND news_events = 0 AND kids = 0 AND knowledge = 0)
+                     then 'Entertainment'
+                     when (music = 1 or news_events = 1 or kids = 1 or knowledge = 1)
+                     then 'Entertainment Extra'
+                     else 'Unknown' end) as tv_package
+into            tvpackage
+FROM            sk_prod.cust_subs_hist as csh
+        inner join sk_prod.cust_entitlement_lookup as cel
+                on csh.current_short_description = cel.short_description
+        inner join the_boxes as base   --------------------------------------- THE PRIMARY BOXES - WHO HAVE RETURNED DATA: OUR UNIVERSE!
+                on csh.account_number = base.account_number
+WHERE           csh.subscription_sub_type ='DTV Primary Viewing'
+AND             csh.subscription_type = 'DTV PACKAGE'
+AND             csh.status_code in ('AC','AB','PC')
+AND             csh.effective_from_dt < @var_period_start -- i.e. they had the same package for the whole period
+AND             csh.effective_to_dt   >= @var_period_start
+AND             csh.effective_from_dt != csh.effective_to_dt
+group by csh.account_number ;
+
+--QA
+--select * FROM tvpackage
+--select distinct (tv_premiums) FROM tvpackage
+
+-- index the table
+create hg index indx1 on tvpackage(account_number);
+
+
+-- add the fields to the table:
+alter table     TA_viewing_capped
+add(            tv_package varchar(50) default 'Unknown',
+                tv_premiums varchar (100) default 'Unknown');
+
+
+update          TA_viewing_capped as base
+set             base.tv_package = tvp.tv_package,
+                base.tv_premiums = tvp.tv_premiums
+from            tvpackage as tvp
+where           base.account_number = tvp.account_number;
+commit;
+
+--QA
+--select top 10 * from TA_viewing_capped;
+--select * from TA_viewing_capped where tv_premiums='Dual Movies'
+--------------------------------------------------------------------------------
+-- B02 - pvr and HD flags
+--------------------------------------------------------------------------------
+
+drop table hd_skyplus;
+-- LETS find out if the customers have a HD subscription and PVR capability
+SELECT  csh.account_number
+                ,max(CASE  WHEN csh.subscription_sub_type ='DTV HD'
+                       AND csh.status_code in  ('AC','AB','PC') THEN 1 ELSE 0 END) AS hdtv
+                ,max(CASE  WHEN csh.subscription_sub_type ='DTV Sky+'
+                       AND csh.status_code in  ('AC','AB','PC') THEN 1 ELSE 0 END) AS skyplus -- should this be plus?
+INTO hd_skyplus
+FROM            sk_prod.cust_subs_hist as csh
+                inner join the_boxes as base   --------------------------------------- THE PRIMARY BOXES - WHO HAVE RETURNED DATA: OUR UNIVERSE!
+                on csh.account_number = base.account_number
+     WHERE csh.subscription_sub_type  IN ('DTV HD'
+                                         ,'DTV Sky+')
+       AND csh.status_code in ('AC','AB','PC')
+       AND csh.effective_from_dt <> csh.effective_to_dt
+       AND csh.effective_from_dt <= @var_period_start
+       AND csh.effective_to_dt    > @var_period_start
+GROUP BY csh.account_number;
+
+
+
+-- index the table
+create hg index indx1 on hd_skyplus (account_number);
+
+
+-- add the fields to the table:
+alter table     TA_viewing_capped
+add(            HDTV integer default 0
+                ,skyplus integer default 0);
+
+
+update          TA_viewing_capped as base
+set             base.HDTV = tvp.HDTV
+                ,base.skyplus = tvp.skyplus
+from            hd_skyplus as tvp
+where           base.account_number = tvp.account_number;
+commit;
+
+--select top 10 * from TA_viewing_capped;
+
+
+
+
+/*
+--------------------------------------------------------------------------------
+-- PART C - SCALING
+--------------------------------------------------------------------------------
+             C01 - CREATE A BASE
+             C02 - CALCULATE AND ALLOCATE NOMINAL/AVERAGE SCALING FACTORS TO EACH ACCOUNT
+
+--------------------------------------------------------------------------------
+*/
+
+
+
+
+/*
+
+Scaling; for this project scaling is only needed to allocate the panel to deciles. Customers are allocated to deciles by a particular viewing measure
+        and the customers weighting. The resulting distribution is hence that of UK customers and not the panel. (Scaled Deciles)
+
+        Since we are looking at 2 weeks of viewing data we need to identify a single scaling measure to allocate each account to allocate effectively
+        . The new standard meathodology is the following; take the mid point over the period (19th August for example) then use the weighting from
+        this day for allocating customers to deciles.
+
+        We have seen that about 80k (14%) of the panel for this 2 week period have not returned data on this particular day and so we will go ahead
+        and allocate those customers who have retunred data on this date to deciles. We will then identify the decile thresholds (max and min) and
+        use these to allocate the remaining panel to deciles.
+
+        This gives more accuracy than previous normalisation meathods (scaling factor).
+
+        One more thing; scoring looks at primary accounts as of the time of running the code. We are looking at viewing data from the past and hence
+        will have primary account differences between the periods.
+
+        Viewing data will be extracted for primary accounts as of now and sclaing will be based on all accounts returning data at the mid point
+        in the past. Primary accounts as of now (likely to be less) will bve removed from the scaling population)
+*/
+
+
+-------
+-- Get the base accounts for scaling; these are accounts that returned data on a given day (mid period day)
+-------
+if object_id('scaling_accounts') is not null drop table scaling_accounts;
+
+select distinct account_number
+       ,max(dk_instance_end_time_dim) as rank
+into scaling_accounts
+FROM sk_prod.VESPA_EVENTS_ALL 
+WHERE cast(event_start_date_time_utc as date)in ('2012-12-02')
+       and panel_id IN (12,4)
+	AND account_number NOT IN (Select * FROM vespa_analysts.accounts_to_exclude ) -- IMPORTANT!!! As per Tony Kinnaird Email to VESPA about troublesome accounts (Apr 09, 2013). 
+group by account_number;
+--459,983
+
+--QA
+--select count(*),count(distinct account_number)  from scaling_accounts;
+--select top 10 * from sk_prod.VESPA_EVENTS_VIEWED_ALL;
+
+
+
+----------
+-- add some new fields and add the scaling measures
+----------
+
+   alter table scaling_accounts
+     add (weighting_date        date
+         ,weightings            float
+         ,new_weight            float
+         ,scaling_segment_ID    integer);
+commit;
+
+
+  update scaling_accounts
+     set weighting_date =       @mid_date;
+
+
+select top 10 * from scaling_accounts;
+
+
+
+-- First, get the segmentation for the account at the time of viewing#
+  update scaling_accounts as bas
+     set bas.scaling_segment_ID = wei.scaling_segment_ID
+    from vespa_analysts.SC2_intervals as wei
+   where bas.account_number = wei.account_number
+     and cast(bas.weighting_date as date) between cast(wei.reporting_starts as date) and cast(wei.reporting_ends as date);
+
+
+
+-- Second, find out the weight for that segment on that day
+update scaling_accounts
+     set weightings = wei.weighting
+    from scaling_accounts as bas INNER JOIN vespa_analysts.SC2_weightings as wei
+                                        ON bas.weighting_date = wei.scaling_day
+                                        and bas.scaling_segment_ID = wei.scaling_segment_ID
+;
+commit;
+
+
+---- Clean up the table
+
+delete from scaling_accounts where weightings is null or weightings = 0;
+-- DR/DONE!1868 rows accounts dont have weightings
+
+
+select COUNT (*) FROM scaling_accounts
+
+
+select * FROM scaling_accounts
+
+----
+-- QA checks
+----
+
+-- check the total population for the mid point date
+select sum(weightings) from scaling_accounts; -- 9.4million DR/Done!
+-- this is the total population watching TV on mid point day.
+
+select sum(weightings)
+from scaling_accounts
+where account_number in (select distinct(account_number) from TA_viewing_capped where daily_table_date = @mid_date);
+-- 8626178.48053694(Harry's result), (9024211.068542957 Don's result) DR/Done!
+-- post capping and removing non-primary (based on SAV)
+
+
+
+----------
+-- Now add the weighting and some flags to the vieiwng table
+----------
+
+ alter table TA_viewing_capped
+     add (weightings            float
+         ,decile_me_first       integer);
+commit;
+
+
+update TA_viewing_capped
+     set weightings = wei.weightings
+        ,decile_me_first = 1 --
+    from TA_viewing_capped as bas
+    INNER JOIN scaling_accounts as wei
+               on bas.account_number = wei.account_number
+;
+commit;
+
+-- this table will contain nulls where the customer has not been scaled.
+
+select top 10 * from TA_viewing_capped;
+
+
+/*
+--------------------------------------------------------------------------------
+-- PART D - AVERAGE VIEWING PER DAY (MINUTES)
+--------------------------------------------------------------------------------
+             D01 - SUMMERISE VIEWING FOR EACH CUSTOMER
+             D02 - CALCULATE AVERAGE MINBUTES FOR EACH PACKAGE - BASED ON THE UK BASE
+             D03 - CALCULATE EACH CUSTOMERS DEVIATION FROM THE PACKAGE  MEAN
+             D04 - ALLOCATE EACH ACCOUNT TO THE RELEVANT DECILE
+
+--------------------------------------------------------------------------------
+*/
+
+-- the movies, sports, premium and exclusive channels are subject to change - check that these definitions are still true when re-running the code
+-- there may be new channels - or epg channel name changes.
+
+
+----------------------------------------------------------------------
+-- DO1 -- LETS GET THE VIEWING DETAILS SUMMARISED FOR EACH CUSTOMER
+----------------------------------------------------------------------
+
+
+
+
+
+
+
+-----------
+-- STEP 1: LETS GET A CUSTOMER LEVEL SUMMARY OF VIEWING *MINUTES* PER DAY
+-----------
+
+
+If object_id('daily_averages') is not null drop table daily_averages
+
+
+ SELECT account_number
+       ,max(weightings) as normalised_weight -- need the correct weighting to do this part!
+        ,hdtv
+        ,skyplus
+        ,premium_viewable = case when full_package not in ('Entertainment Extra','Entertainment Extra','Unknown') then 1 else 0 end
+
+        ,non_movies = case when full_package not in ('Sky World','Top Tier','Dual Sports Single Movies','Single Sports Dual Movies',
+                                                 'Dual Movies','Single Sports Single Movies','Single Movies') then 1 else 0 end
+
+        ,non_sports = case when full_package not in ('Sky World','Top Tier','Dual Sports Single Movies','Dual Sports','Single Sports Dual Movies',
+                                                     'Single Sports Single Movies','Single Sports') then 1 else 0 end
+
+        ,Tv_package
+        ,tv_premiums
+        ,full_package = case when TV_premiums in ('Basic') then Tv_package
+                             when TV_premiums in ('Top Tier') and TV_package = 'Entertainment Extra' then 'Sky World'
+                             else tv_premiums end -- have not split out entertainment and extra in movies and sports upgrades
+
+
+         --- ************THIS HAS BEEN CHANGED **********************
+        ,count(distinct(daily_table_date)) as days_data_return
+        ,((sum(case when pay_free_indicator2 = 'Pay' then viewing_duration else null end)/60)/days_data_return) as average_pay_minutes --DR/DOne!Change! By using Martin's table he has only FTA and Pay there and not the usual names such as Free, Radio, Pay, etc. So we needed to change the flag names.
+        ,((sum(case when pay_free_indicator2 = 'FTA' then viewing_duration else null end)/60)/days_data_return) as average_free_minutes -- DR/DOne!Change! By using Martin's table he has only FTA and Pay there and not the usual names such as Free, Radio, Pay, etc. So we needed to change the flag names.
+        ,average_Total_minutes_day = average_pay_minutes + (case when average_free_minutes is not null then average_free_minutes else 0 end)
+        ,SOV_pay = cast(average_pay_minutes as float)/cast(nullif(average_Total_minutes_day,0) as float)
+
+        ,((sum(case when pay_free_indicator2 = 'FTA' and genre_description = 'Movies' and tv_premiums not in('Dual Movies','Dual Sports Single Movies',
+                 'Single Movies','Single Sports Dual Movies','Single Sports Single Movies','Sky World','Top Tier') -- could have used non-movies flag?
+              then viewing_duration else null end)/60)/days_data_return)
+              as average_FTA_movies -- FREE TO AIR MOVEIS
+
+        ,((sum(case when pay_free_indicator2 = 'FTA' and genre_description = 'Sports' and tv_premiums not in ('Top Tier','Dual Sports Single Movies','Dual Sports'
+                                                                         ,'Single Sports Dual Movies','Single Sports Single Movies','Single Sports')
+             then viewing_duration else null end)/60)/days_data_return)
+              as average_FTA_sports-- FREE TO AIR SPORTS
+
+         -- PREMIUM CONTENT (THIS VARIES WITH THE CUSTOMERS PACKAGE --- single sports can be either ss1 or ss2.... ETC
+        ,((sum(case when TV_premiums in('Single Sports','Dual Sports') and channel_name in ('Sky Sp NewsHD','Sky Sports 1','Sky Sports 1 HD','Sky Sports 2'
+                                       ,'Sky Sports 2 HD','Sky Sports 3','Sky Sports 3 HD','Sky Sports 4','Sky Sports 4 HD','Sky Sports F1','Sky Sports HD1','Sky Sports HD2'
+                                       ,'Sky Sports HD3','Sky Sports HD4','Sky Spts F1 HD') -- this is all of the sports channels -- assume customer can only watch thier package
+                 then viewing_duration
+
+                 when TV_premiums in ('Single Movies','Dual Movies') and channel_name in ('MGM HD','Disney Cine','Disney Cine HD','Disney Cine+1'
+                                     ,'Sky Christmas','Sky ChristmsHD','Sky Classics','Sky Classics HD','Sky Mdn Greats','Sky MdnGrtsHD','Sky Comedy','Sky Comedy HD'
+                                     ,'Sky DraRomHD','Sky DramaRom','Sky Family','Sky Family HD','Sky Indie','Sky Indie HD','Sky Prem+1','Sky Premiere','Sky ScFi/HorHD'
+                                     ,'Sky ScFi/Horror','Sky Showcase','SkyPremiereHD','SkyShowcaseHD','SkyShowcseHD','Sky Thriller','Sky Thriller HD')
+                 then viewing_duration
+
+                 when TV_premiums in ('Top Tier','Dual Sports Single Movies','Single Sports Dual Movies','Single Sports Single Movies')
+                 and channel_name in ('Sky Sp NewsHD','Sky Sports 1','Sky Sports 1 HD','Sky Sports 2','Sky Sports 2 HD','Sky Sports 3'
+                                     ,'Sky Sports 3 HD','Sky Sports 4','Sky Sports 4 HD','Sky Sports F1','Sky Sports HD1'
+                                     ,'Sky Sports HD2','Sky Sports HD3','Sky Sports HD4','Sky Spts F1 HD','MGM HD','Disney Cine','Disney Cine HD','Disney Cine+1'
+                                     ,'Sky Christmas','Sky ChristmsHD','Sky Classics','Sky Classics HD','Sky Mdn Greats','Sky MdnGrtsHD','Sky Comedy','Sky Comedy HD'
+                                     ,'Sky DraRomHD','Sky DramaRom','Sky Family','Sky Family HD','Sky Indie','Sky Indie HD','Sky Prem+1','Sky Premiere','Sky ScFi/HorHD'
+                                     ,'Sky ScFi/Horror','Sky Showcase','SkyPremiereHD','SkyShowcaseHD','SkyShowcseHD','Sky Thriller','Sky Thriller HD')
+                 then viewing_duration
+                 else null end)/60)/days_data_return)
+
+                 as average_premium_viewing
+
+          -- EXCLUSIVE CONTENT: ATLANTIC, SKY SPORTS 3/ 4 / NEWS- ALL HD
+        ,((sum(case when channel_name in ('Sky Sp NewsHD''Sky Sports 3 HD','Sky Sports 4 HD','Sky Atlantic','Sky Atlantic HD')
+                  then viewing_duration  else null end)/60)/days_data_return)  as average_exclusive_viewing
+
+        --- HD viewing where the customer has HD
+        ,((sum(case when hdtv = 1 and channel_name like '%HD' or channel_name like 'HD%' or channel_name like '%HD%' -- how long will this be true?
+                then viewing_duration else null end)/60)/days_data_return) as average_HD_minutes
+
+         ---- PVR vieiwng where the customer has PVR subscription (it doesnt work without at least basic subscription)
+        ,((sum(case when skyplus = 1 and live = 0 then viewing_duration else null end)/60)/days_data_return) as average_PVR_minutes
+
+ into daily_averages
+ from TA_viewing_capped
+WHERE account_number NOT IN (Select * FROM vespa_analysts.accounts_to_exclude ) -- IMPORTANT!!!! This was added as of 09-Apr-2013. T. Kinnaird via email instructed not to use accounts in that table as they were leading to problems.
+group by account_number, Tv_package, tv_premiums,hdtv,skyplus;
+-- 585,859 Row(s) affected (Harry's code result), 487626 rows affected execution time: 646.086 seconds (Don's result), (472k -- Hannah's result)
+
+--QA
+--select * from daily_averages
+
+--------------------------------------------------------------------------------
+--DO2- NOW LETS CALCULATE THE AVERAGE SHARE OF VIEWING ACROSS MEASURES FOR EACH PACKAGE:
+--------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------
+--step 1: find the number of customers in each pack
+---------------------------------------------------------------
+
+IF OBJECT_ID('PACK_MINUTES') IS NOT NULL DROP TABLE PACK_MINUTES;
+
+select full_package
+       ,sum(normalised_weight) as pack_weight
+into PACK_MINUTES
+from daily_averages
+group by full_package;
+-- now we know how many people are in each pack
+
+-- select * from PACK_MINUTES
+--DR/DONe!
+---------------------------------------------------------------
+--step 2: find the distribution of share of viewing amoung all UK customers within thier package
+---------------------------------------------------------------
+
+
+drop table #unique_mins_and_weightings;
+
+
+select distinct(sov.full_package)
+        ,average_FTA_movies
+        ,average_FTA_sports
+        ,average_premium_viewing
+        ,average_exclusive_viewing
+        ,average_HD_minutes
+        ,average_pay_minutes
+        ,average_PVR_minutes
+
+        ,sum(normalised_weight) weighting
+
+        ,weight_times_MOVIES              = average_FTA_movies*weighting
+        ,weight_times_SPORTS              = average_FTA_sports*weighting
+        ,weight_times_PREMIUM             = average_premium_viewing*weighting
+        ,weight_times_EXCLUSIVE           = average_exclusive_viewing*weighting
+        ,weight_times_HD                  = average_HD_minutes*weighting
+        ,weight_times_PAY                 = average_pay_minutes * weighting
+        ,weight_times_PVR                 = average_PVR_minutes*weighting
+
+into #unique_mins_and_weightings
+from daily_averages as sov
+left join PACK_MINUTES as pak
+on pak.full_package= sov.full_package
+group by sov.full_package
+        ,average_FTA_movies
+        ,average_FTA_sports
+        ,average_premium_viewing
+        ,average_exclusive_viewing
+        ,average_HD_minutes
+        ,average_pay_minutes
+        ,average_PVR_minutes;
+--any nulls weightings will result
+--475,501 row(s) affected (DR result)
+
+
+select * from #unique_mins_and_weightings
+
+select * from #unique_mins_and_weightings
+
+
+-- now we have unique minute types multiplied by weightings -- thats part 1 of finding out how many minutes were watched in each package
+
+
+---------------------------------------------------------------
+--step 3: get the sum of share of viewing before dividing by the number of customers within the package
+---------------------------------------------------------------
+
+IF OBJECT_ID('total_minutes') IS NOT NULL DROP TABLE total_minutes;
+
+select full_package
+         ,sum(weight_times_MOVIES)          as movie_mins
+         ,sum(weight_times_SPORTS)          as sport_mins
+         ,sum(weight_times_PREMIUM)         as premium_mins
+         ,sum(weight_times_EXCLUSIVE)       as exclusive_mins
+         ,sum(weight_times_HD)              as hd_mins
+         ,sum(weight_times_PAY)             as pay_mins
+         ,sum(weight_times_PVR)             as pvr_mins
+INTO total_minutes
+from #unique_mins_and_weightings
+group by full_package
+order by full_package;
+
+--QA
+--SELECT * FROM total_minutes
+-- now we know the number of minutes watched in package -- these are daily averages as they are taken from the daily averages table
+--DR/DONE? - why is there areas that have null
+--Spoke to HARRY!!! Expect those nulls as they are not being targeted for the TA! It is fine that Nulls show up every time a 'Movies' from the 'full package' column crosstabs with 'movie_mins' column. And that 'sports_mins' column is NULL when ANY package that has Sports are in the 'full_package' column.  
+
+
+
+
+---------------------------------------------------------------
+--step 4: get the average by dividing by the number of people in that package
+---------------------------------------------------------------
+
+ALTER TABLE FROM PACK_MINUTES
+add  (movie_mins float
+      ,sport_mins float
+      ,premium_mins float
+      ,exclusive_mins float
+      ,hd_mins float
+      ,pay_mins float
+      ,pvr_mins float );
+
+UPDATE PACK_MINUTES
+ set sov.movie_mins          = tot.movie_mins     / pack_weight
+     ,sov.sport_mins         = tot.sport_mins     / pack_weight
+     ,sov.premium_mins       = tot.premium_mins   / pack_weight
+     ,sov.exclusive_mins     = tot.exclusive_mins / pack_weight
+     ,sov.hd_mins            = tot.hd_mins        / pack_weight
+     ,sov.pay_mins           = tot.pay_mins       / pack_weight
+     ,sov.pvr_mins           = tot.pvr_mins       / pack_weight
+from PACK_MINUTES sov
+ left join total_minutes tot
+ on tot.full_package= sov.full_package;
+-- this gives use the average number of minutes watched by each cusotmer in that package
+-- these are daily averages as they are taken from the daily averages table
+
+--DR/DONE!
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+-- Lets copy the above into a new table ( i added this chunk of code later and want it to work with the current structure)
+
+
+If object_id('daily_totals_by_package') is not null drop table daily_totals_by_package;
+
+
+select full_package
+        ,MAX(movie_mins) as average_FTA_movies
+        ,MAX(sport_mins) as average_FTA_sports
+        ,MAX(premium_mins) as average_premium_viewing
+        ,MAX(exclusive_mins) as average_exclusive_viewing
+        ,MAX(hd_mins) as average_HD_minutes
+        ,MAX(pay_mins) as pay_mins -- changed from sov_pay
+        ,MAX(pvr_mins) as average_PVR_minutes-- this approach ignores nulls:
+into daily_totals_by_package
+from PACK_MINUTES
+group by full_package;
+-- average of an average:
+
+--select * from daily_totals_by_package
+
+
+update daily_totals_by_package
+set average_premium_viewing = case when average_premium_viewing = 0 then null else average_premium_viewing end;
+
+--DR/DOne!
+
+---------------------------------------------------------------
+--D03 - NOW LETS FIND THE CUSTOMERS DEVIATION FROM THE PACKAGE AVERAGE SOV;
+---------------------------------------------------------------
+
+-- the table DAILY_CUST_SOV mcontains alot of nulls; some for people who are non-eligable (eg we are not looking at FTA movies for movies customers)
+-- some for customers who did not watch movies to get an accurate representation of the deviations from the package average we need to
+
+-- set the share of viewing to zero to for those customers that have capcity to watch
+Update daily_averages
+set  average_FTA_movies             = case when non_movies = 1       and average_FTA_movies is null then 0 else average_FTA_movies end
+    ,average_FTA_sports             = case when non_sports = 1       and average_FTA_sports is null then 0 else average_FTA_sports end
+    ,average_premium_viewing        = case when premium_viewable = 1 and average_premium_viewing is null then 0 else average_premium_viewing end
+    ,average_exclusive_viewing      = case when                          average_exclusive_viewing is null then 0 else average_exclusive_viewing end
+    ,average_HD_minutes             = case when hdtv = 1             and average_HD_minutes is null then 0 else average_HD_minutes end
+    ,average_pay_minutes            = case when                          average_pay_minutes is null then 0 else average_pay_minutes end
+    ,average_PVR_minutes            = case when skyplus = 1          and average_PVR_minutes is null then 0 else average_PVR_minutes end
+;
+
+--select top 10 * from daily_averages;
+--SELECT top 100* FROM daily_averages
+--DR/Done!
+
+
+
+--- THIS IS GOING TO BE THE DEVIATIONS ETC --
+If object_id('Phase2_minute_output') is not null drop table Phase2_minute_output;
+
+
+select  day.account_number
+       ,day.normalised_weight
+       ,day.full_package as package
+       ,day.premium_viewable
+       ,day.non_movies
+       ,day.non_sports
+
+       ,day.hdtv
+       ,day.skyplus
+--        ,day.average_FTA_movies as FTA_MOVIES_MINS_PerDay_NON_MOVIES_cust
+--        ,day.average_FTA_sports AS FTA_SPORTS_MINS_PerDay_NON_SPORTS_cust
+
+       ,FTA_MOVIES_MINS_PerDay_NON_MOVIES_cust1 = day.average_FTA_movies - (case when day.full_package = pak.full_package
+                                                                                then pak.average_FTA_movies else null end)
+
+       ,FTA_SPORTS_MINS_PerDay_NON_SPORTS_cust1 = day.average_FTA_sports - (case when day.full_package = pak.full_package
+                                                                                then pak.average_FTA_sports else null end)
+
+       ,Avg_premium_viewing_deviation_rel_to_pack1 = day.average_premium_viewing - (case when day.full_package = pak.full_package
+                                                                                then pak.average_premium_viewing else null end)
+
+       ,Avg_exclusive_deivation_rel_to_pack1 = day.average_exclusive_viewing - (case when day.full_package = pak.full_package
+                                                                                then pak.average_exclusive_viewing else null end)
+
+       ,Avg_HD_devi_for_Sbscrbr_rel_to_pack1 = day.average_HD_minutes - (case when day.full_package = pak.full_package
+                                                                                then pak.average_HD_minutes else null end)
+
+       ,Avg_pay_SOV_devi_rel_to_pack1 = day.average_pay_minutes - (case when day.full_package = pak.full_package
+                                                                                then pak.pay_mins else null end)
+
+       ,Avg_PVR_devi_rel_to_pack1 = day.average_PVR_minutes - (case when day.full_package = pak.full_package -- NULL IF NO PVR viewing or subscription
+                                                                                then pak.average_PVR_minutes else null end)
+
+
+         -- THIS IS NEW: TAKES THE PERCENTAGE DEVIATION RELATIVE TO PACK AVERAGE  this converts the deviation into a percentage
+
+       ,FTA_MOVIES_MINS_PerDay_NON_MOVIES_cust = cast(FTA_MOVIES_MINS_PerDay_NON_MOVIES_cust1 as real) / (case when day.full_package = pak.full_package
+                                                                                then pak.average_FTA_movies else null end)
+
+       ,FTA_SPORTS_MINS_PerDay_NON_SPORTS_cust = cast(FTA_SPORTS_MINS_PerDay_NON_SPORTS_cust1 as float) / (case when day.full_package = pak.full_package
+                                                                                then pak.average_FTA_sports else null end)
+
+       ,Avg_premium_viewing_deviation_rel_to_pack = cast(Avg_premium_viewing_deviation_rel_to_pack1 as float) / (case when day.full_package = pak.full_package
+                                                                                then pak.average_premium_viewing else null end)
+-- these two have devide by zero
+--,0 as Avg_exclusive_deivation_rel_to_pack
+--,0 as Avg_HD_devi_for_Sbscrbr_rel_to_pack
+
+
+       ,Avg_exclusive_deivation_rel_to_pack = cast(Avg_exclusive_deivation_rel_to_pack1 as float) / (case when day.full_package = pak.full_package
+                                                                                then pak.average_exclusive_viewing else null end)
+
+       ,Avg_HD_devi_for_Sbscrbr_rel_to_pack = cast(Avg_HD_devi_for_Sbscrbr_rel_to_pack1 as float) / (case when day.full_package = pak.full_package
+                                                                                then pak.average_HD_minutes else null end)
+
+       ,Avg_pay_SOV_devi_rel_to_pack = cast(Avg_pay_SOV_devi_rel_to_pack1 as float) / (case when day.full_package = pak.full_package
+                                                                                then pak.pay_mins else null end)
+
+       ,Avg_PVR_devi_rel_to_pack = cast(Avg_PVR_devi_rel_to_pack1 as float) / (case when day.full_package = pak.full_package
+                                                                                then pak.average_PVR_minutes else null end)
+
+into Phase2_minute_output
+from daily_averages as day
+left join daily_totals_by_package as pak
+on day.full_package = pak.full_package;
+
+--QA
+--select top 10 * from Phase2_minute_output;
+
+--DR/DOne! NO Change!
+
+----------------------------------------------------------------------------------------------
+------ Now decile thes guys!
+
+
+
+
+
+----------------------------------------------------------------------
+-- DO4: LETS DECILE THESE CUSTOMERS
+---------------------------------------------------------------------
+
+------------
+-- STEP 1: LETS GET THE CUMULITIVE WEIGHTING TO ALLOCATE DECILES TO THE CUSTOMERS BASED ON THIER POPULATION REPRESENTATION
+------------
+
+--select top 10 * from phase2_viewing_capped_avg_mins_day
+
+-- we only need to quintile 4things: total minutes, SOV pay, SOV PVR, SOV FTA Movies. Day of week and genre can be done in a different table (many rows)
+
+drop table #temp22
+
+select  account_number
+        ,normalised_weight
+        ,premium_viewable
+        ,non_movies
+        ,non_sports
+        ,hdtv
+        ,skyplus
+        ,FTA_MOVIES_MINS_PerDay_NON_MOVIES_cust
+        ,FTA_SPORTS_MINS_PerDay_NON_SPORTS_cust
+        ,Avg_premium_viewing_deviation_rel_to_pack
+        ,Avg_exclusive_deivation_rel_to_pack
+        ,Avg_HD_devi_for_Sbscrbr_rel_to_pack
+        ,Avg_pay_SOV_devi_rel_to_pack
+        ,Avg_PVR_devi_rel_to_pack
+
+                -- lets a,dd cumulitive weightings for sclaed deciling.
+        , case when non_movies = 1 then (sum(normalised_weight) over ( partition by non_movies order by FTA_MOVIES_MINS_PerDay_NON_MOVIES_cust -- partition is not needed
+                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)) else 0 end as FTA_MOVIES_cumul_weighting
+
+        , case when non_sports = 1 then (sum(normalised_weight) over ( partition by non_sports order by FTA_SPORTS_MINS_PerDay_NON_SPORTS_cust -- partition is not needed
+                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)) else 0 end as FTA_SPORTS_cumul_weighting
+
+        , case when premium_viewable = 1 then ( sum(normalised_weight) over ( partition by premium_viewable order by Avg_premium_viewing_deviation_rel_to_pack
+                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)) else 0 end as PREMIUM_viewing_cumul_weighting
+
+         , sum(normalised_weight) over ( order by Avg_exclusive_deivation_rel_to_pack
+                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) as EXCLUSIVE_viewing_cumul_weighting -- odefferentiate 'Unknown' customers?
+
+         , case when hdtv = 1 then( sum(normalised_weight) over (partition by hdtv order by Avg_HD_devi_for_Sbscrbr_rel_to_pack
+                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) )else 0 end as HD_cumul_weighting
+
+         , sum(normalised_weight) over ( order by Avg_pay_SOV_devi_rel_to_pack
+                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) as PAY_SOV_cumul_weighting
+
+         , case when skyplus = 1 then (sum(normalised_weight) over (partition by skyplus order by Avg_PVR_devi_rel_to_pack
+                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)) else 0 end as PVR_cumul_weighting
+
+into temp22
+from Phase2_minute_output
+where normalised_weight is not null; -- the accounts that were not scaled - they will be allocated to deciles via by looking at min/max thresholds
+
+--- the figures above are arranged such that lower viewing is first and higher viewing last - will transalte to higher cumul weightings for more viewing
+
+--QA
+--select * FROM Phase2_minute_output
+
+
+
+-- lets do some checks:
+--QA--------------------------------------------------------------------
+
+/*
+SELECT * FROM temp22
+SELECT MAX( FTA_MOVIES_cumul_weighting ) FROM TEMP22
+
+SELECT MAX( FTA_SPORTS_cumul_weighting ) FROM TEMP22
+
+SELECT MAX( PREMIUM_viewing_cumul_weighting ) FROM TEMP22
+
+SELECT MAX( EXCLUSIVE_viewing_cumul_weighting ) FROM TEMP22
+
+SELECT MAX( HD_cumul_weighting ) FROM TEMP22
+
+SELECT MAX(PAY_SOV_cumul_weighting) FROM TEMP22
+
+SELECT MAX(PVR_cumul_weighting) FROM TEMP22
+
+*/
+
+
+
+--------------------------------------------------------------------------------
+--STEP 2: - CREATE DECILE TABLEs AND ADD WEIGHTING BANDINGS
+--------------------------------------------------------------------------------
+
+/*IF object_id('decile_weights_FTA_MOVIES') IS NOT NULL*/ DROP TABLE decile_weights_FTA_MOVIES;
+/*IF object_id('decile_weights_FTA_SPORTS') IS NOT NULL*/ DROP TABLE decile_weights_FTA_SPORTS;
+/*IF object_id('decile_weights_PREMIUM') IS NOT NULL*/ DROP TABLE decile_weights_PREMIUM;
+/*IF object_id('decile_weights_HD') IS NOT NULL*/ DROP TABLE decile_weights_HD;
+/*IF object_id('decile_weights_PVR') IS NOT NULL*/ DROP TABLE decile_weights_PVR;
+/*IF object_id('decile_weights_base') IS NOT NULL*/ DROP TABLE decile_weights_base;
+
+
+create table decile_weights_FTA_MOVIES ( centile integer primary key);
+create table decile_weights_FTA_SPORTS ( centile integer primary key);
+create table decile_weights_PREMIUM ( centile integer primary key);
+create table decile_weights_HD ( centile integer primary key);
+create table decile_weights_pvr ( centile integer primary key);
+create table decile_weights_base ( centile integer primary key);
+
+
+create variable y int;
+set y = 1;
+
+while y <= 10
+begin
+        insert into decile_weights_FTA_MOVIES values (y)
+        insert into decile_weights_FTA_SPORTS values (y)
+        insert into decile_weights_PREMIUM values (y)
+        insert into decile_weights_HD values (y)
+        insert into decile_weights_PVR values (y)
+        insert into decile_weights_base values (y)
+
+        set y = y + 1
+end;
+
+
+
+-- add a sample field to help decide which customers go into which decile based on how much of the sample they represent;
+alter table decile_weights_FTA_MOVIES add sample float;
+alter table decile_weights_FTA_SPORTS add sample float;
+alter table decile_weights_PREMIUM add sample float;
+alter table decile_weights_HD add sample float;
+alter table decile_weights_PVR add sample float;
+alter table decile_weights_base add sample float;
+
+
+update decile_weights_FTA_MOVIES        set sample = ceil((centile) *   (select sum(normalised_weight) from temp22 where non_movies = 1)/10);
+update decile_weights_FTA_SPORTS        set sample = ceil((centile) *   (select sum(normalised_weight) from temp22 where non_sports = 1)/10);
+update decile_weights_PREMIUM           set sample = ceil((centile) *   (select sum(normalised_weight) from temp22 where premium_viewable = 1 )/10);
+update decile_weights_HD                set sample = ceil((centile) *   (select sum(normalised_weight) from temp22 where hdtv = 1)/10);
+update decile_weights_PVR               set sample = ceil((centile) *   (select sum(normalised_weight) from temp22 where skyplus =1 )/10);
+update decile_weights_base              set sample = ceil((centile) *   (select sum(normalised_weight) from temp22)/10); -- all cusotmers
+
+
+--check it:
+
+select * from decile_weights_FTA_MOVIES;
+select * from decile_weights_FTA_SPORTS;
+select * from decile_weights_PREMIUM;
+select * from decile_weights_HD;
+select * from decile_weights_PVR;
+select * from decile_weights_base; -- this will be used for exclusive and pay SOV
+
+
+--DR/DONe! No change!
+--------------------------------------------------------------------------------
+--STEP 3 - now allocate each account to the relevant quintile based on the cumulitave weighting
+--------------------------------------------------------------------------------
+
+IF object_id('customer_deciles') IS NOT NULL DROP TABLE customer_deciles;
+
+-- we need to copy the temp table into a real table so we can add columns etc -- these are the scaled customers
+select * into customer_deciles from temp22;
+
+
+-- we need to create 4 quintile allocations
+alter table customer_deciles
+add ( FTA_movies_decile integer default 0
+      ,FTA_sports_decile integer default 0
+      ,premium_decile integer default 0
+      ,exclusive_decile integer default 0
+      ,HD_deciles integer default 0
+      ,pay_sov_deciles integer default 0
+      ,pvr_deciles integer default 0);
+
+
+-- now lets use the different cumul weightings to allocate the different deciles.
+
+-- FTA MOVIES
+update customer_deciles
+        set FTA_movies_decile = centile
+from customer_deciles as vdw
+ inner join decile_weights_FTA_MOVIES as cww
+ on FTA_MOVIES_cumul_weighting <= sample
+where non_movies = 1; -- DR/Done! change! Harry advised that we add this Where clause to address issues of zeros
+-- the zero deciles are those customers that have movies
+
+
+
+-- FTA SPORTS
+update customer_deciles
+        set FTA_sports_decile = centile
+from customer_deciles as vdw
+ inner join decile_weights_FTA_SPORTS as cww
+ on FTA_SPORTS_cumul_weighting <= sample
+where non_sports = 1; -- DR/Done! change! Harry advised that we add this Where clause to address issues of zeros
+
+
+
+-- PREMIUM CONTENT
+update customer_deciles
+        set premium_decile = centile
+from customer_deciles as vdw
+ inner join decile_weights_PREMIUM as cww
+ on PREMIUM_viewing_cumul_weighting <= sample
+ where premium_viewable = 1; -- DR/Done! change! Harry advised that we add this Where clause to address issues of zeros
+
+
+-- EXCLUSIVE CONTENT
+update customer_deciles
+        set exclusive_decile = centile
+from customer_deciles as vdw
+ inner join decile_weights_base as cww
+ on EXCLUSIVE_viewing_cumul_weighting <= sample; -- DR/Done! NO change! Where clause not applicable as there is no Flag available to identify this group.
+
+
+-- HD CONTENT
+update customer_deciles
+        set HD_deciles = centile
+from customer_deciles as vdw
+ inner join decile_weights_HD as cww
+ on HD_cumul_weighting <= sample
+ where hdtv = 1; -- DR/Done! change! Harry advised that we add this Where clause to address issues of zeros
+
+
+-- PAY SOV CONTENT
+update customer_deciles
+        set pay_sov_deciles = centile
+from customer_deciles as vdw
+ inner join decile_weights_base as cww
+ on PAY_SOV_cumul_weighting <= sample; -- DR/Done! NO change! Where clause not applicable as we are interested in the whole population
+
+
+-- PVR CONTENT
+update customer_deciles
+        set pvr_deciles = centile
+from customer_deciles as vdw
+ inner join decile_weights_PVR as cww
+ on PVR_cumul_weighting <= sample
+ where skyplus = 1; --  DR/Done! change! Harry advised that we add this Where clause to address issues of zeros
+
+--DR/DONe! Table looks weird. HD and Sky Plus are all zeros and related columns HD_deciles and pvr_deciles are zeros.
+--Done some checks and it's not a big deal. If you order by those variables you will see that there are values for many accounts.
+--select * FROM customer_deciles order by pvr_deciles desc
+--select * FROM customer_deciles where account_number='200000847216'
+--now the scaled customers have been deciled - lets scale the remaining c.70k customers based on the threshholds
+
+
+---------------------------------------------------------------------------------
+-- step 4: get the accounts that have not been scaled into one table - following the format above.
+
+        -- tHESE WILL BE ALLOCATED TO A DECILE BASED ON THE THRESHOLDS OF THAT DECILE GROUP.
+---------------------------------------------------------------------------------
+
+select  account_number
+        ,normalised_weight
+        ,premium_viewable
+        ,non_movies
+        ,non_sports
+        ,hdtv
+        ,skyplus
+        ,FTA_MOVIES_MINS_PerDay_NON_MOVIES_cust
+        ,FTA_SPORTS_MINS_PerDay_NON_SPORTS_cust
+        ,Avg_premium_viewing_deviation_rel_to_pack
+        ,Avg_exclusive_deivation_rel_to_pack
+        ,Avg_HD_devi_for_Sbscrbr_rel_to_pack
+        ,Avg_pay_SOV_devi_rel_to_pack
+        ,Avg_PVR_devi_rel_to_pack
+
+                -- lets a,dd cumulitive weightings for sclaed deciling. - the below is included to make a copy into customer_deciles easier
+        , FTA_MOVIES_cumul_weighting = null
+
+        , FTA_SPORTS_cumul_weighting = null
+
+        , PREMIUM_viewing_cumul_weighting = null
+
+         , EXCLUSIVE_viewing_cumul_weighting = null
+
+         , HD_cumul_weighting = null
+
+         , PAY_SOV_cumul_weighting = null
+
+         , PVR_cumul_weighting = null
+
+into cust_deciles_allocation
+from Phase2_minute_output
+where normalised_weight is null -- the accounts that were not scaled - they will be allocated to deciles via by looking at min/max thresholds
+--34966 row(s) affected
+
+--QA
+--select count(*) from cust_deciles_allocation
+--DR/DONE!
+
+--------------------------------------------------------------------------------
+--STEP 5 - now allocate each account to the relevant quintile based on the threasholds
+--------------------------------------------------------------------------------
+
+----
+-- a: add some new columns
+----
+
+alter table cust_deciles_allocation
+add ( FTA_movies_decile integer default 0
+      ,FTA_sports_decile integer default 0
+      ,premium_decile integer default 0
+      ,exclusive_decile integer default 0
+      ,HD_deciles integer default 0
+      ,pay_sov_deciles integer default 0
+      ,pvr_deciles integer default 0);
+
+select top 10 * from cust_deciles_allocation
+
+----
+-- b: identify the the threatholds for each of the decile groupings - make a table for each decile type
+----
+
+
+--movies
+select FTA_movies_decile
+        ,min(FTA_MOVIES_MINS_PerDay_NON_MOVIES_cust) as movies_min
+        ,max(FTA_MOVIES_MINS_PerDay_NON_MOVIES_cust) as movies_max
+into #movies_thresholds
+from customer_deciles
+where non_movies=1 
+group by FTA_movies_decile
+order by FTA_movies_decile;
+
+
+--sports
+select FTA_sports_decile
+        ,min(FTA_SPORTS_MINS_PerDay_NON_SPORTS_cust) as sports_min
+        ,max(FTA_SPORTS_MINS_PerDay_NON_SPORTS_cust) as sports_max
+into #sports_thresholds
+from customer_deciles
+where non_sports=1
+group by FTA_sports_decile
+order by FTA_sports_decile;
+
+
+--premium
+select premium_decile
+        ,min(Avg_premium_viewing_deviation_rel_to_pack) as premium_min
+        ,max(Avg_premium_viewing_deviation_rel_to_pack) as premium_max
+into #premium_thresholds
+from customer_deciles
+where premium_viewable=1
+group by premium_decile
+order by premium_decile;
+
+
+--exclusive
+select exclusive_decile
+        ,min(Avg_exclusive_deivation_rel_to_pack) as exclusive_min
+        ,max(Avg_exclusive_deivation_rel_to_pack) as exclusive_max
+into #exclusive_thresholds
+from customer_deciles
+group by exclusive_decile
+order by exclusive_decile;
+
+
+--HD
+select HD_deciles
+        ,min(Avg_HD_devi_for_Sbscrbr_rel_to_pack) as HD_min
+        ,max(Avg_HD_devi_for_Sbscrbr_rel_to_pack) as HD_max
+into #HD_thresholds
+from customer_deciles
+WHERE HDTV=1
+group by HD_deciles
+order by HD_deciles;
+
+
+--Pay Sov
+select pay_sov_deciles
+        ,min(Avg_pay_SOV_devi_rel_to_pack) as Pay_Sov_min
+        ,max(Avg_pay_SOV_devi_rel_to_pack) as Pay_Sov_max
+into #Pay_SOV_thresholds
+from customer_deciles
+group by pay_sov_deciles
+order by pay_sov_deciles;
+
+
+-- PVR
+select pvr_deciles
+        ,min(Avg_PVR_devi_rel_to_pack) as PVR_min
+        ,max(Avg_PVR_devi_rel_to_pack) as PVR_max
+into #PVR_thresholds
+from customer_deciles
+WHERE skyplus=1
+group by pvr_deciles
+order by pvr_deciles;
+
+--Dr/Done!
+----
+-- c: allocate the customers to a decile
+----
+
+
+-- Movies
+update cust_deciles_allocation
+        set alo.FTA_movies_decile = ths.FTA_movies_decile
+from cust_deciles_allocation as alo
+ inner join #movies_thresholds as ths
+ on FTA_MOVIES_MINS_PerDay_NON_MOVIES_cust between movies_min and Movies_max
+where non_movies = 1;
+
+-- select FTA_movies_decile, count(*) from cust_deciles_allocation group by FTA_movies_decile
+--Observation by DR is that distribution is not even and there is a big population in the lower deciles. 
+
+
+
+-- Sports
+update cust_deciles_allocation
+        set alo.FTA_sports_decile = ths.FTA_sports_decile
+from cust_deciles_allocation as alo
+ inner join #sports_thresholds as ths
+ on FTA_SPORTS_MINS_PerDay_NON_SPORTS_cust between sports_min and sports_max
+where non_sports = 1;
+
+-- select FTA_sports_decile, count(*) from cust_deciles_allocation     group by FTA_sports_decile    order by FTA_sports_decile
+-- Observation by DR is that distribution is not even and there is a big population in the lower deciles. Spoke to HG about the situation. Cannot do anything about this as the zeros are affecting the decile allocation.
+
+
+-- premium
+update cust_deciles_allocation
+        set alo.premium_decile = ths.premium_decile
+from cust_deciles_allocation as alo
+ inner join #premium_thresholds as ths
+ on Avg_premium_viewing_deviation_rel_to_pack between premium_min and premium_max
+where premium_viewable = 1;
+
+-- select premium_decile, count(*) from cust_deciles_allocation     group by premium_decile    order by premium_decile
+-- Observation by DR is that distribution is not even and there is a big population in the lower deciles. Spoke to HG about the situation. Cannot do anything about this as the zeros are affecting the decile allocation.
+
+
+
+-- exclusive
+update cust_deciles_allocation
+        set alo.exclusive_decile = ths.exclusive_decile
+from cust_deciles_allocation as alo
+ inner join #exclusive_thresholds as ths
+ on Avg_exclusive_deivation_rel_to_pack between exclusive_min and exclusive_max;
+
+--select exclusive_decile, count(*) from cust_deciles_allocation     group by exclusive_decile    order by exclusive_decile
+--select * FROM cust_deciles_allocation
+-- Observation by DR is that distribution is not even and there is a big population in the lower deciles. Spoke to HG about the situation. Cannot do anything about this as the zeros are affecting the decile allocation.
+
+
+-- HD
+update cust_deciles_allocation
+        set alo.HD_deciles = ths.HD_deciles
+from cust_deciles_allocation as alo
+ inner join #HD_thresholds as ths
+ on Avg_HD_devi_for_Sbscrbr_rel_to_pack  between HD_min and HD_max
+ where hdtv = 1;
+
+-- select HD_deciles, count(*) from cust_deciles_allocation     group by HD_deciles    order by HD_deciles
+--select * FROM cust_deciles_allocation
+-- Observation by DR is that distribution is not even and there is a big population in the lower deciles. Spoke to HG about the situation. Cannot do anything about this as the zeros are affecting the decile allocation.
+
+-- PAY SOV
+update cust_deciles_allocation
+        set alo.pay_sov_deciles = ths.pay_sov_deciles
+from cust_deciles_allocation as alo
+ inner join #pay_sov_thresholds as ths
+ on Avg_pay_SOV_devi_rel_to_pack  between pay_sov_min and pay_sov_max;
+
+-- select pay_sov_deciles, count(*) from cust_deciles_allocation     group by pay_sov_deciles    order by pay_sov_deciles
+-- Observation by DR is that distribution is not even and there is a big population in the lower deciles. Spoke to HG about the situation. Cannot do anything about this as the zeros are affecting the decile allocation.
+
+
+
+-- PVR
+update cust_deciles_allocation
+        set alo.pvr_deciles = ths.pvr_deciles
+from cust_deciles_allocation as alo
+ inner join #pvr_thresholds as ths
+ on Avg_PVR_devi_rel_to_pack  between pvr_min and pvr_max
+  where skyplus = 1;
+
+-- select pvr_deciles, count(*) from cust_deciles_allocation     group by pvr_deciles    order by pvr_deciles
+-- Observation by DR is that distribution is not even and there is a big population in the lower deciles. Spoke to HG about the situation. Cannot do anything about this as the zeros are affecting the decile allocation.
+-- NOTE: zero deciles are those customers not eligible for that decile. i.e. movies customers being deciled for FTA movies. see breif.
+
+
+----
+-- d: now insert these records into customer_deciles so we have all deciles in the same place.
+----
+
+
+insert into customer_deciles
+        select * from cust_deciles_allocation ;-- added 77k records ~ 14% increase
+
+
+select top 10 * from cust_deciles_allocation ;
+
+/*
+--************
+-- QA---
+--************
+
+
+select top 10 * from customer_deciles
+
+--we are looking to check the number of customers in each quintile - we hope they are in the same ball park (not the same as traditionally done)
+--also we want to make sure there are not huge differences between the average weighting of the customers within each Quintitle
+
+--there will be zeroes these are non movies, sports HD etc accounts.
+select distinct(FTA_movies_decile), count(*) as count, avg(normalised_weight) from customer_deciles
+group by FTA_movies_decile
+order by FTA_movies_decile
+
+select distinct(FTA_sports_decile), count(*) as count, avg(normalised_weight) from customer_deciles
+group by FTA_sports_decile
+order by FTA_sports_decile
+
+select distinct(premium_decile), count(*) as count, avg(normalised_weight) from customer_deciles
+group by premium_decile
+order by premium_decile
+
+select distinct(exclusive_decile), count(*) as count, avg(normalised_weight) from customer_deciles
+group by exclusive_decile
+order by exclusive_decile
+
+select distinct(HD_deciles), count(*) as count, avg(normalised_weight) from customer_deciles
+group by HD_deciles
+order by HD_deciles
+
+select distinct(pay_sov_deciles), count(*) as count, avg(normalised_weight) from customer_deciles
+group by pay_sov_deciles
+order by pay_sov_deciles
+
+select distinct(pvr_deciles), count(*) as count, avg(normalised_weight) from customer_deciles
+group by pvr_deciles
+order by pvr_deciles
+
+0 decile means the customer is not eligible for that category e.g. not a HD customer
+
+--- the above all looks fine.
+
+
+
+1 = very light/no viewing
+10 = heavy viewing
+*/
+
+
+
+ -- ok so OUTPUT: customer_deciles has all the deciles and deviations in minutes from package averages. Now lets do the same for share of viewing.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+/*
+--------------------------------------------------------------------------------
+-- PART E - SHARE OF VIEWING
+--------------------------------------------------------------------------------
+             E01 - SUMMERISE SHARE OF VIEWING FOR EACH CUSTOMER
+             E02 - CALCULATE SHARE OF VIEWING AVERAGE FOR EACH PACKAGE - BASED ON THE UK BASE
+             E03 - CALCULATE EACH CUSTOMERS DEVIATION FROM THE PACKAGE  MEAN
+             E04 - ALLOCATE EACH ACCOUNT TO THE RELEVANT DECILE
+
+--------------------------------------------------------------------------------
+*/
+
+-- share of viewing will show the average share of viewing per day; rather the deviation from the pack averages (UK average)
+
+
+
+--------------------------------------------------------------------------------
+--EO1- LETS CALCULATE THE CUSTOMERS SHARE OF VIEIWNG
+--------------------------------------------------------------------------------
+
+-- the base table daily_averages contmains average minutes per day; just need to deivde by the total amount of viewing per day to get share
+
+IF OBJECT_ID('DAILY_CUST_SOV') IS NOT NULL DROP TABLE DAILY_CUST_SOV;
+
+select day.account_number
+       ,day.normalised_weight
+       ,day.full_package as package
+       ,premium_viewable = case when day.full_package not in ('Entertainment Extra','Entertainment Extra','Unknown') then 1 else 0 end
+
+       ,non_movies = case when day.full_package not in ('Sky World','Top Tier','Dual Sports Single Movies','Single Sports Dual Movies',
+                                                'Dual Movies','Single Sports Single Movies','Single Movies') then 1 else 0 end
+
+       ,non_sports = case when day.full_package not in ('Sky World','Top Tier','Dual Sports Single Movies','Dual Sports','Single Sports Dual Movies',
+                                                    'Single Sports Single Movies','Single Sports') then 1 else 0 end
+       ,hdtv
+       ,skyplus
+
+
+       ,SOV_PAY = cast(day.average_pay_minutes as float)/cast(NULLIF(day.average_Total_minutes_day,0) as float)
+
+into DAILY_CUST_SOV
+from daily_averages as day;
+
+
+commit;
+
+--------------------------------------------------------------------------------
+--EO2- NOW LETS CALCULATE THE AVERAGE SHARE OF VIEWING ACROSS MEASURES FOR EACH PACKAGE:
+--------------------------------------------------------------------------------
+-- to comnpare the customers SOV to the pack we need to know the average SOV for the pack - this depends on the number of customers per pack:
+
+
+
+
+---------------------------------------------------------------
+--step 1: find the number of customers in each pack
+---------------------------------------------------------------
+
+IF OBJECT_ID('pack_SOV') IS NOT NULL DROP TABLE pack_SOV;
+
+select package
+       ,sum(normalised_weight) as pack_weight
+into pack_SOV
+from DAILY_CUST_SOV
+group by package;
+
+
+
+
+---------------------------------------------------------------
+--step 2: find the distribution of share of viewing amoung all UK customers within thier package
+---------------------------------------------------------------
+
+
+drop table #unique_sov_and_weightings;
+
+
+select distinct(sov.package)
+
+        ,SOV_PAY
+
+        ,sum(normalised_weight) weighting
+
+        ,weight_times_SOV_PAY                 = SOV_PAY*weighting
+
+into unique_sov_and_weightings
+from DAILY_CUST_SOV as sov
+left join pack_SOV as pak
+on pak.package = sov.package
+group by sov.package
+        ,SOV_PAY;
+
+--235574 row(s) affected, Execution time: 9.445 seconds
+--select top 10 * from unique_sov_and_weightings
+
+---------------------------------------------------------------
+--step 3: get the sum of share of viewing before dividing by the number of customers within the package
+---------------------------------------------------------------
+
+IF OBJECT_ID('total_sov') IS NOT NULL DROP TABLE total_sov;
+
+select package
+         ,sum(weight_times_SOV_PAY)             as sov_pay
+INTO total_sov
+from unique_sov_and_weightings
+group by package
+order by package;
+
+--Dr/Done!
+---------------------------------------------------------------
+--step 4: get the average by dividing by the number of people in that package
+---------------------------------------------------------------
+
+ALTER TABLE pack_SOV
+add  (sov_pay float );
+
+
+
+UPDATE pack_SOV
+ set sov.sov_pay           = tot.sov_pay       / pack_weight
+
+from pack_SOV sov
+ left join total_sov tot
+ on tot.package = sov.package;
+
+--- now we have the average share of viewing cross measures for each package
+--DR/Done!
+
+
+---------------------------------------------------------------
+--E03 - NOW LETS FIND THE CUSTOMERS DEVIATION FROM THE PACKAGE AVERAGE SOV;
+---------------------------------------------------------------
+
+-- the table DAILY_CUST_SOV mcontains alot of nulls; some for people who are non-eligable (eg we are not looking at FTA movies for movies customers)
+-- some for customers who did not watch movies to get an accurate representation of the deviations from the package average we need to
+-- set the share of viewing to zero to for those customers that have capcity to watch
+
+Update DAILY_CUST_SOV
+set  SOV_PAY            = case when                          SOV_PAY is null then 0 else SOV_PAY end;
+
+
+
+-- now lets get the SOV deviations
+
+IF OBJECT_ID('CUST_SOV_DEVIATIONS') IS NOT NULL DROP TABLE CUST_SOV_DEVIATIONS;
+
+
+select day.account_number
+       ,day.normalised_weight
+       ,day.package
+
+       --flags
+       ,day.premium_viewable
+       ,day.non_movies
+       ,day.non_sports
+       ,day.hdtv
+       ,day.skyplus
+
+       -- deviations in SOV (CUSOMER - PACK AVERAGE)
+       ,PAY_SOV         = day.SOV_PAY               - tot.sov_pay
+INTO CUST_SOV_DEVIATIONS
+FROM DAILY_CUST_SOV day
+LEFT JOIN pack_SOV tot
+ on tot.package = day.package;
+
+--DR/Done! 487626 row(s) affected, Execution time: 9.665 seconds
+--------------------------------------------------------------------------------
+--EO4- NOW LETS DECILE THE CUSTOMERS BASED ON THIER SOV DEVIATIONS WHERE THEY ARE ELIGABLE (I.E. ONLY DECILE hd CUSTOMERS FOR HD VIEWING
+--------------------------------------------------------------------------------
+----------------------------------------------------------------------
+-- LETS GET THE CUMULITIVE WEIGHTING TO ALLOCATE DECILES TO THE CUSTOMERS BASED ON THIER POPULATION REPRESENTATION
+---------------------------------------------------------------------
+
+-- we only need to quintile 4things: total minutes, SOV pay, SOV PVR, SOV FTA Movies.
+
+drop table #customer_sov_devi_cumil_viewing;
+
+select  account_number
+       ,normalised_weight
+       ,package
+
+       --flags
+       ,premium_viewable
+       ,non_movies
+       ,non_sports
+       ,hdtv
+       ,skyplus
+
+       -- deviations in SOV (CUSOMER - PACK AVERAGE)
+       ,PAY_SOV
+
+         , sum(normalised_weight) over ( order by PAY_SOV
+                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) as PAY_SOV_cumul_weighting
+
+into customer_sov_devi_cumil_viewing
+from CUST_SOV_DEVIATIONS
+where normalised_weight is not null
+--- the figures above are arranged such that lower viewing is first and higher viewing last - will transalte to higher cumul weightings for more viewing
+-- 507,955 (Harry's result)
+--DR/DOne! (452660 row(s) affected)
+
+
+
+
+
+-- lets do some checks:
+--QA--------------------------------------------------------------------
+--
+--
+-- SELECT MAX(PAY_SOV_cumul_weighting) FROM customer_sov_devi_cumil_viewing
+
+
+
+
+--------------------------------------------------------------------------------
+--EO4- now allocate each account to the relevant quintile based on the cumulitave weighting
+--------------------------------------------------------------------------------
+
+IF object_id('customer_deciles2') IS NOT NULL DROP TABLE customer_deciles2;
+
+-- we need to copy the temp table into a real table so we can add columns etc
+select * into customer_deciles2 from customer_sov_devi_cumil_viewing;
+
+
+-- we need to create 4 quintile allocations
+alter table customer_deciles2
+add ( pay_sov_deciles integer default 0);
+
+
+-- now lets use the different cumul weightings to allocate the different deciles.
+-- PAY SOV CONTENT
+update customer_deciles2
+        set pay_sov_deciles = centile
+from customer_deciles2 as vdw
+ inner join decile_weights_base as cww -- deciling to the base
+ on PAY_SOV_cumul_weighting <= sample;
+
+--DR/DONE! 452660 row(s) affected
+
+-- Check it:
+Select pay_sov_deciles, count(*) as volume from customer_deciles2 group by pay_sov_deciles order by pay_sov_deciles -- seems reasonable
+-- looks fine
+--Dr/Done!
+
+
+--------------------------------------------------------------------------------
+--EO5- Get the accounts that have not been scaled into one table - following the format above.
+--------------------------------------------------------------------------------
+        ---- tHESE WILL BE ALLOCATED TO A DECILE BASED ON THE THRESHOLDS OF THAT DECILE GROUP.
+
+
+-- this is the table that we need: CUST_SOV_DEVIATIONS
+
+if object_id('cust_deciles_allocation2') is not null drop table cust_deciles_allocation2;
+
+select  account_number
+        ,normalised_weight
+        ,package
+        ,premium_viewable
+        ,non_movies
+        ,non_sports
+        ,hdtv
+        ,skyplus
+
+        ,PAY_SOV-- lets a,dd cumulitive weightings for sclaed deciling. - the below is included to make a copy into customer_deciles easier
+        , PAY_SOV_cumul_weighting = null
+
+
+into cust_deciles_allocation2
+from CUST_SOV_DEVIATIONS
+where normalised_weight is null -- the accounts that were not scaled - they will be allocated to deciles via by looking at min/max thresholds
+--DR/Done! 34966 row(s) affected
+
+--------------------------------------------------------------------------------
+--E06- now allocate each account to the relevant quintile based on the threasholds
+--------------------------------------------------------------------------------
+
+----
+-- a: add a new columns
+----
+
+alter table cust_deciles_allocation2
+add ( pay_sov_deciles integer default 0);
+
+
+----
+-- b: identify the the threatholds for each of the decile groupings - make a table for each decile type
+----
+
+
+--Pay Sov
+select pay_sov_deciles
+        ,min(PAY_SOV) as Pay_Sov_min
+        ,max(PAY_SOV) as Pay_Sov_max
+into #Pay_SOV_thresholds2
+from customer_deciles2
+group by pay_sov_deciles
+order by pay_sov_deciles;
+--DR/Done! (10 rows affected)
+
+----
+-- c: allocate the customers to a decile
+----
+
+
+
+-- PAY SOV
+update cust_deciles_allocation2
+        set alo.pay_sov_deciles = ths.pay_sov_deciles
+from cust_deciles_allocation2 as alo
+ inner join #pay_sov_thresholds2 as ths
+ on PAY_SOV  between pay_sov_min and pay_sov_max;
+
+-- select pay_sov_deciles, count(*) from cust_deciles_allocation2     group by pay_sov_deciles    order by pay_sov_deciles
+-- NOTE: zero deciles are those customers not eligible for that decile. i.e. movies customers being deciled for FTA movies. see breif.
+
+--check it:
+select pay_sov_deciles, count(*) from cust_deciles_allocation2 group by pay_sov_deciles order by pay_sov_deciles
+
+
+
+----
+-- d: now insert these records into customer_deciles so we have all deciles in the same place.
+----
+
+insert into customer_deciles2
+        select * from cust_deciles_allocation2;
+
+
+
+
+
+/*
+--************
+-- QA---
+--************
+
+
+select top 10 * from customer_deciles2
+
+--we are looking to check the number of customers in each quintile - we hope they are in the same ball park (not the same as traditionally done)
+--also we want to make sure there are not huge differences between the average weighting of the customers within each Quintitle
+
+select distinct(pay_sov_deciles), count(*) as count, avg(normalised_weight) from customer_deciles2
+group by pay_sov_deciles
+order by pay_sov_deciles
+
+--- the above all looks fine.
+
+*/
+
+
+
+ -- ok so OUTPUT: customer_deciles2 has all the deciles and deviations in SOV from package averages
+--------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+/*
+--------------------------------------------------------------------------------
+-- PART F - GENERATE OUTPUT TABELS
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+*/
+
+--------------------------------------------------------------------------------
+-- TWEAK THE TABLE
+--------------------------------------------------------------------------------
+
+
+
+-- make the SOV table easier to read in the pivot table;
+
+alter table customer_deciles2
+rename PAY_SOV_DECILES TO PAY_SOV_DECILE;
+
+alter table customer_deciles
+rename PAY_SOV_DECILES TO pay_mins_decile; -- this is % minute deviations from the package average minutes viewed per day
+
+--DR/DOne!
+---------------------
+-- step two -- add the CQM flags
+---------------------
+
+-- CQM scores are joined on cb_key_household which is in the daily viewing table - lets copy the distinct accounts into a new table
+IF object_id('cb_temp') IS NOT NULL DROP TABLE cb_temp;
+
+select distinct(account_number), max(cb_key_household) as cb_key_household
+into cb_temp
+from TA_viewing_capped
+group by account_number;
+
+
+-- lets add the CQM score to this table and the banding definitions
+alter table cb_temp
+add cqm_score tinyint default null;
+
+update cb_temp xx
+set xx.cqm_score = zz.model_score
+from sk_prod.id_v_universe_all zz
+where xx.cb_key_household = zz.cb_key_household;
+--DR/Done!462994 row(s) updated
+
+
+-- add this to the output table
+alter table customer_deciles2
+add (cqm_score integer);
+
+
+-- update the output table
+update customer_deciles2
+set out.cqm_score = tmp.cqm_score
+from customer_deciles2 as out
+left join cb_temp as tmp
+on tmp.account_number = out.account_number;
+--DR/DOne!487626 row(s) affected, Execution time: 1.391 seconds
+--DR/DONE! select COUNT (*) FROM customer_deciles2 where cqm_score IS NULL -- 24k accounts are not with CQM
+drop table cb_temp; -- check the output before droping this - it takes ages!
+
+
+select top 10 * from customer_deciles2;
+select count(*) from customer_deciles2 -- this table contains all accounts.
+
+--------------------------------------------------------------------
+
+
+--- this is the summary output
+-- deciles have been included for the chance to optimise NBAs in future evaluations, however we may not be able to get these into merlin
+-- need to keep a log - depending of the evaluation/score refresh rates
+
+
+
+if object_id('DO_NOT_DELETE_NBA_SCORING_20130328') is not null drop table DO_NOT_DELETE_NBA_SCORING_20130328;
+
+
+select cd.account_number
+       , case when cd.non_movies = 1       and FTA_MOVIES_DECILE between 8 and 10 then 1 else 0 end as Movies_Upgrade_NBA -- NBA A
+       , case when Movies_Upgrade_NBA = 1 then FTA_MOVIES_DECILE else null end as Movies_decile
+
+       , case when EXCLUSIVE_DECILE between 8 and 10 then 1 else 0 end as High_Exclusive_NBA --NBA B
+       , Exclusive_Deciles =  case when High_Exclusive_NBA = 1 then EXCLUSIVE_DECILE else null end
+
+       , case when PAY_SOV_DECILE between 8 and 10 then 1 else 0 end as High_Pay_NBA -- this is from SOV table, NBA C
+       , case when High_Pay_NBA = 1 then PAY_SOV_DECILE else null end as Pay_Decile
+
+       , case when cd.skyplus = 1 and PVR_DECILES between 8 and 10 then 1 else 0 end as High_PVR_NBA -- NBA D
+       , case when High_PVR_NBA = 1 then PVR_DECILES else null end as PVR_Decile
+
+       , case when cd.premium_viewable = 1 and PREMIUM_DECILE between 1 and 2 then 1 else 0 end as Low_Premium_NBA -- NBA E
+       , case when Low_Premium_NBA = 1 then PREMIUM_DECILE else null end as Premium_Deciles
+
+       , case when Movies_Upgrade_NBA = 1 and Low_Premium_NBA = 1 then 1 else 0 end as swap_movies_for_sports_NBA -- NBA (F) (A&E)
+       , case when swap_movies_for_sports_NBA = 1 and FTA_MOVIES_DECILE = 10 and PREMIUM_DECILE = 1 then 1
+              when swap_movies_for_sports_NBA = 1 and FTA_MOVIES_DECILE = 10 and PREMIUM_DECILE = 2 then 2
+              when swap_movies_for_sports_NBA = 1 and FTA_MOVIES_DECILE = 9 and PREMIUM_DECILE = 1 then 2
+              when swap_movies_for_sports_NBA = 1 and FTA_MOVIES_DECILE = 9 and PREMIUM_DECILE = 2 then 3
+              when swap_movies_for_sports_NBA = 1 and FTA_MOVIES_DECILE = 8 and PREMIUM_DECILE = 1 then 3
+              when swap_movies_for_sports_NBA = 1 and FTA_MOVIES_DECILE = 8 and PREMIUM_DECILE = 2 then 4 end
+              as premium_swap_score
+
+       ,offer_seeker_NBA = case when cqm_score between 1 and 22
+                         and pay_mins_decile between 9 and 10 then 1
+                    when cqm_score between 1 and 22
+                         and pay_mins_decile between 3 and 8
+                         and PAY_SOV_DECILE between 6 and 10 then 1
+                    else 0 end
+
+        ,case when offer_seeker_NBA = 1 and pay_mins_decile between 9 and 10 and PAY_SOV_DECILE between 9 and 10 then 1
+              when offer_seeker_NBA = 1 and pay_mins_decile between 9 and 10 and PAY_SOV_DECILE between 7 and 8 then 2
+              when offer_seeker_NBA = 1 and pay_mins_decile between 7 and 8 and PAY_SOV_DECILE between 9 and 10 then 2
+              when offer_seeker_NBA = 1 and pay_mins_decile between 9 and 10 and PAY_SOV_DECILE between 5 and 6 then 3
+              when offer_seeker_NBA = 1 and pay_mins_decile between 7 and 8 and PAY_SOV_DECILE between 7 and 8 then 3
+              when offer_seeker_NBA = 1 and pay_mins_decile between 5 and 6 and PAY_SOV_DECILE between 9 and 10 then 3
+              when offer_seeker_NBA = 1 and pay_mins_decile between 9 and 10 and PAY_SOV_DECILE between 3 and 4 then 4
+              when offer_seeker_NBA = 1 and pay_mins_decile between 7 and 8 and PAY_SOV_DECILE = 6 then 4
+              when offer_seeker_NBA = 1 and pay_mins_decile between 5 and 6 and PAY_SOV_DECILE between 7 and 8 then 4
+              when offer_seeker_NBA = 1 and pay_mins_decile between 3 and 4 and PAY_SOV_DECILE between 9 and 10 then 4
+              when offer_seeker_NBA = 1 and pay_mins_decile between 9 and 10 and PAY_SOV_DECILE between 1 and 2 then 5
+              when offer_seeker_NBA = 1 and pay_mins_decile between 5 and 6 and PAY_SOV_DECILE = 6 then 5
+              when offer_seeker_NBA = 1 and pay_mins_decile between 3 and 4 and PAY_SOV_DECILE between 7 and 8 then 5
+              when offer_seeker_NBA = 1 and pay_mins_decile between 3 and 4 and PAY_SOV_DECILE = 6 then 6
+                else 0 end as OS_score
+
+
+       ,MODEL_CODE_VERSION = 1
+       ,MODEL_RUN_DATE = TODAY()
+
+into DO_NOT_DELETE_NBA_SCORING_20130328 
+from customer_deciles as cd
+left join customer_deciles2 as cd2 -- this is the sov table
+on cd2.account_number = cd.account_number;
+--
+--Dr/DONE! 452660 row(s) affected
+--QA Populations
+--select * FROM DO_NOT_DELETE_NBA_SCORING_20130328 
+--DESCRIBE TABLE DO_NOT_DELETE_NBA_SCORING_20130328
+--select COUNT (*) FROM DO_NOT_DELETE_NBA_SCORING_20130328 -- total population is 452,660 accounts (compared to Phase 2: 499K)
+--select DISTINCT Movies_Upgrade_NBA, COUNT (*) FROM DO_NOT_DELETE_NBA_SCORING_20130328 GROUP BY Movies_Upgrade_NBA -- 378K that are '0' and 74k that are '1' (compared to Phase 2: '0'=419K, '1'=79K)
+--select DISTINCT High_Exclusive_NBA, COUNT (*) FROM DO_NOT_DELETE_NBA_SCORING_20130328 GROUP BY High_Exclusive_NBA -- 313K that are '0' and 138k that are '1' (compared to Phase 2: '0'=353K, '1'=145K)
+--select DISTINCT High_Pay_NBA, COUNT (*) FROM DO_NOT_DELETE_NBA_SCORING_20130328 GROUP BY High_Pay_NBA -- 321K that are '0' and 130k that are '1' (compared to Phase 2: '0'=397K, '1'=101K)
+--select DISTINCT High_PVR_NBA, COUNT (*) FROM DO_NOT_DELETE_NBA_SCORING_20130328 GROUP BY High_PVR_NBA -- 323K that are '0' and 129k that are '1' (compared to Phase 2: '0'=361K, '1'=138K)
+--select DISTINCT Low_Premium_NBA, COUNT (*) FROM DO_NOT_DELETE_NBA_SCORING_20130328 GROUP BY Low_Premium_NBA -- 392K that are '0' and 59k that are '1' (compared to Phase 2: '0'=429K, '1'=70K)
+--select DISTINCT swap_movies_for_sports_NBA, COUNT (*) FROM DO_NOT_DELETE_NBA_SCORING_20130328 GROUP BY swap_movies_for_sports_NBA -- 442K that are '0' and 10k that are '1' (compared to Phase 2: '0'=492K, '1'=6K)
+--select DISTINCT offer_seeker_NBA, COUNT (*) FROM DO_NOT_DELETE_NBA_SCORING_20130328 GROUP BY offer_seeker_NBA -- 275k that are '0' and 176k that are '1' (compared to Phase 2: '0'=320K, '1'=179K)
+--DR/DOne!
+
+-- THIS IS THE FINAL TABLE********************************************************************************************
+select top 100 * from DO_NOT_DELETE_NBA_SCORING_20130328
+--********************************************************************************************************************
+
+
+--************************THIS HAS BEEN CHANGED*********************************
+--Conversion of Scores to NuLLs
+--Reason: Unlike previous TA Projects where a group of agents were assigned to work with the NBA's, in this run all the agents will be able to answer TA from any NBA segment. 
+--Thus there is a need for a CONTROL Group. 
+--To do a Control Group, we need to force 50% of anyone who has a score to ones that DO NOT HAVE  SCORE (i.e. force scores to be '0').
+
+--Start by Creating a Table
+CREATE TABLE TA3_SCORED_POPULATIONS(
+account_number varchar (12), score tinyint default null, forced_score tinyint, Movies_Upgrade_NBA tinyint, High_Exclusive_NBA tinyint, High_Pay_NBA tinyint, High_PVR_NBA tinyint, Low_Premium_NBA tinyint, swap_movies_for_sports_NBA tinyint, offer_seeker_NBA tinyint);
+--DR/DONE!
+
+--Add the segment scores to our table
+INSERT INTO TA3_SCORED_POPULATIONS (
+        account_number
+        ,score
+        ,forced_score
+        ,Movies_Upgrade_NBA
+        ,High_Exclusive_NBA
+        ,High_Pay_NBA
+        ,High_PVR_NBA
+        ,Low_Premium_NBA
+        ,swap_movies_for_sports_NBA
+        ,offer_seeker_NBA)
+    SELECT  account_number, 
+        CASE WHEN (Movies_Upgrade_NBA=1 OR 
+                                 High_Exclusive_NBA=1 OR  
+                                 High_Pay_NBA=1 OR  
+                                 High_PVR_NBA=1 OR  
+                                 Low_Premium_NBA=1 OR 
+                                 swap_movies_for_sports_NBA=1 OR  
+                                 offer_seeker_NBA=1) THEN   1
+                                 ELSE 0 
+         END AS score
+        ,score AS forced_score
+        ,Movies_Upgrade_NBA
+        ,High_Exclusive_NBA
+        ,High_Pay_NBA
+        ,High_PVR_NBA
+        ,Low_Premium_NBA
+        ,swap_movies_for_sports_NBA
+        ,offer_seeker_NBA
+    FROM DO_NOT_DELETE_NBA_SCORING_20130328
+WHERE score =1; COMMIT;
+--356,074 results DR/DONE!
+--QA
+SELECT * FROM TA3_SCORED_POPULATIONS
+
+--Update our table
+UPDATE TA3_SCORED_POPULATIONS
+SET forced_score=0
+FROM TA3_SCORED_POPULATIONS AS pop
+INNER JOIN forced_score AS frc
+ON pop.account_number=frc.account_number
+;
+--178037 row(s) updated
+
+--QA
+SELECT top 1000* FROM TA3_SCORED_POPULATIONS
+
+
+
+--ADD A CONTROL GROUP--
+--Use random generator to drop 50% of the sample group as we will need a CONTROL GROUP (code for random generator from Sky WIKI) 
+
+--First let's create a pretty random multiplier
+CREATE VARIABLE multiplier bigint; --Has to be a bigint if you are dealing with millions of records.
+SET multiplier = DATEPART(millisecond,now())+1; -- pretty random number between 1 and 1000
+ 
+--Populate random number
+ALTER TABLE TA3_SCORED_POPULATIONS ADD rand_num DECIMAL(22,20);          --Make a decimal field to 20 places.
+UPDATE TA3_SCORED_POPULATIONS SET rand_num = rand(number(*)*multiplier); --The Number(*) function just gives a sequential number.
+CREATE hg INDEX idx_rand_num_hg ON TA3_SCORED_POPULATIONS(rand_num);                --as we are going to sort on it
+ 
+--Output 178,037 (half of the population that has a score) random records
+    SELECT TOP 178037 * 
+    INTO forced_score
+    FROM TA3_SCORED_POPULATIONS 
+ORDER BY rand_num
+--178037 row(s) affected
+
+CREATE hg INDEX idx_acct_frc ON TA3_SCORED_POPULATIONS(account_number);   
+
+--QA for distribution is similar to the original population
+--SELECT  Movies_Upgrade_NBA, COUNT (Movies_Upgrade_NBA) as Hits_Movies_Upgrade_NBA
+--FROM TA3_SCORED_POPULATIONS
+--WHERE Movies_Upgrade_NBA=1
+--GROUP BY Movies_Upgrade_NBA --74,467
+--
+--SELECT  Movies_Upgrade_NBA, COUNT (Movies_Upgrade_NBA) as Hits_Movies_Upgrade_NBA
+--FROM TA3_SCORED_POPULATIONS
+--WHERE Movies_Upgrade_NBA=1
+--AND forced_score=0
+--GROUP BY Movies_Upgrade_NBA -- 37,206
+--
+----High_Exclusive_NBA
+--SELECT  High_Exclusive_NBA, COUNT (High_Exclusive_NBA) as Hits
+--FROM TA3_SCORED_POPULATIONS
+--WHERE High_Exclusive_NBA=1
+--GROUP BY High_Exclusive_NBA -- 138,941
+--
+--SELECT  High_Exclusive_NBA, COUNT (High_Exclusive_NBA) as Hits
+--FROM TA3_SCORED_POPULATIONS
+--WHERE High_Exclusive_NBA=1
+--AND forced_score=0
+--GROUP BY High_Exclusive_NBA -- 69,418
+--
+------High_Pay_NBA
+--SELECT  High_Pay_NBA, COUNT (High_Pay_NBA) as Hits
+--FROM TA3_SCORED_POPULATIONS
+--WHERE High_Pay_NBA=1
+--GROUP BY High_Pay_NBA -- 130,873
+--
+--SELECT  High_Pay_NBA, COUNT (High_Pay_NBA) as Hits
+--FROM TA3_SCORED_POPULATIONS
+--WHERE High_Pay_NBA=1
+--AND forced_score=0
+--GROUP BY High_Pay_NBA -- 65,833
+--
+------High_PVR_NBA
+--SELECT  High_PVR_NBA, COUNT (High_PVR_NBA) as Hits
+--FROM TA3_SCORED_POPULATIONS
+--WHERE High_PVR_NBA=1
+--GROUP BY High_PVR_NBA -- 129,190
+--
+--SELECT  High_PVR_NBA, COUNT (High_PVR_NBA) as Hits
+--FROM TA3_SCORED_POPULATIONS
+--WHERE High_PVR_NBA=1
+--AND forced_score=0
+--GROUP BY High_PVR_NBA -- 64,819
+--
+------Low_Premium_NBA
+--SELECT  Low_Premium_NBA, COUNT (Low_Premium_NBA) as Hits
+--FROM TA3_SCORED_POPULATIONS
+--WHERE Low_Premium_NBA=1
+--GROUP BY Low_Premium_NBA -- 59,679
+--
+--SELECT  Low_Premium_NBA, COUNT (Low_Premium_NBA) as Hits
+--FROM TA3_SCORED_POPULATIONS
+--WHERE Low_Premium_NBA=1
+--AND forced_score=0
+--GROUP BY Low_Premium_NBA -- 29,888
+--
+------swap_movies_for_sports_NBA
+--SELECT  swap_movies_for_sports_NBA, COUNT (swap_movies_for_sports_NBA) as Hits
+--FROM TA3_SCORED_POPULATIONS
+--WHERE swap_movies_for_sports_NBA=1
+--GROUP BY swap_movies_for_sports_NBA -- 10229
+--
+--SELECT  swap_movies_for_sports_NBA, COUNT (swap_movies_for_sports_NBA) as Hits
+--FROM TA3_SCORED_POPULATIONS
+--WHERE swap_movies_for_sports_NBA=1
+--AND forced_score=0
+--GROUP BY swap_movies_for_sports_NBA -- 5195
+--
+------offer_seeker_NBA
+--SELECT  offer_seeker_NBA, COUNT (offer_seeker_NBA) as Hits
+--FROM TA3_SCORED_POPULATIONS
+--WHERE offer_seeker_NBA=1
+--GROUP BY offer_seeker_NBA -- 176839
+--
+--SELECT  offer_seeker_NBA, COUNT (offer_seeker_NBA) as Hits
+--FROM TA3_SCORED_POPULATIONS
+--WHERE offer_seeker_NBA=1
+--AND forced_score=0
+--GROUP BY offer_seeker_NBA -- 88742
+
+----QA result: Populations are quite even. In fact when you round them off they are dead even
+Segment			Total_Pop	%			Forced_Pop	%
+Movies_Upgrade	74467		10.340%		37206		10.303%
+High_Exclusive	138941		19.292%		69418		19.224%
+High_Pay		130873		18.171%		65833		18.231%
+High_PVR		129190		17.938%		64819		17.950%
+Low_Premium		59679		8.286%		29888		8.277%
+swap_movies		10229		1.420%		5195		1.439%
+offer_seeker	176839		24.554%		88742		24.575%
+Total			720218		100%		361101		100%
+
+--
+**********--We need to update the scores and change the name to a more recent date---*************
+--SELECT * 
+--INTO DO_NOT_DELETE_NBA_SCORING_20130404 
+--FROM DO_NOT_DELETE_NBA_SCORING_20130328 
+
+--DUE TO TONY K.'s email we need to remove the Excludeable accounts and create another new file for reference. Update 10-04-2013
+SELECT * 
+INTO DO_NOT_DELETE_NBA_SCORING_20130411 
+FROM DO_NOT_DELETE_NBA_SCORING_20130404 
+WHERE account_number NOT IN (Select * FROM vespa_analysts.accounts_to_exclude ) -- IMPORTANT!!!! This was added as of 09-Apr-2013. T. Kinnaird via email instructed not to use accounts in that table as they were leading to problems.
+--449,708
+
+--Force into zeros all accounts that are in our Control Variable List (TA3_SCORED_POPULATIONS, where score=1 is accounts that have at least one NBA flag, and forced_score is the ones we randomly changed to zeros)
+UPDATE DO_NOT_DELETE_NBA_SCORING_20130411 
+SET     Movies_Upgrade_NBA=0
+        ,High_Exclusive_NBA=0
+        ,High_Pay_NBA=0
+        ,High_PVR_NBA=0
+        ,Low_Premium_NBA=0
+        ,swap_movies_for_sports_NBA=0
+        ,offer_seeker_NBA=0
+        ,OS_score=0
+FROM DO_NOT_DELETE_NBA_SCORING_20130411  
+WHERE account_number IN (SELECT account_number FROM TA3_SCORED_POPULATIONS WHERE forced_score=0)
+AND account_number NOT IN (Select * FROM vespa_analysts.accounts_to_exclude )
+--result: 176,760 rows affected
+
+--DR/DONE! CHange!************************END of 
+CHANGE*********************************-----------------------------------------------------------------------------------------------------------
+
+-- do a count of the NBAS
+select   sum(Movies_Upgrade_NBA)
+        ,sum(High_Exclusive_NBA)
+        ,sum(High_Pay_NBA)
+        ,sum(High_PVR_NBA)
+        ,sum(Low_Premium_NBA)
+        ,sum(swap_movies_for_sports_NBA) -- only 8k accounts qualify
+        ,sum(offer_seeker_NBA)
+from DO_NOT_DELETE_NBA_SCORING_20130411 ;
+
+--QA 
+--SELECT * FROM DO_NOT_DELETE_NBA_SCORING_20130411 
+
+
+
+-- above scoring exaplined:
+/*
+NBA E is a combination of high movies viewing and low premium viewing as follows
+
+High movies = deciles 8, 9 and 10
+Low Premium = deciles 1 and 2
+
+I have created a score based on combinations of the above…
+
+
+Best sub group: ( Movies = 10 and Premium = 1 )                                                                 Given score 1
+Medium High:   ( Movies = 10 and Premium = 2 ) and  ( Movies = 9 and Premium = 1 )                              Given score 2
+Medium Low:    ( Movies = 9 and Premium = 2 ) and  ( Movies = 8 and Premium = 1 )                               Given score 3
+Low sub group:  ( Movies = 8 and Premium = 2 )                                                                  Given score 4
+
+Please let me know if these sensible to you.
+
+*/
+
+
+
+
+--------------------------------------------------------------------------------
+-- LETS CREATE A SERIES OF SMALLER TABLES THAT WILL BE USED TO TRANSFER THE SCORES INTO PROD3
+--------------------------------------------------------------------------------
+
+
+
+-----
+-- MOVIES UPGRADE:
+-----
+
+--if object_id('movies_scoring') is not null drop table movies_scoring;
+
+select model_code = 81
+       ,model_name = 'VESPA_FTA_Movies'
+       ,account_number
+       ,Movies_decile as decile
+       ,vintiles = 0 -- not to be used
+       ,percentiles = 0 -- not to be used
+       ,score = Movies_Upgrade_NBA
+       ,model_code_version
+       ,model_run_date
+into movies_scoring
+from DO_NOT_DELETE_NBA_SCORING_20130411  -- This is the master scoring table
+WHERE account_number NOT IN (Select * FROM vespa_analysts.accounts_to_exclude )
+--DR/DONE! 449,708 row(s) affected 
+
+--DRDone! QA 
+--select * from movies_scoring;
+--select * from movies_scoring where decile is not null;
+--select * from movies_scoring where score<1;
+--Looks OKDR/Done!
+
+
+--Need to get rid of all nulls as when you try to do the load to CITeam it does not allow for nulls
+UPDATE rombaoad.movies_scoring
+SET decile = 0
+where decile IS NULL;
+--376008 row(s) updated
+----- 
+-- HIGH EXCLUSIVE:
+-----
+
+--if object_id('high_exclusive') is not null drop table high_exclusive;
+
+select model_code = 82
+       ,model_name = 'VESPA_Exclusive'
+       ,account_number
+       ,Exclusive_Deciles as decile
+       ,vintiles = 0 -- not to be used
+       ,percentiles = 0 -- not to be used
+       ,score = High_Exclusive_NBA
+       ,model_code_version
+       ,model_run_date
+into high_exclusive
+from DO_NOT_DELETE_NBA_SCORING_20130411  -- This is the master scoring table
+WHERE account_number NOT IN (Select * FROM vespa_analysts.accounts_to_exclude )
+--DR/DOne! 449,708 row(s) affected
+--select * from high_exclusive;
+--select * from high_exclusive where decile is not null;
+--select * from high_exclusive where score<1;
+--Looks OKDR/Done!
+
+----Need to get rid of all nulls as when you try to do the load to CITeam it does not allow for nulls
+UPDATE rombaoad.high_exclusive
+SET decile = 0
+where decile IS NULL;
+
+
+
+-----
+-- HIGH PAY SOV
+-----
+
+--if object_id('high_pay') is not null drop table high_pay;
+
+select model_code = 83
+       ,model_name = 'VESPA_PayTV'
+       ,account_number
+       ,Pay_Decile as decile
+       ,vintiles = 0 -- not to be used
+       ,percentiles = 0 -- not to be used
+       ,score = High_Pay_NBA
+       ,model_code_version
+       ,model_run_date
+into high_pay
+from DO_NOT_DELETE_NBA_SCORING_20130411  -- This is the master scoring table
+WHERE account_number NOT IN (Select * FROM vespa_analysts.accounts_to_exclude )
+--Dr/Done!449,708 row(s) affected
+
+----Need to get rid of all nulls as when you try to do the load to CITeam it does not allow for nulls
+UPDATE rombaoad.high_pay
+SET decile = 0
+where decile IS NULL;
+--select * FROM rombaoad.high_pay
+-----
+-- HIGH PVR
+-----
+
+--if object_id('high_pvr') is not null drop table high_pvr;
+
+select model_code = 84
+       ,model_name = 'VESPA_PVR'
+       ,account_number
+       ,PVR_Decile as decile
+       ,vintiles = 0 -- not to be used
+       ,percentiles = 0 -- not to be used
+       ,score = High_PVR_NBA
+       ,model_code_version
+       ,model_run_date
+into high_pvr
+from DO_NOT_DELETE_NBA_SCORING_20130411  -- This is the master scoring table
+WHERE account_number NOT IN (Select * FROM vespa_analysts.accounts_to_exclude )
+--DR/DOne!449,708 row(s) affected
+
+----Need to get rid of all nulls as when you try to do the load to CITeam it does not allow for nulls
+UPDATE rombaoad.high_pvr
+SET decile = 0
+where decile IS NULL;
+
+-----
+-----
+-- LOW PREMIUM
+-----
+
+--if object_id('low_premium') is not null drop table low_premium;
+
+select model_code = 85
+       ,model_name = 'VESPA_Premium'
+       ,account_number
+       ,Premium_Deciles as decile
+       ,vintiles = 0 -- not to be used
+       ,percentiles = 0 -- not to be used
+       ,score = Low_Premium_NBA
+       ,model_code_version
+       ,model_run_date
+into low_premium
+from DO_NOT_DELETE_NBA_SCORING_20130411  -- This is the master scoring table
+WHERE account_number NOT IN (Select * FROM vespa_analysts.accounts_to_exclude );
+--DR/DONE!449,708 row(s) affected
+
+----Need to get rid of all nulls as when you try to do the load to CITeam it does not allow for nulls
+UPDATE rombaoad.low_premium
+SET decile = 0
+where decile IS NULL;
+
+-----
+-- SWAP SPORTS FOR MOVIES
+-----
+
+-- this has been given a model number and will be uploaded but we dont yet know if this will be triggered via the flags below;
+
+--if object_id('Swap_Sport_For_Movies') is not null drop table Swap_Sport_For_Movies;
+
+select model_code = 86
+       ,model_name = 'Swap_Sport_For_Movies'
+       ,account_number
+       ,premium_swap_score as decile
+       ,vintiles = 0 -- not to be used
+       ,percentiles = 0 -- not to be used
+       ,score = swap_movies_for_sports_NBA
+       ,model_code_version
+       ,model_run_date
+into Swap_Sport_For_Movies
+from DO_NOT_DELETE_NBA_SCORING_20130411  -- This is the master scoring table
+WHERE account_number NOT IN (Select * FROM vespa_analysts.accounts_to_exclude );
+--DR/DONE!449,708 row(s) affected
+
+----Need to get rid of all nulls as when you try to do the load to CITeam it does not allow for nulls
+UPDATE rombaoad.Swap_Sport_For_Movies
+SET decile = 0
+where decile IS NULL;
+
+-----
+-- Offer Seeker Score
+-----
+
+-- this has been given a model number and will be uploaded but we dont yet know if this will be triggered via the flags below;
+
+--if object_id('offer_seeker') is not null drop table offer_seeker;
+
+select model_code = 87
+       ,model_name = 'Vespa_Offer_Seekers_NBA'
+       ,account_number
+       ,os_score as decile
+       ,vintiles = 0 -- not to be used
+       ,percentiles = 0 -- not to be used
+       ,score = offer_seeker_NBA
+       ,model_code_version
+       ,model_run_date
+into offer_seeker
+from DO_NOT_DELETE_NBA_SCORING_20130411   -- This is the master scoring table
+WHERE account_number NOT IN (Select * FROM vespa_analysts.accounts_to_exclude );
+
+--DR/DONE! 449,708 row(s) affected
+----Need to get rid of all nulls as when you try to do the load to CITeam it does not allow for nulls
+UPDATE rombaoad.offer_seeker
+SET decile = 0
+where decile IS NULL;
+
+----------------------------------
+--      ADMIN
+----------------------------------
+
+
+-- grant access to the tables:
+
+Grant select on DO_NOT_DELETE_NBA_SCORING_20130411  to public;
+Grant select on movies_scoring to public;
+Grant select on high_exclusive to public;
+Grant select on high_pay to public;
+Grant select on high_pvr to public;
+Grant select on low_premium to public;
+Grant select on Swap_Sport_For_Movies to public;
+Grant select on offer_seeker to public;
+
+
+
+
+
+
+/*
+select top 100*
+from high_pvr
+*/
+
+
+
+/*
+select top 100*
+from TA_viewing_capped;
+
+select top 100*
+from DO_NOT_DELETE_NBA_SCORING_20121009;
+
+select count(*)
+from DO_NOT_DELETE_NBA_SCORING_20121009;
+
+
+update          TA_viewing_capped as base
+set             base.channel_name = tvp.channel_name
+from            Program_details as tvp
+where           base.dk_programme_instance_dim = tvp.dk_programme_instance_dim
+commit;
+
+
+*/
+

@@ -1,0 +1,46 @@
+Terms:
+
+Journey: 
+A collection of actions done by the user when visiting a specific areas in the UI (ie. TV Guide, Sky Cinema, Fullscreen, Search, etc.)
+
+Converted Journey: 
+The journey in which the user performed at least one of the following interactive actions (Download, Playback, Channel Tuning and/or Recordings). These actions are interpreted as commitment to watch and therefore consumption.
+
+Effectiveness:
+% of Converted Journeys out of the total number of Journeys seen into a specific area in the UI. Example: if today we see 230 journeys into Sky Store and only 50 converted, then 50/230 = 22% conversion rate, thus, Sky Store effectiveness is of 22%.
+
+Share of Home Page Traffic:
+% journeys that went into a specific TLM out of all journeys that started on the Home Page
+
+Reach:
+# of STBs using/engaging with Sky Q features and/or menus.
+
+Converted Reach:
+% of STBs that performed at least one of the following interactive actions (Download, Playback, Channel Tuning and/or Recordings). These actions are interpreted as commitment to watch and therefore consumption.
+
+Journey Duration:
+The number of seconds elapsed from the beginning of the journey until its end.
+
+Time to Conversion:
+The number of seconds elapsed from the beginning of the journey until first appearance of any of the following interactive actions is captured (Download, Playback, Channel Tuning and/or Recordings).
+
+Trial Group:
+A statistically significant number of STBs as a sample to validate a specific hypothesis under analysis.
+
+Trial Group A:
+Control Group, the sample of STBs that preserve the current software version
+
+Trial Group B:
+Test Group, the sample of STBs that receive the new software version proposition (not live to all customers)
+
+Ratio of Journeys (~Journeys)
+Avg number of Journeys (converted or not) done by each STB on a given time-frame.
+
+Frequency of Usage (Days):
+The number of days users engaged with a specific feature (for example, Apps, Miniguide, Search, etc.)
+
+# of Launches:
+The number of times users engaged with a specific feature (for example, Apps, Miniguide, Search, etc.).
+
+Active Base:
+The number of STBs that returned any PA data on any day within the time frame of the analysis/report.

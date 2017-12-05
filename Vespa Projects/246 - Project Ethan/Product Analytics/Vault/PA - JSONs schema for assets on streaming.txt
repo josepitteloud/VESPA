@@ -1,0 +1,40 @@
+{
+  "action":["03000","03001"],
+  "schema": {
+    "$schema" : "http://json-schema.org/draft-04/schema#",
+    "type":"object",
+    "required":["action", "timems","trigger","ref"],
+    "additionalProperties": false,
+    "properties":{
+      "action": {
+        "type":"object",
+        "required":["id", "asset", "position"],
+        "properties":{
+          "id": {"type":"string", "pattern":["03000","03001"]},
+          "asset":	{
+					"type":"object"
+					,"required":["UUID","type"]
+					,"properties":{
+						"UUID": {"type":"string"}
+						,"type": {"type":"string", "pattern":"strm"}
+					}
+			},
+          "position": {
+				"type": "object"
+				,"required":["currentPosition","Duration","recordedDuration"]
+				,"properties":{
+					"currentPosition": {"type":"string"}
+					,"Duration": {"type":"string"}
+					,"recordedDuration": {"type":"string","pattern":"Duration"}
+				}			
+			}
+        }
+      },
+      "timems": {"type": "string"},
+      "trigger": {"type": "object", "required": ["id"]},
+      "ref": {"type": "object", "required": ["id"]},
+      "orig": {"type": "string"},
+      "dest": {"type": "string"}
+    }
+  }
+}

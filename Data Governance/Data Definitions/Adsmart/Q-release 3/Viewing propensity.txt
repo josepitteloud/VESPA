@@ -1,0 +1,42 @@
+/************************************
+ *                                  *
+ *         viewing_propensity		*
+ *                                  *
+ ************************************/
+
+
+UPDATE ADSMART 
+SET  a.viewing_propensity  = CASE 	WHEN VIEWING_BASED_ATTRIBUTES LIKE '01' THEN 'Percent 90-99'
+									WHEN VIEWING_BASED_ATTRIBUTES LIKE '02' THEN 'Percent 80-89'
+									WHEN VIEWING_BASED_ATTRIBUTES LIKE '03' THEN 'Percent 70-79'
+									WHEN VIEWING_BASED_ATTRIBUTES LIKE '04' THEN 'Percent 60-69'
+									WHEN VIEWING_BASED_ATTRIBUTES LIKE '05' THEN 'Percent 50-59'
+									WHEN VIEWING_BASED_ATTRIBUTES LIKE '06' THEN 'Percent 40-49'
+									WHEN VIEWING_BASED_ATTRIBUTES LIKE '07' THEN 'Percent 30-39'
+									WHEN VIEWING_BASED_ATTRIBUTES LIKE '08' THEN 'Percent 20-29'
+									WHEN VIEWING_BASED_ATTRIBUTES LIKE '09' THEN 'Percent 10-19'
+									WHEN VIEWING_BASED_ATTRIBUTES LIKE '10' THEN 'Percent 0-9'
+									ELSE 'Unknown'
+									END
+FROM ADSMART AS a 
+LEFT JOIN vespa_shared.VIEWING_ATTRIBUTES AS b on a.ACCOUNT_NUMBER = b.ACCOUNT_NUMBER; 
+
+
+/* QA 
+
+viewing			hits
+Percent 0-9		679558
+Percent 10-19	679487
+Percent 20-29	680149
+Percent 30-39	607110
+Percent 40-49	607345
+Percent 50-59	607732
+Percent 60-69	607544
+Percent 70-79	607929
+Percent 80-89	692627
+Percent 90-99	692776
+Unknown			295632
+
+
+On 			05/01/2015
+*/

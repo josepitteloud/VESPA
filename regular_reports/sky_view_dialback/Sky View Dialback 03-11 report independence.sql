@@ -1,0 +1,6 @@
+-- Sky View panel: Dialback Report Output 11: profiling of reporting probabily independence
+--select transition_determinant_30d
+--from vespa_analysts.sky_view_dialback_11_transition_profiling
+--order by trans_rank desc
+--;
+-- This section of the report has since been discontinued...

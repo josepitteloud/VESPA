@@ -1,0 +1,25 @@
+--select top 100 * from   sk_prod.vespa_dp_prog_viewed_201309
+select service_key
+,max(channel_name) as channel
+,sum(case when capping_end_date_time_utc is null then 0 when a.capped_partial_flag = 1 then datediff(second, a.instance_start_date_time_utc, a.capping_end_date_time_utc)
+     else datediff(second, a.instance_start_date_time_utc, a.instance_end_date_time_utc)
+     end)  
+as viewing_duration
+,sum(case when reported_playback_speed is not null then 0 when capping_end_date_time_utc is null then 0 when a.capped_partial_flag = 1 then datediff(second, a.instance_start_date_time_utc, a.capping_end_date_time_utc)
+     else datediff(second, a.instance_start_date_time_utc, a.instance_end_date_time_utc)
+     end)  as viewing_duration_live
+
+from  sk_prod.vespa_dp_prog_viewed_201308 as a
+                         where capped_full_flag = 0 -- only those instances that have not been fully capped
+                           and instance_start_date_time_utc < instance_end_date_time_utc              -- Remove 0sec instances
+                           and (reported_playback_speed is null or reported_playback_speed = 2) -- Live or Recorded Records
+                           and account_number is not null --remove instances we do not know the account for
+                           and subscriber_id is not null --remove instances we do not know the subscriber_id for
+                           and (type_of_viewing_event in ('HD Viewing Event', 'Sky+ time-shifted viewing event', 'TV Channel Viewing')-- limit to keep out 
+                            --interactive viewing and other service viewing event i.e. where it could not identify viewing event type it was
+                            or (type_of_viewing_event = 'Other Service Viewing Event' 
+                            and service_type_description in ('NVOD service','High Definition TV test service','Digital TV channel')))
+                           and capping_end_date_time_utc is not null -- only those records where the event has been given a capped event end time
+group by service_key
+order by channel
+commit;

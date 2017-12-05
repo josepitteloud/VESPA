@@ -1,0 +1,2 @@
+Queries 00 through to 06 take Adsmart and capping threshold data from Netezza, import into OLive, apply the algorithm and produce sumamry reports.
+

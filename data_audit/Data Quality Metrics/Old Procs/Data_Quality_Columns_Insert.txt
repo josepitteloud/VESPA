@@ -1,0 +1,27 @@
+declare @tname varchar(50)
+declare @creator  varchar(50)
+
+set @tname = lower('data_quality_dp_data_audit')
+set @creator = lower('kinnairt')
+
+delete from data_quality_columns
+commit
+
+insert into data_quality_columns
+(creator ,table_name,  column_name, column_type,  column_length,  load_timestamp)
+select creator,  tname,  cname,  coltype,  length,  getdate() from sys.syscolumns
+where lower(tname) = lower(@tname)
+and lower(creator) = lower(@creator)
+
+commit
+
+
+insert into data_quality_columns
+(creator, table_name, column_name, column_type, column_length, load_timestamp)
+select creator, tname, cname, coltype, length, getdate()
+from sys.syscolumns
+where cname like '%percentile'
+and upper(tname) like '%PERSON%NEW'
+and creator = 'sk_prod'
+
+COMMIT

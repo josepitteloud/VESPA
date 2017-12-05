@@ -1,0 +1,77 @@
+
+SELECT * from 	SABB_predicted_values 	
+SELECT * from 	SABB_predicted_values_debug 
+
+select 
+subs_week
+,sabb_forecast_segment
+,pred_syscan_rate as syscan_rate_2016
+,pred_cuscan_rate as cuscan_rate_2016
+,pred_hm_rate as hm_rate_2016
+,pred_3rd_party_rate as _3rd_party_rate_2016	
+,pred_bb_offer_applied_rate as bb_offer_applied_rate_2016	
+into #SABB_predicted_values_debug
+from SABB_predicted_values_debug
+where subs_week<38
+
+--select * from #SABB_predicted_values_debug
+
+select 
+subs_week
+,sabb_forecast_segment
+,pred_syscan_rate as  syscan_rate_2015
+,pred_cuscan_rate as  cuscan_rate_2015
+,pred_hm_rate as  hm_rate_2015
+,pred_3rd_party_rate as  _3rd_party_rate_2015
+,pred_bb_offer_applied_rate as  bb_offer_applied_rate_2015	
+,prev_syscan_rate as  syscan_rate_2014
+,prev_cuscan_rate as  cuscan_rate_2014
+,prev_hm_rate as  hm_rate_2014
+,prev_3rd_party_rate as  _3rd_party_rate_2014
+,prev_bb_offer_applied_rate as  bb_offer_applied_rate_2014
+into #SABB_predicted_values
+from SABB_predicted_values
+
+select a.*
+,b. syscan_rate_2016
+,b. cuscan_rate_2016
+,b. hm_rate_2016
+,b. _3rd_party_rate_2016	
+,b. bb_offer_applied_rate_2016
+into #t
+from #SABB_predicted_values a
+left join #SABB_predicted_values_debug b
+on a.subs_week=b.subs_week and a.sabb_forecast_segment=b.sabb_forecast_segment	
+
+--select * from #t
+
+
+	select t.*
+	,Coalesce(t1.Grad_Coeff * 4 ,0) as SysCan_full_trend
+	,Coalesce(t2.Grad_Coeff * 4 ,0) as CusCan_full_trend
+	,Coalesce(t3.Grad_Coeff * 4 ,0) as HM_full_trend
+	,Coalesce(t4.Grad_Coeff * 4 ,0) as _3rd_party_full_trend
+	,Coalesce(t5.Grad_Coeff * 4 ,0) as BB_Offer_Applied_full_trend
+	
+from #t as t
+	LEFT JOIN Fcast_Regr_Coeffs AS t1 ON t.sabb_forecast_segment = t1.fcast_segment
+		--         and d.LV = Forecast_Start_Wk
+		AND t1.Metric = 'SysCan Entry'
+		
+	LEFT JOIN Fcast_Regr_Coeffs AS t2 ON t.sabb_forecast_segment = t2.fcast_segment
+		--         and d.LV = Forecast_Start_Wk
+		AND t2.Metric = 'CusCan Entry'
+		
+	LEFT JOIN Fcast_Regr_Coeffs AS t3 ON t.sabb_forecast_segment = t3.fcast_segment
+		--         and d.LV = Forecast_Start_Wk
+		AND t3.Metric = 'HM Entry'
+		
+	LEFT JOIN Fcast_Regr_Coeffs AS t4 ON t.sabb_forecast_segment = t4.fcast_segment
+		--         and d.LV = Forecast_Start_Wk
+		AND t4.Metric = '3rd Party Entry'
+		
+	LEFT JOIN Fcast_Regr_Coeffs AS t5 ON t.sabb_forecast_segment = t5.fcast_segment
+		--         and d.LV = Forecast_Start_Wk
+		AND t5.Metric = 'BB Offer Applied'
+		
+		

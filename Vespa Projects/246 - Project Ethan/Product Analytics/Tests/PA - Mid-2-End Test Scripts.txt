@@ -1,0 +1,237 @@
+
+----------------
+-- SANITY CHECKS
+----------------
+
+Script Global Navigation:
+
+	00003 - System Stand-by Out
+	<01400> - Home
+	<00000> - <system info message>		
+	<00001> - <Channel Tune-in>
+	01400 - TV Guide
+	01400 - TV Guide/Documentaries
+	01400 - back
+	01400 - back
+	01400 - Sky Movies
+	01400 - Back
+	01400 - Settings
+	01400 - Settings/setup
+	01400 - Settings/setup/network
+	01400 - back
+	01400 - back
+	01400 - back
+	01400 - sports
+	01400 - sports/On Demand
+	01400 - back
+	01400 - back
+	01400 - Recordings
+	01400 - Recordings/most recent
+	01400 - back
+	01400 - Recordings/downloads
+	01400 - back
+	01400 - Recordings/A-Z
+	01400 - back
+	01400 - Recordings/Purchase
+	01400 - back
+	01400 - back
+	01400 - Sky Store
+	01400 - back
+	01400 - Music
+	01400 - On Now
+	01400 - back
+	01400 - Sky Arts
+	01400 - back
+	01400 - back
+	01400 - help
+	01400 - back
+	01400 - My Account
+	01400 - back
+	00100 - Dismiss UI
+	<01400> - Nav into full-screen
+	01400 - Search
+	01600 - Search
+	00002 - Stand-by In
+	
+
+Gateway STB mini guide events:
+
+	00003 - System Stand-by Out
+	<01400> - Home
+	<00000> - <system info message>
+	<00001> - <Channel Tune-in>
+	00100 - Dismiss UI
+	<01400> - Nav into Full-screen
+	01000 - Open Mini-guide
+	01002 - Mini-guide Channel Browse (Channel Up)
+	01002 - Mini-guide Channel Browse (Channel Down)
+	01002 - Mini-guide Channel Browse (Channel Numbers Pressed)
+	01001 - Mini-guide Dismiss
+	00002 - Stand-by In
+
+Full screen tuning
+
+	- Tuning from TV Guide/Full-screen
+	
+		00003 - System Stand-by Out
+		<01400> - Home
+		<00000> - <system info message>
+		<00001> - <Channel Tune-in>
+		01400 - TV Guide
+		01400 - TV Guide/ All channels
+		00001 - Channel Tune-in
+		<00100> - Dismiss UI
+		<01400> - Nav into full-screen
+		00001 - Channel Tune-in (Channel Up)
+		00001 - Channel Tune-in (Channel Down)
+		00002 - Stand-by In
+	
+	- Tuning from Mini-guide
+	
+		00003 - System Stand-by Out
+		<01400> - Home
+		<00000> - <system info message>
+		<00001> - <Channel Tune-in>
+		00100 - Dismiss UI
+		<01400> - Nav into Full-screen
+		01000 - Open Mini-guide
+		01002 - Mini-guide Channel Browse
+		00001 - Channel Tune-in
+		<01001> - Mini-guide Dismiss
+		00002 - Stand-by In
+
+Trigger Download & Playback Start/Stop
+
+	- Downloads management
+	
+		00003 - System Stand-by Out
+		<01400> - Home
+		<00000> - <system info message>		
+		<00001> - <Channel Tune-in>
+		01400 - Sky Box Sets
+		01400 - Sky Box Sets/Featured (catalogue)
+		01400 - Interim
+		02400 - Trigger VOD Download
+		02450 - Asset Available to Watch
+		02400 - Trigger VOD Download
+		01400 - Nav. Into Home (Home button pressed)
+		01400 - Recordings
+		01400 - Recordings/Downloading
+		02410 - Pause all Downloads
+		02401 - Cancel Asset Download
+		02411 - Resume Downloads
+		02450 - Asset Available to Watch		
+		00002 - Stand-by In
+	
+Make bookings (stand-alone, series)
+
+	- make bookings from TV guide
+	
+		00003 - System Stand-by Out
+		<01400> - Home
+		<00000> - <system info message>		
+		<00001> - <Channel Tune-in>
+		01400 - TV Guide
+		01400 - TV Guide/ All channels
+		02010 - Series Recording
+		02011 - Cancel Series Recording
+		<02302> - <Asset Delete>
+		02002 - Stand-alone Recording (Ongoing)
+		02001 - Cancel Stand-alone Recording (Ongoing)
+		<02302> - Asset Delete
+		00002 - Stand-by In
+		
+	- make bookings from mini-guide
+	
+		00003 - System Stand-by Out
+		<01400> - Home
+		<00000> - <system info message>		
+		<00001> - <Channel Tune-in>
+		00100 - Dismiss UI
+		<01400> - Nav into Full-screen
+		01000 - Open Mini-guide
+		01002 * 3
+		02005 - Series Recording (Ongoing)
+		02000 - Stand-alone Recording
+		01001 - Dismiss Mini-guide
+		00002 - Stand-by In
+		
+Asset Playbacks
+
+	00003 - System Stand-by Out
+	<01400> - Home
+	<00000> - <system info message>		
+	<00001> - <Channel Tune-in>
+	01400 - Recordings
+	01400 - Recordings/Most Recent
+	01400 - Interim
+	03000 - Playback Start (asset 1)
+	<01400> - Nav into Full-screen
+	01400 - Nav into Home (home button pressed)
+	01400 - Recordings
+	01400 - Recordings/Most Recent
+	01400 - Interim
+	03000 - Playback Start (asset 2)
+	<03001> - Playback Stop (Asset 1)
+	<01400> - Nav into Full-screen
+	00001 - Channel Tune-in (Channel-Up Button pressed)
+	<03001> - Playback Stop (Asset 2)
+	01400 - Nav into Home (home button pressed)
+	01400 - Recordings
+	01400 - Recordings/Most Recent
+	01400 - Interim
+	02302 - Asset Delete
+	02300 - Asset keep
+	00002 - Stand-by In
+	
+	
+Searching for Assets
+
+	00003 - System Stand-by Out
+	<01400> - Home
+	<00000> - <system info message>		
+	<00001> - <Channel Tune-in>
+	01400 - Nav into search
+	01600 - Focus on Text Ribbon (Search Area)
+	01605 - Query for "C"
+	01605 - Query for "CL"
+	01605 - Query for "CLA"
+	01400 - Nav into Asset Interim page (From Search)
+	00002 - Stand-by In
+
+
+Store Events
+
+	00003 - System Stand-by Out
+	<01400> - Home
+	<00000> - <system info message>		
+	<00001> - <Channel Tune-in>
+	01400 - Sky Store
+	01400 - Sky Store/New To Rent
+	01400 - Interim
+	*01400 - Interim
+	05300 - Rental Confirmation
+	<02400> - Trigger VOD Download
+	02450 - Asset Available to Watch
+	03000 - Playback Start (Asset 1)
+	<01400> - Nav into Full-screen
+	01400 - Nav into Home (home button pressed)
+	01400 - Sky Store
+	01400 - Sky Store/New To Buy
+	01400 - Interim
+	05350 - Purchase Confirmation
+	---
+	<02400> - Trigger VOD Download
+	02450 - Asset Available to Watch
+	03000 - Playback Start(Asset 2)
+	<03001> - Playback Stop (Asset 1)
+	<01400> - Nav into Full-screen
+	---
+	00002 - Stand-by In
+	
+	
+AutoDownload
+AutoPlay
+	VOD
+	On-line Videos
+Launching Apps

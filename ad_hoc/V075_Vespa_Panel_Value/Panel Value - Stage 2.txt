@@ -1,0 +1,148 @@
+=============Panel Value 18/12/2012
+--------------------------
+SELECT  account_number
+        ,pk_viewing_prog_instance_fact
+        ,dk_programme_instance_dim
+        ,programme_name
+        ,duration 
+        ,channel_name
+        ,reported_playback_speed
+        ,subscriber_id
+        ,broadcast_time_of_day
+        ,broadcast_start_date_time_utc
+        ,broadcast_end_date_time_utc
+        ,instance_start_date_time_utc
+        ,instance_end_date_time_utc
+        ,event_start_date_time_utc
+        ,event_end_date_time_utc
+        ,cb_key_individual
+        ,cb_key_household 
+INTO PanelValue_FullViewingTable
+FROM sk_prod.vespa_events_all
+WHERE subscriber_id is NOT NULL                                                                     -- Query Limit
+AND event_start_date_time_utc between '2012-10-13 00:00:00.000' and '2012-10-20 23:59:59.000'   -- Query Limit
+AND duration > 6  -- Query Limit
+AND panel_id=12 -- Query Limit
+AND account_number is NOT NULL    -- Query Limit
+--AND reported_playback_speed is NULL     -- Query Limit not used as we may need to query all viewing
+COMMIT;     --289290335 row(s) affected, Execution time: 5550.65 seconds
+
+
+CREATE   INDEX  SBDf_idx_pk ON PanelValue_FullViewingTable  (pk_viewing_prog_instance_fact);
+CREATE   INDEX  SBDf_idx_cbkyhh ON PanelValue_FullViewingTable  (cb_key_household);
+CREATE   INDEX  SBDf_idx_acct ON PanelValue_FullViewingTable  (account_number);
+CREATE   INDEX  SBDf_idx_evtSdt_utc ON PanelValue_FullViewingTable  (event_start_date_time_utc);
+CREATE   INDEX  SBDf_idx_evtEdt_utc ON PanelValue_FullViewingTable  (event_end_date_time_utc);
+CREATE   INDEX  SBDf_idx_chnl ON PanelValue_FullViewingTable  (channel_name);
+CREATE   INDEX  SBDf_idx_subID ON PanelValue_FullViewingTable  (subscriber_id);
+CREATE   INDEX  SBDf_idx_bcsSdt_utc ON PanelValue_FullViewingTable  (broadcast_start_date_time_utc);
+CREATE   INDEX  SBDf_idx_bcstEdt_utc ON PanelValue_FullViewingTable  (broadcast_end_date_time_utc);
+CREATE   INDEX  SBDf_idx_instSdt_utc ON PanelValue_FullViewingTable  (instance_start_date_time_utc);
+CREATE   INDEX  SBDf_idx_instEdt_utc ON PanelValue_FullViewingTable  (instance_end_date_time_utc);
+CREATE   INDEX  SBDf_idx_dk ON PanelValue_FullViewingTable  (dk_programme_instance_dim);
+CREATE   INDEX  SBDf_idx_cbindiv ON PanelValue_FullViewingTable  (cb_key_individual);
+Commit;
+
+
+
+
+--------------------------------Checks on Viewing Table Pull
+--checks the size of the tables
+SELECT kbytes FROM (sp_iqtablesize ('PanelValue_FullViewingTable'))
+--81,262,832
+
+--Issue with duplicate keys (as of 18/12/2012 TK looking into getting this fixed by next week. Need to wait to get this fixed before proceeding)
+SELECT  count (distinct pk_viewing_prog_instance_fact)  --288,608,263
+           ,count (*)                                      --289,290,335 
+FROM PanelValue_FullViewingTable
+
+
+
+
+--------------
+-Code 02 - Capped Tables
+--------------
+begin
+
+    declare @varBuildId           int
+    declare @varStartDate         date
+    declare @varEndDate           date
+    declare @varSql               varchar(15000)
+
+    set @varStartDate = '2012-10-13'
+    set @varEndDate   = '2012-10-20'
+
+    execute logger_create_run 'PV_OctNov_Data', now(), @varBuildId output
+
+    while @varStartDate <= @varEndDate
+        begin
+
+            execute logger_add_event @varBuildId, 3, 'Starting extract for ' || @varStartDate
+
+            set @varSql = '
+                           INSERT INTO PV_CappedViewingTK                 -- create table in the previous
+                              SELECT
+                                    augs.cb_row_id,
+                                    augs.timeshifting,
+                                    cast(augs.viewing_starts as varchar(23)),
+                                    cast(augs.viewing_stops as varchar(23)),
+                                    augs.viewing_duration,
+                                    augs.capped_flag,
+                                    ''##^^1^^##'' augs_table_dt
+                               FROM vespa_analysts.Vespa_daily_augs_##^^1^^##  AS augs,
+                                    PanelValue_FullViewingTable as vw
+                              WHERE augs.cb_row_id = vw.pk_viewing_prog_instance_fact
+                           '
+            commit
+
+            execute(replace(@varSql,'##^^1^^##', dateformat(@varStartDate, 'yyyymmdd')))
+            commit
+ 
+   set @varstartdate = dateadd(day,1,@varstartdate) 
+        end
+
+    execute logger_get_latest_job_events 'PV_OctNov_Data', 4
+
+end;
+
+
+
+------------------------Check on capping tables
+select * from PV_CappedViewingTK  -- look ok
+select count (cb_row_id), count (*) from  PV_CappedViewingTK -- NO DUPLICATES FOUND 182,740,767
+
+
+
+
+
+
+======================================Create Segment Table for Sky Assets==================================
+
+CREATE TABLE PV_Segment_Program_Table (segment_id varchar (35) NOT NULL, dk_programme_instance_dim int); Commit; -- Execution time: 0.422 seconds
+
+--Add Segment Sky Sports (based on Programmes for a set of Sky Sports Channels)
+INSERT INTO PV_Segment_Program_Table
+SELECT DISTINCT 'SkySports',  dk_programme_instance_dim
+from PanelValue_FullViewingTable
+WHERE channel_name IN (
+                        'Sky Sp NewsHD'
+                        ,'Sky Sports 1'
+                        ,'Sky Sports 1 HD'
+                        ,'Sky Sports 2'
+                        ,'Sky Sports 2 HD'
+                        ,'Sky Sports 3'
+                        ,'Sky Sports 3 HD'
+                        ,'Sky Sports 4'
+                        ,'Sky Sports 4 HD'
+                        ,'Sky Sports F1'
+                        ,'Sky Spts F1 HD'
+                        ,'Sky Spts News'
+                        ); Commit;
+--16246 row(s) inserted, Execution time: 73.747 seconds
+
+-------------------------Checks
+
+--Duplicates check on programmes - shows each is unique
+select * from PV_Segment_Program_Table  -- table view ok
+select count (distinct dk_programme_instance_dim), count (*) from PV_Segment_Program_Table --count(distinct PV_Segment_Program_Table.dk_programme_instance_dim),count()--16246,16246
+

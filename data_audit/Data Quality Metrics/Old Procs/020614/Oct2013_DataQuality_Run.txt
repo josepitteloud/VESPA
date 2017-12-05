@@ -1,0 +1,45 @@
+create variable @RunID bigint;
+exec logger_create_run 'Data_Quality_Checks', 'Latest Run', @RunID output;
+
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-01';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-02';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-03';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-04';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-05';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-06';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-07';
+--------------------------------------------------------------------------------------------
+
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-08';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-09';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-10';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-11';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-12';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-13';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-14';
+--------------------------------------------------------------------------------------------
+
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-15';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-16';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-17';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-18';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-19';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-20';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-21';
+--------------------------------------------------------------------------------------------
+
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-22';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-23';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-24';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-25';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-26';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-27';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-28';
+--------------------------------------------------------------------------------------------
+
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-29';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-30';
+exec kinnairt.data_quality_data_processing_month 'null',@RunID,'201310','2013-10-31';
+--------------------------------------------------------------------------------------------
+
+commit

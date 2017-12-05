@@ -1,0 +1,31 @@
+declare @viewing_date_start date
+
+declare @viewing_date_end date
+
+set @viewing_date_start = '2013-04-01'
+
+set @viewing_date_end = '2013-04-03'
+
+
+SELECT b.metric_short_name
+,b.metric_description
+, a.dq_vr_id
+, a.dq_run_id
+, date(a.viewing_data_date) viewing_data_date
+, a.dq_vm_id
+, a.metric_result
+, b.metric_benchmark
+, a.metric_tolerance_amber metric_tolerance_amber
+, a.metric_tolerance_red
+, a.metric_rag metric_rag
+, a.load_timestamp load_timestamp
+, a.modified_date modified_date
+, b.metric_grouping
+FROM (select a.* from kinnairt.data_quality_vespa_repository a,
+(select dq_vm_id, viewing_data_date,max(dq_vr_id) dq_vr_id from kinnairt.data_quality_vespa_repository
+where date(viewing_data_date) between @viewing_date_start and @viewing_date_end
+group by dq_vm_id,viewing_data_date) b
+where a.dq_vr_id = b.dq_vr_id) AS a
+INNER JOIN kinnairt.data_quality_vespa_metrics AS b
+  ON a.dq_vm_id = b.dq_vm_id
+WHERE b.current_flag = 1

@@ -1,0 +1,13 @@
+SELECT 
+	  a.ACCOUNT_NUMBER
+	, c.subscription_type
+	, c.subscription_sub_type
+	, c.STATUS
+	
+FROM WH_CUST_ACCOUNT_FO 		AS a
+JOIN WH_PH_subs					AS b ON a.primary_service_instance_id = b.service_instance_id
+JOIN WH_PH_SUBS_HIST			AS c ON b.PH_subs_link_sk	= c.PH_SUBS_LINK_SK
+WHERE c.subscription_type = 'NOW TV'
+	AND '2016-06-01' BETWEEN c.EFFECTIVE_FROM_DT AND c.EFFECTIVE_TO_DT
+	LIMIT 100
+	

@@ -1,0 +1,38 @@
+<QuerySet>
+  <Query IsView="False" IsSP="False">
+    <File>Netezza_Impressions_Report_New.sql</File>
+    <Name>Netezza_Impressions_Report_New</Name>
+  </Query>
+  <Query IsView="False" IsSP="False">
+    <SQL>SELECT *
+  FROM SMI_DW..VIEWING_PROGRAMME_INSTANCE_FACT
+  where pk_viewing_programme_instance_fact = 53323451238
+  
+  
+  where pk_viewing_programme_instance_fact in 
+  (
+51420916420,
+51420935731)
+ LIMIT 100;
+ 
+ select * from 
+</SQL>
+    <Name>VIEWING_PROGRAMME_INSTANCE_FACT</Name>
+  </Query>
+  <Query IsView="False" IsSP="False">
+    <SQL>SELECT *
+  FROM DIS_REFERENCE..FINAL_DTH_VIEWING_EVENT_HISTORY
+  where scms_subscriber_id = 16079
+  and dth_viewing_event_day = '2014-02-28 00:00:00'
+order by event_start_datetime</SQL>
+    <Name>FINAL_DTH_VIEWING_EVENT_HISTORY</Name>
+  </Query>
+  <Query IsView="False" IsSP="False">
+    <SQL>SELECT *
+  FROM ODS_ATOMIC..ATOMIC_VESPA_VIEWING_EVENTS_ODS
+  where subscriberid = 16079
+  and date(start_date ) = '2014-02-28'
+ </SQL>
+    <Name>ATOMIC_VESPA_VIEWING_EVENTS_ODS</Name>
+  </Query>
+</QuerySet>

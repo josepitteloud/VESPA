@@ -1,0 +1,76 @@
+=======================================================
+V289 - APOC (SkyView) Household to Individual algorithm
+\Vespa\capabilities\H2I\Stable 1
+=======================================================
+
+This folder contains a stable version of the H2I algorithm.
+
+
+==========
+10/02/2015
+==========
+
+* Major updates to include non-viewer assignment
+	
+* Execution steps:
+
+	1.	(Re)Build procedures using code from
+			\Vespa\capabilities\H2I\stable_1\
+		using concat_H2I_modules.bat script and execute
+
+	2.	Execution
+		/*	-- If required, clean up all H2I objects from local schema (NOTE - this will also drop the procedures, in which case simply repeat step 1 before proceeding)
+		EXECUTE V289_M000c_drop_H2I_objects;
+		*/
+
+		-- Run H2I (change target date and sample size as appropriate)
+		execute v289_m00_initialisation '2013-09-20';
+		execute v289_m000_Prevalidation '2013-09-20';
+		execute v289_m01_process_manager 1, '2013-09-20', 100;
+
+
+
+==========
+04/12/2014
+==========
+
+* Bug fixes:
+	- local schema references removed
+	- M000b included in build script
+	- Crash bug fixed in M01 when called with (@fresh_start = 1) argument *FROM A FRESH SCHEMA*
+	- dynamic SQL bugs fixed that caused build-crash when all query-terminators (;) are interpreted
+	
+* Execution steps:
+	1.	(Re)Build procedures using code from:
+	\Vespa\capabilities\H2I\stable_1\
+	2.	Execution
+		a.	Run M00 procedure to create tables (if running for the first time)
+				execute v289_m00_initialisation;
+		b.	Run M000 prevalidation to create necessary views and copy of PI_BARB_import from the vespa_shared schema (needed since this has been updated today)
+				execute v289_m000_Prevalidation [TARGET DATE];
+		c.	Run M03 to perform import from PI_BARB_import table (needed just once due to the above)
+				execute v289_m03_barb_data_extraction;
+		d.	Run the rest of the procedure
+				execute v289_m01_process_manager [@fresh_start], [TARGET DATE], 100;
+
+
+==========
+03/12/2014
+==========
+
+* BARB data referenced from static data import @ vespa_shared.PI_BARB_import (see module M03)
+* Execution steps:
+	1.	(Re)Build procedures using code from:
+	\Vespa\capabilities\H2I\stable_1\
+	2.	Execution
+		a.	Run M00 procedure to create tables (if running for the first time)
+		execute v289_m00_initialisation today();
+		b.	Run M000 prevalidation to create necessary views and copy of PI_BARB_import from the vespa_shared schema (needed since this has been updated today)
+		execute v289_m000_Prevalidation [TARGET DATE];
+		c.	Run M03 to perform import from PI_BARB_import table (needed just once due to the above)
+		execute v289_m03_barb_data_extraction;
+		d.	Run the rest of the procedure
+		execute v289_m01_process_manager 1, [TARGET DATE], 100;
+
+==========
+==========

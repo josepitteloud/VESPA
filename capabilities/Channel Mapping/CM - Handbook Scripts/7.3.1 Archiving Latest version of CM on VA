@@ -1,0 +1,14 @@
+insert  into vespa_analysts.CHANNEL_MAP_ARC_SERVICE_KEY_ATTRIBUTES
+select  *
+from    vespa_analysts.CHANNEL_MAP_PROD_SERVICE_KEY_ATTRIBUTES
+commit
+
+insert  into vespa_analysts.CHANNEL_MAP_ARC_SERVICE_KEY_BARB
+select  *
+from    vespa_analysts.CHANNEL_MAP_PROD_SERVICE_KEY_BARB
+commit
+
+insert  into vespa_analysts.CHANNEL_MAP_ARC_SERVICE_KEY_LANDMARK
+select  *
+from    vespa_analysts.CHANNEL_MAP_PROD_SERVICE_KEY_LANDMARK
+commit

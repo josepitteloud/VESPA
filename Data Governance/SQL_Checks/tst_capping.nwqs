@@ -1,0 +1,24 @@
+<QuerySet>
+  <Query IsView="False" IsSP="False">
+    <Name>Tab 1</Name>
+  </Query>
+  <Query IsView="False" IsSP="False">
+    <SQL>SELECT dth_viewing_event_id
+  FROM SMI_DW..VIEWING_PROGRAMME_INSTANCE_FACT
+  where pk_viewing_programme_instance_fact = 52024983327
+ LIMIT 100;</SQL>
+    <Name>VIEWING_PROGRAMME_INSTANCE_FACT</Name>
+  </Query>
+  <Query IsView="False" IsSP="False">
+    <SQL>SELECT *
+  FROM DIS_REFERENCE..FINAL_DTH_VIEWING_EVENT_HISTORY
+  where dth_viewing_event_day = '2014-02-09 00:00:00'
+  and scms_subscriber_id = 1796583
+  and event_category != 'Non Viewing'
+  order by event_start_datetime
+  
+  dth_viewing_event_id = -6337621915312849043
+ LIMIT 100;</SQL>
+    <Name>FINAL_DTH_VIEWING_EVENT_HISTORY</Name>
+  </Query>
+</QuerySet>

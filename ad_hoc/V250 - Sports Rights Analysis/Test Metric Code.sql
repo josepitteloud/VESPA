@@ -1,0 +1,5 @@
+select round(annualised_GPLSS_programmes_viewed_over_threshold_A,1) as rnd_val
+,sum(account_weight)
+from dbarnett.v250_annualised_activity_table_analysis_metrics_PV
+group by rnd_val
+order by rnd_val

@@ -1,0 +1,34 @@
+SELECT event_type,count(*)
+  FROM DIS_REFERENCE.WHATLEYB.FINAL_CAPPED_EVENTS_HISTORY
+ group by event_type
+ order by 2 desc;
+/*
+Live		429982097
+Playback	200602369
+*/
+
+SELECT SILO_BOX,count(*)
+  FROM DIS_REFERENCE.WHATLEYB.FINAL_CAPPED_EVENTS_HISTORY
+ group by SILO_BOX
+ order by 2 desc;
+ 
+/*
+SILO_BOX		350597994
+Primary DTV		263523210
+Secondary DTV	16463262
+*/
+
+ SELECT SILO_GENRE,count(*)
+  FROM DIS_REFERENCE.WHATLEYB.FINAL_CAPPED_EVENTS_HISTORY
+ group by SILO_GENRE
+ order by 2 desc;
+ 
+/*
+SILO_GENRE	202,963,299
+News		 44,419,402
+Comedy		 42,052,612
+Drama		 36,068,952
+Factual		 30,514,484
+*/
+ 
+ 

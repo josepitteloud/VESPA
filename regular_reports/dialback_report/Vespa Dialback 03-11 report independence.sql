@@ -1,0 +1,6 @@
+-- Project Vespa: Dialback Report Output 11: profiling of reporting probabily independence
+--select transition_determinant_30d
+--from vespa_analysts.vespa_Dialback_11_transition_profiling
+--order by trans_rank desc
+--;
+-- This section of the report has since been discontinued...

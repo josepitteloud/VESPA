@@ -1,0 +1,115 @@
+
+/*
+                         $$$
+                        I$$$
+                        I$$$
+               $$$$$$$$ I$$$    $$$$$      $$$ZDD    DDDDDDD.
+             ,$$$$$$$$  I$$$   $$$$$$$    $$$ ODD  ODDDZ 7DDDD
+             ?$$$,      I$$$ $$$$. $$$$  $$$= ODD  DDD     NDD
+              $$$$$$$$= I$$$$$$$    $$$$.$$$  ODD +DD$     +DD$
+                  :$$$$~I$$$ $$$$    $$$$$$   ODD  DDN     NDD.
+               ,.   $$$+I$$$  $$$$    $$$$=   ODD  NDDN   NDDN
+              $$$$$$$$$ I$$$   $$$$   .$$$    ODD   ZDDDDDDDN
+                                      $$$      .      $DDZ
+                                     $$$             ,NDDDDDDD
+                                    $$$?
+
+                      CUSTOMER INTELLIGENCE SERVICES
+
+
+        Segmentation Engine
+        --------------------------------
+        Author  : Alan Barber/Don Rombaoa 
+        Date    : 15 February 2013
+
+SECTIONS
+----------------
+A: Segmentation Engine - Test Area
+B: Segmentation Engine - Final Coding
+
+
+Code Location
+Section A: Segmentation Engine - Test Area
+        --      code_location_A01        Reporting Days Report For Scaling
+        --      code_location_A02        
+        --      code_location_A03        
+        --      code_location_A04        
+        --      code_location_A05        
+        --      code_location_A06        
+        --      code_location_A07        
+        --      code_location_A08        
+        --      code_location_A09        
+		--		code_location_A10		
+        --      code_location_A11        
+		--      code_location_A12        
+		--      code_location_A13		
+		--      code_location_A14		
+
+
+Code Location
+Section B: Segmentation Engine - Test Area
+        --      code_location_B01        To be Finalised
+		
+*/
+
+
+============================ Section A: Segmentation Engine - Test Area ============================
+--This area will serve as the testing ground for codes that will be used to create the VESPA segmentation engine. 
+
+
+
+	
+===================
+--code_location_A01  Reporting Days Report for Scaling
+===================
+--Reports on the number of reporting days associated with an account given a date range
+
+--Create procedure to retrieve reporting days based on date range
+CREATE OR REPLACE PROCEDURE scaling_make_report(
+                in @varStartDate          DATE,
+                in @varEndDate            DATE)
+        RESULT (account_number varchar(12), reporting_days smallint)      
+BEGIN
+
+select account_number
+    ,sum(1 + datediff(day -- the "1 +" is there because the endpoints are inclusive
+        ,case when reporting_starts < @varStartDate then @varStartDate else reporting_starts end
+        ,case when reporting_ends > @varEndDate then @varEndDate else reporting_ends end
+    )) as reporting_days
+from vespa_analysts.SC2_intervals
+where @varStartDate       between reporting_starts and reporting_ends -- limit to intervals that overlap with the target period
+or    @varEndDate         between reporting_starts and reporting_ends
+or    reporting_starts  between @varStartDate and @varEndDate
+group by account_number
+
+end;
+
+GRANT EXECUTE on scaling_make_report to public;
+
+--Execute procedure by inserting date range 
+execute scaling_make_report '2012-12-01', '2012-12-07'
+
+
+=======================================================
+--code_location_A02    
+=======================================================
+
+
+
+
+
+
+
+
+
+========================== Section B: Segmentation Engine - Final Coding ==========================
+
+
+
+
+
+
+
+
+
+

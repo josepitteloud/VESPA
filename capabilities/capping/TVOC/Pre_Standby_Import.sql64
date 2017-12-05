@@ -1,0 +1,77 @@
+-- create these in Olive
+drop table Capping_NZ_Extract_Standby_dth_viewing_event_id_tmp
+commit
+
+create table Capping_NZ_Extract_Standby_dth_viewing_event_id_tmp  (
+        PK_VIEWING_PROGRAMME_INSTANCE_FACT      BIGINT          NOT NULL,
+        dth_viewing_event_id                    BIGINT          NOT NULL,
+        event_action                            VARCHAR(48)     NOT NULL,
+        standby_lead_event_action               VARCHAR(48)     NOT NULL,
+		pre_standby_event_flag					tinyint			not null
+        )
+commit
+
+/*--this step not required... this was to make a copy of the 1st attempt
+select *
+  into Capping_NZ_Extract_Standby_dth_viewing_event_id_1stAttempt_tmp
+  from Capping_NZ_Extract_Standby_dth_viewing_event_id_tmp
+commit
+--2179358 Row(s) affected
+*/
+
+drop table Capping_NZ_Extract_Standby_dth_viewing_event_id_staging
+commit
+
+create table Capping_NZ_Extract_Standby_dth_viewing_event_id_staging  (
+--        PK_VIEWING_PROGRAMME_INSTANCE_FACT      VARCHAR(30),
+--        dth_viewing_event_id                    VARCHAR(30),
+        dth_viewing_event_id                    bigint,
+        event_action                            VARCHAR(48),
+        standby_lead_event_action               VARCHAR(48),
+		pre_standby_event_flag					varchar(1)			
+        )
+commit
+
+
+load table Capping_NZ_Extract_Standby_dth_viewing_event_id_staging
+(    --pk_viewing_programme_instance_fact,
+    dth_viewing_event_id
+    ,event_action
+    ,standby_lead_event_action
+	,pre_standby_event_flag
+    '\n'   )
+from '/ETL013/prod/sky/olive/data/share/clarityq/export/ChrisS/aug_pre_standby.csv'
+--from 'aug_pre_standby.csv'
+QUOTES OFF
+ESCAPES OFF
+DELIMITED BY ','
+SKIP 1
+NOTIFY 1000
+ON FILE ERROR ROLLBACK
+
+
+truncate table Capping_NZ_Extract_Standby_dth_viewing_event_id_tmp commit
+
+insert into Capping_NZ_Extract_Standby_dth_viewing_event_id_tmp
+select
+       cast(olive.pk_viewing_prog_instance_fact as BIGINT)       pk_viewing_programme_instance_fact,
+       cast(dth_viewing_event_id        as BIGINT)              dth_viewing_event_id,
+       cast(event_action                as VARCHAR(48))         event_action,
+       cast(standby_lead_event_action   as VARCHAR(48))         standby_lead_event_action,
+	   cast (pre_standby_event_flag as tinyint)				pre_standby_event_flag
+  from Capping_NZ_Extract_Standby_dth_viewing_event_id_staging nz
+  inner join VESPA_DP_PROG_VIEWED_201608 olive
+  on nz.dth_viewing_event_id=olive.viewing_event_id
+  
+commit
+
+
+create    index Capping_NZ_pk_vpif_idx on Capping_NZ_Extract_Standby_dth_viewing_event_id_tmp (pk_viewing_programme_instance_fact)
+create    index Capping_NZ_dth_event_id_idx on Capping_NZ_Extract_Standby_dth_viewing_event_id_tmp (dth_viewing_event_id)
+create HG index Capping_NZ_event_action_idx on Capping_NZ_Extract_Standby_dth_viewing_event_id_tmp (event_action)
+commit
+
+grant select on Capping_NZ_Extract_Standby_dth_viewing_event_id_tmp to vespa_group_low_security
+
+
+--ready to be used in Olive

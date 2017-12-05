@@ -1,0 +1,7 @@
+Capping and scaling data checks (21-27 Feb)
+
+1.	Pull viewing data for week 21-27 Jan with capping segmentation variables & fields for both old and new data structure.
+2.	Compare number of events by DOW, hour, event type.
+3.	Compare number of capped events by DOW, hour, event type.
+4.	Compare viewing time (before capping) by DOW, hour, event type.
+5.	Compare viewing time (after capping) by DOW, hour, event type.
