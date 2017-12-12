@@ -16,9 +16,10 @@ SELECT a.subs_week_and_year
     , churn_type
     , COUNT(*) hits 
 INTO weeks_fix  
-FROM BB_Churn_cancellations_6 AS a 
+FROM BB_Churn_cancellations AS a 
 JOIN sky_calendar AS x ON a.end_date = DATEADD (week, 1, x.calendar_Date)
 LEFT JOIN sky_calendar AS b ON x.subs_week_and_year = b.subs_week_and_year  AND b.subs_month_end = 'Y'
+WHERE now_v1 = 0 
 GROUP BY a.subs_week_and_year , churn_type , eom, end_date 
 ORDER by churn_type, a.subs_week_and_year 
 
