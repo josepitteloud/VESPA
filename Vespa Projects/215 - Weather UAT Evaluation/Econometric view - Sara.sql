@@ -25,7 +25,7 @@ DROP TABLE WEATHER_SKY_movies_data
 
 CREATE OR REPLACE VIEW weather_agg_fix_sara AS 
 SELECT 
-	  district
+	  a.district
 	, max(max_period_temp) max_temp
 	, max(min_period_temp) min_temp
 	, MIN(max_period_temp) min_max_temp
@@ -41,7 +41,7 @@ SELECT
 FROM weather_data_aggregated_history AS a
 LEFT JOIN (SELECT sunshine_duration, DATE(date_time) dt, district FROM weather_data_history WHERE sunshine_duration IS NOT NULL) AS b ON a.district = b.district AND DATE(weather_date) = dt AND period = 'P2'
 GROUP BY 
-	  district
+	  a.district
 	, period
 	, period_from	
 	, period_to

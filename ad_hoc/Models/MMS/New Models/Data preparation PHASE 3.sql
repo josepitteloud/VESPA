@@ -1,6 +1,6 @@
 ------ Contents ------
 --  0.0 Configuration
---  1.0 Create CS_scoring_base_20171120 dataset
+--  1.0 Create CS_scoring_base_20171213 dataset
     --  1.1 Create initial table
     --  1.2 Add Orders fields
     --  1.4 Add target and eligibility flags
@@ -54,7 +54,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
     SET @end_date_lag = DATEADD(mm, -1, @end_date)
 
 -------------------------------------------
---  1.0 Create CS_scoring_base_20171120 dataset
+--  1.0 Create CS_scoring_base_20171213 dataset
 -------------------------------------------
 
     --  1.1 Create initial table
@@ -62,19 +62,22 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 	MESSAGE CAST(now() as timestamp)||' | 1' TO CLIENT
 
         DROP TABLE  IF EXISTS #Qtr_Wk_End_Dts;
-        SELECT calendar_date
+        /*SELECT calendar_date
         INTO #Qtr_Wk_End_Dts
         FROM sky_calendar
         WHERE datepart(DAY,calendar_date+1) = 1
-                AND calendar_date BETWEEN @start_date AND @end_date;
+                AND calendar_date BETWEEN @start_date AND @end_date;*/
+		
+		SELECT CAST('2017-12-01' AS DATE) AS calendar_date
+        INTO #Qtr_Wk_End_Dts	
         COMMIT;
 
         CREATE lf INDEX idx_1 ON #Qtr_Wk_End_Dts(Calendar_Date);
 
 
-        DROP TABLE IF EXISTS CS_scoring_base_20171120;
+        DROP TABLE IF EXISTS CS_scoring_base_20171213;
         SELECT Cast(wk.calendar_date AS date) Base_Dt,account_number--,product_holding DTV_Product_Holding,status_code as DTV_Status_Code
-        INTO CS_scoring_base_20171120
+        INTO CS_scoring_base_20171213
         FROM #Qtr_Wk_End_Dts wk
              INNER JOIN
              cust_subs_hist asr
@@ -95,45 +98,47 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 					  
 		MESSAGE CAST(now() as timestamp)||' | 2' TO CLIENT;
 
-        CREATE HG INDEX id1 ON CS_scoring_base_20171120 (account_number);
-        CREATE DATE INDEX iddt ON CS_scoring_base_20171120 (base_dt);
+        CREATE HG INDEX id1 ON CS_scoring_base_20171213 (account_number);
+        CREATE DATE INDEX iddt ON CS_scoring_base_20171213 (base_dt);
 
-        CALL Decisioning_procs.Add_Subs_Calendar_Fields('CS_scoring_base_20171120','Base_Dt');
+        CALL Decisioning_procs.Add_Subs_Calendar_Fields('CS_scoring_base_20171213','Base_Dt');
 		
-        CALL Decisioning_procs.Add_Active_Subscriber_Product_Holding('CS_scoring_base_20171120','Base_Dt','DTV');
-        CALL Decisioning_procs.Add_Active_Subscriber_Product_Holding('CS_scoring_base_20171120','Base_Dt','BB');
+        CALL Decisioning_procs.Add_Active_Subscriber_Product_Holding('CS_scoring_base_20171213','Base_Dt','DTV');
+        CALL Decisioning_procs.Add_Active_Subscriber_Product_Holding('CS_scoring_base_20171213','Base_Dt','BB');
 		
-		Call Decisioning_procs.Add_Active_Subscriber_Product_Holding('CS_scoring_base_20171120','Base_Dt','Sports');
-		Call Decisioning_procs.Add_Active_Subscriber_Product_Holding('CS_scoring_base_20171120','Base_Dt','Movies');
-        CALL Decisioning_procs.Add_Active_Subscriber_Product_Holding('CS_scoring_base_20171120','Base_Dt','MULTISCREEN');
-        CALL Decisioning_procs.Add_Active_Subscriber_Product_Holding('CS_scoring_base_20171120','Base_Dt','SGE');
+		Call Decisioning_procs.Add_Active_Subscriber_Product_Holding('CS_scoring_base_20171213','Base_Dt','Sports');
+		Call Decisioning_procs.Add_Active_Subscriber_Product_Holding('CS_scoring_base_20171213','Base_Dt','Movies');
+        CALL Decisioning_procs.Add_Active_Subscriber_Product_Holding('CS_scoring_base_20171213','Base_Dt','MULTISCREEN');
+        CALL Decisioning_procs.Add_Active_Subscriber_Product_Holding('CS_scoring_base_20171213','Base_Dt','SGE');
 		MESSAGE CAST(now() as timestamp)||' | 2.1' TO CLIENT;
 
-		CALL Decisioning_Procs.Add_Activations_DTV('CS_scoring_base_20171120','Base_Dt');
-        CALL Decisioning_Procs.Add_Activation_BB('CS_scoring_base_20171120','Base_Dt');
+		CALL Decisioning_Procs.Add_Activations_DTV('CS_scoring_base_20171213','Base_Dt');
+        CALL Decisioning_Procs.Add_Activation_BB('CS_scoring_base_20171213','Base_Dt');
 		MESSAGE CAST(now() as timestamp)||' | 2.2' TO CLIENT;
 		
-		CALL Decisioning_Procs.Add_Churn_DTV ('CS_scoring_base_20171120','Base_Dt');
-		CALL Decisioning_Procs.Add_Churn_BB ('CS_scoring_base_20171120','Base_Dt');
-		CALL Decisioning_Procs.Add_PL_Entries_DTV('CS_scoring_base_20171120','Base_Dt');
-		CALL Decisioning_Procs.Add_PL_Entries_BB('CS_scoring_base_20171120','Base_Dt');
+		CALL Decisioning_Procs.Add_Churn_DTV ('CS_scoring_base_20171213','Base_Dt');
+		CALL Decisioning_Procs.Add_Churn_BB ('CS_scoring_base_20171213','Base_Dt');
+		CALL Decisioning_Procs.Add_PL_Entries_DTV('CS_scoring_base_20171213','Base_Dt');
+		CALL Decisioning_Procs.Add_PL_Entries_BB('CS_scoring_base_20171213','Base_Dt');
 		MESSAGE CAST(now() as timestamp)||' | 2.3' TO CLIENT;
 		
 																				 
-        CALL Decisioning_procs.Add_Demographics_To_Base('CS_scoring_base_20171120','Base_Dt');
+        CALL Decisioning_procs.Add_Demographics_To_Base('CS_scoring_base_20171213','Base_Dt');
 		MESSAGE CAST(now() as timestamp)||' | 2.4' TO CLIENT;
 		
-		CALL Decisioning_procs.Add_Offers_Software('CS_scoring_base_20171120','Base_Dt','DTV');
-        CALL Decisioning_procs.Add_Offers_Software('CS_scoring_base_20171120','Base_Dt','BB');
-        Call Decisioning_procs.Add_Software_Orders('CS_scoring_base_20171120','Base_Dt','Movies');
-		Call Decisioning_procs.Add_Software_Orders('CS_scoring_base_20171120','Base_Dt','Sports');
+		CALL Decisioning_procs.Add_Offers_Software('CS_scoring_base_20171213','Base_Dt','DTV');
+        CALL Decisioning_procs.Add_Offers_Software('CS_scoring_base_20171213','Base_Dt','BB');
+        Call Decisioning_procs.Add_Software_Orders('CS_scoring_base_20171213','Base_Dt','Movies');
+		Call Decisioning_procs.Add_Software_Orders('CS_scoring_base_20171213','Base_Dt','Sports');
 		MESSAGE CAST(now() as timestamp)||' | 2.5' TO CLIENT;
         
-        CALL Decisioning_procs.Add_Broadband_Postcode_Exchange_To_Base('CS_scoring_base_20171120');
-        CALL Decisioning_procs.Add_Fibre_Areas('CS_scoring_base_20171120');
-        CALL Decisioning_Procs.Add_Turnaround_Attempts('CS_scoring_base_20171120','Base_Dt','TA Events');
-		CALL Decisioning_procs.Add_BB_Provider('CS_scoring_base_20171120','Base_Dt');
-						
+        CALL Decisioning_procs.Add_Broadband_Postcode_Exchange_To_Base('CS_scoring_base_20171213');
+        CALL Decisioning_procs.Add_Fibre_Areas('CS_scoring_base_20171213');
+        CALL Decisioning_Procs.Add_Turnaround_Attempts('CS_scoring_base_20171213','Base_Dt','TA Events');
+		CALL Decisioning_procs.Add_BB_Provider('CS_scoring_base_20171213','Base_Dt');
+		Call Decisioning_procs.Add_Software_Orders('cs_binned2','Base_Dt','MS+','Account_Number','Drop and Replace')
+
+		
 		MESSAGE CAST(now() as timestamp)||' | 3' TO CLIENT;
 																			
 	
@@ -144,10 +149,12 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 	
 	--  1.4 Add target and eligibility flags
 
-        ALTER TABLE CS_scoring_base_20171120
+        ALTER TABLE CS_scoring_base_20171213
         ADD (UP_Rental          BIT DEFAULT 0 
             ,UP_buy_and_Keep	BIT DEFAULT 0 
             ,UP_SkyQ			BIT DEFAULT 0 
+			,UP_skyQ_MS 		bit DEFAULT 0 
+		
             ,Rental_eligible       	BIT DEFAULT 0 
             ,Buy_and_keep_eligible 	BIT DEFAULT 0 
             ,SkyQ_eligible 	 		BIT DEFAULT 0 
@@ -161,6 +168,8 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 			, bak_used_before		BIT DEFAULT 0 
 			, base_dt_2 DATE DEFAULT NULL 		-- to generate TA next 30d
 			, TA_next_30d BIT DEFAULT 0			-- to removed upgrades related to TA
+			, Order_MS_added_next_60d AS tinyint DEFAULT null
+            , Order_MS_removed_next_60d AS tinyint DEFAULT null
             );
 		MESSAGE CAST(now() as timestamp)||' | 4' TO CLIENT
 		GO
@@ -174,7 +183,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 				, base_dt
 			INTO #temp_rental_usage_over_last_12_months
 			FROM Decisioning.OTT_Purchases 	AS a 
-			JOIN CS_scoring_base_20171120 					AS b  ON a.account_number = b.account_number AND a.ordered_dt <= base_dt
+			JOIN CS_scoring_base_20171213 					AS b  ON a.account_number = b.account_number AND a.ordered_dt <= base_dt
 			WHERE movie_order = 1 
 				AND movie_cancelled_order = 0 
 			GROUP BY b.account_number, base_dt
@@ -184,13 +193,13 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 			CREATE DATE INDEX id2 	ON #temp_rental_usage_over_last_12_months (max_dt)
 			COMMIT
 
-			UPDATE CS_scoring_base_20171120
+			UPDATE CS_scoring_base_20171213
 			SET Rental_eligible	= CASE 	WHEN DATEDIFF(WEEK, max_dt, GETDATE()) <= 13 					THEN 0 --- Active customer
 										WHEN DATEDIFF(WEEK, max_dt, GETDATE())  > 13 OR max_dt IS NULL 	THEN 1 --- Lapsed or non-customer
 										ELSE 1
 										END
 				, rentals_used_before	= CASE 	WHEN  max_dt IS NOT NULL THEN 1 ELSE 0 END
-			FROM CS_scoring_base_20171120 AS a 
+			FROM CS_scoring_base_20171213 AS a 
 			LEFT JOIN #temp_rental_usage_over_last_12_months	AS cps ON a.account_number = cps.account_number AND a.base_dt = cps.base_dt
 	 
 
@@ -209,7 +218,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 				, base_dt
 			INTO #temp_buy_and_keep_usage_recency
 			FROM Decisioning.OTT_Purchases 	AS a 
-			JOIN CS_scoring_base_20171120 					AS b  ON a.account_number = b.account_number AND a.ordered_dt <= base_dt
+			JOIN CS_scoring_base_20171213 					AS b  ON a.account_number = b.account_number AND a.ordered_dt <= base_dt
 			WHERE product_type = 'EST'
 			GROUP BY b.account_number, base_dt
             
@@ -220,7 +229,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 			CREATE DATE INDEX id3 	ON #temp_buy_and_keep_usage_recency (max_dt)
 			COMMIT
 			
-			UPDATE CS_scoring_base_20171120 a
+			UPDATE CS_scoring_base_20171213 a
 			SET Buy_and_keep_eligible	 = CASE 	WHEN DATEDIFF(WEEK, max_dt, GETDATE()) <= 13 				THEN 0 ---Active customer
 													WHEN DATEDIFF(WEEK, max_dt, GETDATE())  > 13 				THEN 1 ---Lapsed
 													WHEN max_dt IS NULL 										THEN 1 --- Never bought
@@ -230,7 +239,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 							   
 											 END
 				, bak_used_before	= CASE 	WHEN  max_dt IS NOT NULL THEN 1 ELSE 0 END
-			FROM CS_scoring_base_20171120 a
+			FROM CS_scoring_base_20171213 a
 			LEFT JOIN #temp_buy_and_keep_usage_recency AS cps ON a.account_number = cps.account_number AND a.base_dt = cps.base_dt
 			
 			DROP TABLE #temp_buy_and_keep_usage_recency
@@ -249,7 +258,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 			FROM cust_single_mobile_account_view    AS a
 			JOIN cust_single_mobile_view            AS b ON a.account_number = b.account_number
 			JOIN cust_single_account_view           AS c ON a.portfolio_id = c.acct_fo_portfolio_id
-			JOIN CS_scoring_base_20171120 							AS x ON x.account_number = c.account_number AND a.prod_earliest_mobile_ordered_dt <= base_dt
+			JOIN CS_scoring_base_20171213 							AS x ON x.account_number = c.account_number AND a.prod_earliest_mobile_ordered_dt <= base_dt
 			GROUP BY c.account_number, base_dt 
 						
 			COMMIT
@@ -258,9 +267,9 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 			CREATE DTTM INDEX id3 	ON #mobile (dt)
 			COMMIT
 			
-			UPDATE CS_scoring_base_20171120 a
+			UPDATE CS_scoring_base_20171213 a
 			SET Mobile_eligible	= CASE WHEN cps.account_number IS NULL THEN 1 ELSE 0 END 
-			FROM CS_scoring_base_20171120 a
+			FROM CS_scoring_base_20171213 a
 			LEFT JOIN #mobile AS cps ON a.account_number = cps.account_number AND a.base_dt = cps.base_dt
 			
 			DROP TABLE #mobile
@@ -278,7 +287,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 					, base.base_dt
 			INTO #sky_q_elig
 			FROM cust_set_top_box AS stb
-			JOIN CS_scoring_base_20171120 AS base ON stb.account_number = base.account_number AND stb.created_dt <= base.base_dt 
+			JOIN CS_scoring_base_20171213 AS base ON stb.account_number = base.account_number AND stb.created_dt <= base.base_dt 
 			WHERE   base.account_number IS NOT NULL
 			GROUP BY  stb.account_number
 					, base.base_dt
@@ -288,13 +297,13 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 			CREATE DATE INDEX id2 	ON #sky_q_elig (base_dt)
 			COMMIT 
 			
-			UPDATE CS_scoring_base_20171120
+			UPDATE CS_scoring_base_20171213
 			SET    SkyQ_eligible = b.PrimaryBoxType
-			FROM   CS_scoring_base_20171120 AS base
+			FROM   CS_scoring_base_20171213 AS base
 			JOIN  	#sky_q_elig AS b ON b.account_number = base.account_number AND b.base_dt = base.base_dt 
 						
 			--- Flagging Black tier AND non-DTV active customers as non-eligible
-			UPDATE CS_scoring_base_20171120
+			UPDATE CS_scoring_base_20171213
 			SET    SkyQ_eligible = 0
 			WHERE DATEDIFF(YEAR, DTV_Last_Activation_Dt, base_dt) >= 15		-- Black tier customers	
 				OR DTV_active = 0 											-- Non DTV customers
@@ -305,16 +314,16 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 		--------- Movies / Sports eligible ----
 					
 					
-		UPDATE CS_scoring_base_20171120 
+		UPDATE CS_scoring_base_20171213 
 		SET movies_eligible = 0 
 			, sports_eligible = 0 
 		
-		UPDATE CS_scoring_base_20171120 
+		UPDATE CS_scoring_base_20171213 
 		SET movies_eligible = 1
 		WHERE Movies_Active = 0 
 		AND Order_Movies_Added_In_Last_30d = 0 
 		
-		UPDATE CS_scoring_base_20171120 
+		UPDATE CS_scoring_base_20171213 
 		SET sports_eligible = 1
 		WHERE sports_Active = 0 
 		AND Order_Sports_Added_In_Last_30d = 0 
@@ -331,7 +340,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 				, base_dt
 			INTO #temp_rental_usage_over_last_12_months
 			FROM Decisioning.OTT_Purchases 	AS a 
-			JOIN CS_scoring_base_20171120 					AS b  ON a.account_number = b.account_number AND a.ordered_dt  BETWEEN DATEADD(DAY, 1 ,base_dt) AND DATEADD(MONTH, 1,base_dt) -- Rentals within the next 30 days after the observation date
+			JOIN CS_scoring_base_20171213 					AS b  ON a.account_number = b.account_number AND a.ordered_dt  BETWEEN DATEADD(DAY, 1 ,base_dt) AND DATEADD(MONTH, 1,base_dt) -- Rentals within the next 30 days after the observation date
 			WHERE movie_order = 1 
 				AND movie_cancelled_order = 0 
 			GROUP BY b.account_number, base_dt
@@ -341,9 +350,9 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 			CREATE DATE INDEX id2 	ON #temp_rental_usage_over_last_12_months (max_dt)
 			COMMIT
 
-			UPDATE CS_scoring_base_20171120
+			UPDATE CS_scoring_base_20171213
 			SET Up_Rental	= CASE 	WHEN cps.max_dt IS NOT NULL THEN 1 ELSE 0 END 
-			FROM CS_scoring_base_20171120 AS a 
+			FROM CS_scoring_base_20171213 AS a 
 			LEFT JOIN #temp_rental_usage_over_last_12_months	AS cps ON a.account_number = cps.account_number AND a.base_dt = cps.base_dt
 			
 
@@ -359,7 +368,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 				, base_dt
 			INTO #temp_buy_and_keep_usage_recency
 			FROM Decisioning.OTT_Purchases 	AS a 
-			JOIN CS_scoring_base_20171120 					AS b  ON a.account_number = b.account_number AND a.ordered_dt  BETWEEN DATEADD(DAY, 1 ,base_dt) AND DATEADD(MONTH, 1,base_dt)
+			JOIN CS_scoring_base_20171213 					AS b  ON a.account_number = b.account_number AND a.ordered_dt  BETWEEN DATEADD(DAY, 1 ,base_dt) AND DATEADD(MONTH, 1,base_dt)
 			WHERE product_type = 'EST'
 			GROUP BY b.account_number, base_dt
             
@@ -369,9 +378,9 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 			CREATE DATE INDEX id3 	ON #temp_buy_and_keep_usage_recency (max_dt)
 			COMMIT
 
-			UPDATE CS_scoring_base_20171120 a
+			UPDATE CS_scoring_base_20171213 a
 			SET UP_buy_and_Keep	 = CASE WHEN cps.max_dt IS NOT NULL THEN 1 ELSE 0 END 
-			FROM CS_scoring_base_20171120 a
+			FROM CS_scoring_base_20171213 a
 			LEFT JOIN #temp_buy_and_keep_usage_recency AS cps ON a.account_number = cps.account_number AND a.base_dt = cps.base_dt
 
 			DROP TABLE #temp_buy_and_keep_usage_recency
@@ -391,7 +400,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 					, base.base_dt
 			INTO #sky_q_up
 			FROM cust_set_top_box AS stb
-			JOIN CS_scoring_base_20171120 AS base ON stb.account_number = base.account_number AND stb.created_dt BETWEEN DATEADD(DAY, 1 ,base_dt) AND DATEADD(MONTH, 1,base_dt) -- Installations within the next 30 days after the observation date
+			JOIN CS_scoring_base_20171213 AS base ON stb.account_number = base.account_number AND stb.created_dt BETWEEN DATEADD(DAY, 1 ,base_dt) AND DATEADD(MONTH, 1,base_dt) -- Installations within the next 30 days after the observation date
 			WHERE   base.account_number IS NOT NULL
 			GROUP BY  stb.account_number
 					, base.base_dt
@@ -401,10 +410,27 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 			CREATE DATE INDEX id2 	ON #sky_q_up (base_dt)
 			COMMIT 
 			
-			UPDATE CS_scoring_base_20171120
+			UPDATE CS_scoring_base_20171213
 			SET    UP_SkyQ = b.PrimaryBoxType
-			FROM   CS_scoring_base_20171120 AS base
+			FROM   CS_scoring_base_20171213 AS base
 			JOIN  	#sky_q_up AS b ON b.account_number = base.account_number AND b.base_dt = base.base_dt 
+			
+
+			--------- UP_SkyQ + MS 
+			
+			
+			UPDATE CS_scoring_base_20171213 a
+			SET a.Order_MS_added_next_60d  = b.Order_MULTISCREEN_PLUS_Added_In_Next_30d
+				, a.Order_MS_removed_next_60d = b.Order_MULTISCREEN_PLUS_Removed_In_Next_30d
+			FROM CS_scoring_base_20171213  as a 
+			join CS_scoring_base_20171213  as b on a.account_number = b.account_number  ANd a.base_dt_2 = b.base_dt					
+			
+			UPDATE CS_scoring_base_20171213
+			SET    UP_skyQ_MS = 1
+			FROM   CS_scoring_base_20171213 AS base
+			JOIN  	#sky_q_up AS b ON b.account_number = base.account_number AND b.base_dt = base.base_dt  AND PrimaryBoxType = 1 
+			WHERE  (Order_MULTISCREEN_PLUS_Added_In_Next_30d +  Order_MS_added_next_60d )- (Order_MULTISCREEN_PLUS_Removed_In_Next_30d + Order_MS_removed_next_60d) > 0
+			
 
 
 	   
@@ -425,7 +451,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 			FROM cust_single_mobile_account_view    AS a
 			JOIN cust_single_mobile_view            AS b ON a.account_number = b.account_number
 			JOIN cust_single_account_view           AS c ON a.portfolio_id = c.acct_fo_portfolio_id
-			JOIN CS_scoring_base_20171120 							AS x ON x.account_number = c.account_number 
+			JOIN CS_scoring_base_20171213 							AS x ON x.account_number = c.account_number 
 														AND a.prod_earliest_mobile_ordered_dt BETWEEN DATEADD(DAY, 1 ,base_dt) AND DATEADD(MONTH, 1,base_dt) 
 			GROUP BY c.account_number, base_dt 
 						
@@ -435,9 +461,9 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 			CREATE DTTM INDEX id3 	ON #mobile (dt)
 			COMMIT
 			
-			UPDATE CS_scoring_base_20171120 a
+			UPDATE CS_scoring_base_20171213 a
 			SET Up_mobile = CASE WHEN cps.account_number IS NOT NULL THEN 1 ELSE 0 END 
-			FROM CS_scoring_base_20171120 a
+			FROM CS_scoring_base_20171213 a
 			LEFT JOIN #mobile AS cps ON a.account_number = cps.account_number AND a.base_dt = cps.base_dt
 			
 			DROP TABLE #mobile
@@ -445,7 +471,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 			
 			--------- Movies / Sports Upsell flags ----
 							
-			UPDATE CS_scoring_base_20171120 
+			UPDATE CS_scoring_base_20171213 
 			SET base_dt_2  = CASE    WHEN base_DT = '2017-02-28' THEN '2017-03-31'
 					WHEN base_DT = '2017-03-31' THEN '2017-04-30'
 					WHEN base_DT = '2017-04-30' THEN '2017-05-31'
@@ -457,26 +483,26 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 					WHEN base_DT = '2017-10-31' THEN '2017-11-30'
 			ELSE NULL END
 								
-			UPDATE CS_scoring_base_20171120 a
+			UPDATE CS_scoring_base_20171213 a
 			SET a.TA_next_30d  = b.TAs_in_last_30d_b
-			FROM CS_scoring_base_20171120  as a 
-			join CS_scoring_base_20171120  as b on a.account_number = b.account_number  ANd a.base_dt_2 = b.base_dt					
+			FROM CS_scoring_base_20171213  as a 
+			join CS_scoring_base_20171213  as b on a.account_number = b.account_number  ANd a.base_dt_2 = b.base_dt					
 
 	
 	
 	
-			UPDATE CS_scoring_base_20171120
+			UPDATE CS_scoring_base_20171213
 			SET UP_movies = 1 
 			WHERE movies_eligible = 1 												
 				AND Order_Movies_Added_In_Next_30d > 0
 				AND Order_Movies_Added_In_Next_30d > Order_Movies_Removed_In_Next_30d
 				AND TA_next_30d = 0
 															
-			UPDATE CS_scoring_base_20171120
+			UPDATE CS_scoring_base_20171213
 			SET UP_sports = 1 
 			WHERE sports_eligible = 1 	
 					AND Order_Sports_Added_In_Next_30d > 0
-					AND Order_Sports_Added_In_Next_30d > Order_Movies_Removed_In_Next_30d
+					AND Order_Sports_Added_In_Next_30d > Order_Sports_Removed_In_Next_30d
 					AND TA_next_30d = 0
 			
 		
@@ -487,10 +513,10 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 
         CREATE Variable @multi BIGINT;
         SET @multi = DATEPART(MS,NOW())+1;
-        ALTER TABLE CS_scoring_base_20171120 ADD rand_num DECIMAL(22,20);
-        UPDATE CS_scoring_base_20171120
+        ALTER TABLE CS_scoring_base_20171213 ADD rand_num DECIMAL(22,20);
+        UPDATE CS_scoring_base_20171213
            SET rand_num = RAND(NUMBER(*)* @multi);
-        CREATE HG INDEX idx1 on CS_scoring_base_20171120(rand_num);    
+        CREATE HG INDEX idx1 on CS_scoring_base_20171213(rand_num);    
 
 -------------------------------------------
 --  2.0 Creating extra variables
@@ -498,7 +524,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 
     --  2.1 PPV Sports Events
 
-        ALTER TABLE CS_scoring_base_20171120
+        ALTER TABLE CS_scoring_base_20171213
         ADD (num_sports_events      INT          DEFAULT NULL
             ,sports_downgrade_date  DATE         DEFAULT NULL 
             ,Sports_Tenure          VARCHAR(20)  DEFAULT NULL 
@@ -517,7 +543,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
                               AND ppv_cancelled_dt = '9999-09-09' THEN 1 ELSE 0 END) AS num_sport_events_12m
 							  
         INTO        #temp_ppv
-        FROM        CS_scoring_base_20171120 a
+        FROM        CS_scoring_base_20171213 a
         INNER JOIN  CUST_PRODUCT_CHARGES_PPV b
         ON          a.account_number   = b.account_number
         WHERE       b.ppv_cancelled_dt = '9999-09-09'
@@ -526,18 +552,18 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
         GROUP BY     a.account_number
                     ,a.base_dt;
 
-        UPDATE      CS_scoring_base_20171120 as a
+        UPDATE      CS_scoring_base_20171213 as a
         SET         a.num_sports_events = b.num_sport_events_12m
         FROM        #temp_ppv as b
         WHERE       a.account_number = b.account_number
         AND         a.base_dt = b.base_dt;
 
-        UPDATE      CS_scoring_base_20171120
+        UPDATE      CS_scoring_base_20171213
         SET          a.sports_downgrade_date = b.sports_downgrade_date 
                     ,a.Sports_Tenure         = b.Sports_Tenure 
                     ,a.movies_downgrade_date = b.movies_downgrade_date 
                     ,a.Movies_Tenure         = b.Movies_Tenure
-        FROM        CS_scoring_base_20171120 As a 
+        FROM        CS_scoring_base_20171213 As a 
         JOIN        citeam.CUST_FCAST_WEEKLY_BASE AS b 
         ON          a.account_number = b.account_number 
         AND         end_date BETWEEN DATEADD(DAY, -6, a.base_dt ) AND a.base_dt;
@@ -546,7 +572,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 		GO
     --  2.2 OD fields
 
-        ALTER TABLE CS_scoring_base_20171120
+        ALTER TABLE CS_scoring_base_20171213
         ADD (OD_Last_3M             INT DEFAULT NULL
             ,OD_Last_12M            INT DEFAULT NULL 
             ,OD_Months_since_Last   INT DEFAULT NULL 
@@ -562,7 +588,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
                     ,SUM(CASE WHEN cast(last_modified_dt AS DATE) BETWEEN dateadd(mm, - 3, base_dt)    AND base_dt THEN 1 ELSE 0 END) AS OD_Last_3M
                     ,SUM(CASE WHEN cast(last_modified_dt AS DATE) BETWEEN dateadd(mm, - 12, base_dt)   AND base_dt THEN 1 ELSE 0 END) AS OD_Last_12M
         INTO        #temp_od
-        FROM        CS_scoring_base_20171120 a
+        FROM        CS_scoring_base_20171213 a
         INNER JOIN  CUST_ANYTIME_PLUS_DOWNLOADS b ON a.account_number = b.account_number
         WHERE       b.last_modified_dt <= base_dt
         GROUP BY    a.account_number, base_dt;
@@ -573,7 +599,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
         CREATE HG Index id1 ON #temp_od(account_number);
         CREATE DATE Index id2 ON #temp_od(base_dt);
 
-        UPDATE      CS_scoring_base_20171120 a
+        UPDATE      CS_scoring_base_20171213 a
         SET          a.OD_Last_3M           = b.OD_Last_3M
                     ,a.OD_Last_12M          = b.OD_Last_12M
                     ,a.OD_Months_since_Last = b.OD_Months_since_Last
@@ -584,14 +610,14 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 		GO
     --  2.3 Recode DTV product holding
 
-        ALTER TABLE CS_scoring_base_20171120 
+        ALTER TABLE CS_scoring_base_20171213 
             ADD DTV_product_holding_recode VARCHAR(40);
            
 		  
 		MESSAGE CAST(now() as timestamp)||' | 17' TO CLIENT;
 		GO
 		   
-        UPDATE      CS_scoring_base_20171120 
+        UPDATE      CS_scoring_base_20171213 
         SET         DTV_product_holding_recode  = CASE WHEN DTV_Product_Holding = 'Box Sets'                                      THEN 'Box Sets'
                                                        WHEN DTV_Product_Holding = 'Box Sets with Cinema'                          THEN 'Box Sets with Cinema'
                                                        WHEN DTV_Product_Holding = 'Box Sets with Cinema 1'                        THEN 'Box Sets with Cinema'
@@ -662,7 +688,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 
 		MESSAGE CAST(now() as timestamp)||' | 18' TO CLIENT;
 		GO
-        ALTER TABLE CS_scoring_base_20171120
+        ALTER TABLE CS_scoring_base_20171213
         ADD         (_1st_TA_reason_flag VARCHAR(15)
                     ,last_TA_reason_flag VARCHAR(15));
 		
@@ -671,7 +697,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 		  
 							 
         
-		UPDATE      CS_scoring_base_20171120
+		UPDATE      CS_scoring_base_20171213
         SET          _1st_TA_reason_flag = CASE WHEN _1st_TA_reason IS NULL THEN 'No reason given' ELSE 'Reason given' END
                     ,last_TA_reason_flag = CASE WHEN last_TA_reason IS NULL THEN 'No reason given' ELSE 'Reason given' END;
 
@@ -682,29 +708,30 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 
         --  2.5.1 Age
 
-            UPDATE      CS_scoring_base_20171120
-            SET          Age = CASE WHEN Age BETWEEN 1916 AND 1999  THEN 2017-Age
-                                   WHEN Age BETWEEN 1816 AND 1899  THEN 1917-Age
-                                   WHEN Age BETWEEN 1016 AND 1099  THEN 1117-Age
-                                   WHEN h_age_fine ='18-25'        THEN 22
-                                   WHEN h_age_fine ='26-30'        THEN 28
-                                   WHEN h_age_fine ='31-35'        THEN 33
-                                   WHEN h_age_fine ='36-40'        THEN 37
-                                   WHEN h_age_fine ='41-45'        THEN 43
-                                   WHEN h_age_fine ='46-50'        THEN 48
-                                   WHEN h_age_fine ='51-55'        THEN 53
-                                   WHEN h_age_fine ='56-60'        THEN 58
-                                   WHEN h_age_fine ='61-65'        THEN 63
-                                   WHEN h_age_fine ='66-70'        THEN 68
-                                   WHEN h_age_fine ='71-75'        THEN 73
-                                   WHEN h_age_fine ='76+'          THEN 80
-                                   WHEN Age BETWEEN 18 AND 101     THEN Age
-                                   ELSE NULL
-                               END;
+            UPDATE      CS_scoring_base_20171213
+            SET          Age = CASE 
+								WHEN Age BETWEEN 18 AND 101     THEN Age
+								WHEN Age BETWEEN 1916 AND 1999  THEN 2017-Age
+								WHEN Age BETWEEN 1816 AND 1899  THEN 1917-Age
+								WHEN Age BETWEEN 1016 AND 1099  THEN 1117-Age
+								WHEN h_age_fine ='18-25'        THEN 22
+								WHEN h_age_fine ='26-30'        THEN 28
+								WHEN h_age_fine ='31-35'        THEN 33
+								WHEN h_age_fine ='36-40'        THEN 37
+								WHEN h_age_fine ='41-45'        THEN 43
+								WHEN h_age_fine ='46-50'        THEN 48
+								WHEN h_age_fine ='51-55'        THEN 53
+								WHEN h_age_fine ='56-60'        THEN 58
+								WHEN h_age_fine ='61-65'        THEN 63
+								WHEN h_age_fine ='66-70'        THEN 68
+								WHEN h_age_fine ='71-75'        THEN 73
+								WHEN h_age_fine ='76+'          THEN 80
+								ELSE NULL
+							END;
 
         --  2.5.2 Missing values
 
-            UPDATE      CS_scoring_base_20171120
+            UPDATE      CS_scoring_base_20171213
             SET          ADSL_Enabled             = CASE WHEN ADSL_Enabled             IS NULL                         THEN 'Unknown' ELSE ADSL_Enabled             END
 																																									   
 						,Exchange_Status          = CASE WHEN Exchange_Status          IS NULL                         THEN 'Unknown' ELSE Exchange_Status          END
@@ -726,7 +753,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
         						
         --  2.5.3 Turn dates into days
 
-            ALTER TABLE CS_scoring_base_20171120
+            ALTER TABLE CS_scoring_base_20171213
             ADD         (DTV_Last_cuscan_churn          INT
                         ,DTV_Last_Activation            INT
                         ,DTV_Curr_Contract_Intended_End INT
@@ -750,7 +777,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 		MESSAGE CAST(now() as timestamp)||' | 20' TO CLIENT;
 		GO
         
-            UPDATE      CS_scoring_base_20171120
+            UPDATE      CS_scoring_base_20171213
             SET          DTV_Last_cuscan_churn          = DATEDIFF(DAY, DTV_Last_CusCan_Churn_Dt, base_dt)
                         ,DTV_Last_Activation            = DATEDIFF(DAY, DTV_Last_Activation_Dt, base_dt)
                         ,DTV_Curr_Contract_Intended_End = DATEDIFF(DAY, DTV_Curr_Contract_Intended_End_Dt, base_dt)
@@ -782,7 +809,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 
         /* Make sure mapped_account_numbers table is updated, check with Robert Barker from the NOW TV Analytics team*/
 
-        ALTER TABLE CS_scoring_base_20171120 
+        ALTER TABLE CS_scoring_base_20171213 
         ADD         (accountid         BIGINT
                     ,NTV_Ents_Last_30D BIT DEFAULT 0
                     ,NTV_Ents_Last_90D BIT DEFAULT 0);
@@ -790,18 +817,18 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 
 		MESSAGE CAST(now() as timestamp)||' | 22' TO CLIENT;
 		GO
-        UPDATE      CS_scoring_base_20171120
+        UPDATE      CS_scoring_base_20171213
         SET         accountid = mapped.accountid
-        FROM        CS_scoring_base_20171120 csr
+        FROM        CS_scoring_base_20171213 csr
         INNER JOIN  tva02.mapped_account_numbers mapped
         ON          csr.account_number = mapped.account_number;
 
-        CREATE HG INDEX id_accid ON CS_scoring_base_20171120 (accountid);
+        CREATE HG INDEX id_accid ON CS_scoring_base_20171213 (accountid);
 			
 		  
 						 
 
-        UPDATE      CS_scoring_base_20171120 csr
+        UPDATE      CS_scoring_base_20171213 csr
         SET         NTV_Ents_Last_30D = 1
         FROM        citeam.nowtv_accounts_ents ntvents
         WHERE       csr.accountid = ntvents.accountid
@@ -810,7 +837,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
         AND         DATEDIFF(dd, csr.base_dt, ntvents.period_start_date) <= 0
         AND         ntvents.accountid IS NOT NULL;
 
-        UPDATE      CS_scoring_base_20171120 csr
+        UPDATE      CS_scoring_base_20171213 csr
         SET         NTV_Ents_Last_90D = 1
         FROM        citeam.nowtv_accounts_ents ntvents
         WHERE       csr.accountid = ntvents.accountid
@@ -824,7 +851,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 		
     --  2.7 Rentals and BAK Variables
 			
-			ALTER TABLE CS_scoring_base_20171120
+			ALTER TABLE CS_scoring_base_20171213
 		ADD ( rentals_months_since_last INT DEFAULT NULL 
 			, rents_6M INT DEFAULT NULL 
 			, rents_9M INT DEFAULT NULL 
@@ -844,7 +871,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 				, base_dt
 			INTO #last_rental
 			FROM Decisioning.OTT_Purchases 	AS a 
-			JOIN CS_scoring_base_20171120 					AS b  ON a.account_number = b.account_number AND a.ordered_dt <= base_dt
+			JOIN CS_scoring_base_20171213 					AS b  ON a.account_number = b.account_number AND a.ordered_dt <= base_dt
 			WHERE movie_order = 1 
 				AND movie_cancelled_order = 0 
 			GROUP BY b.account_number, base_dt;
@@ -854,13 +881,13 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 			CREATE DATE INDEX id2 	ON #last_rental (max_dt);
 			COMMIT;
 
-			UPDATE CS_scoring_base_20171120
+			UPDATE CS_scoring_base_20171213
 			SET 
 				rentals_months_since_last = DATEDIFF (MONTH, b.max_dt, b.base_dt)
 				, a.rents_6M = b.rentals_6M
 				, a.rents_9M = b.rentals_9M
 				, a.rents_12M = b.rentals_12M
-			FROM CS_scoring_base_20171120 AS a 
+			FROM CS_scoring_base_20171213 AS a 
 			JOIN #last_rental AS b ON a.account_number = b.account_number AND a.basE_dt = b.basE_dt;
 			
 			COMMIT;
@@ -873,7 +900,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 				, base_dt
 			INTO #BAK
 			FROM Decisioning.OTT_Purchases 	AS a 
-			JOIN CS_scoring_base_20171120 					AS b  ON a.account_number = b.account_number AND a.ordered_dt <= base_dt
+			JOIN CS_scoring_base_20171213 					AS b  ON a.account_number = b.account_number AND a.ordered_dt <= base_dt
 			WHERE product_type = 'EST'
 			GROUP BY b.account_number, base_dt
             
@@ -884,17 +911,17 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 			CREATE DATE INDEX id3 	ON #BAK (max_dt)
 			COMMIT
 			
-			UPDATE CS_scoring_base_20171120 a
+			UPDATE CS_scoring_base_20171213 a
 			SET  a.BAK_time_since_last = DATEDIFF (MONTH, b.max_dt, b.base_dt)
 				, a.BAK_6M = b.BAK_6M
 				, a.BAK_9M = b.BAK_9M
 				, a.BAK_12M = b.BAK_12M
-			FROM CS_scoring_base_20171120 a
+			FROM CS_scoring_base_20171213 a
 			LEFT JOIN #BAK AS b ON a.account_number = b.account_number AND a.base_dt = b.base_dt
 		/*	
 			SELECT 
 			rents_6M, bak_6M, count(*) hits 
-			FROM CS_scoring_base_20171120
+			FROM CS_scoring_base_20171213
 			group by rents_6M, bak_6M			
 			
 			*/
@@ -904,7 +931,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 
 
 
-			ALTER TABLE CS_scoring_base_20171120
+			ALTER TABLE CS_scoring_base_20171213
 			ADD ( HD_VAL	int	DEFAULT 6		,
 					BB_VAL	int	DEFAULT 6		,
 					BK_VAL	int	DEFAULT 6		,
@@ -931,7 +958,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 			
 			GO 
 			
-			UPDATE  CS_scoring_base_20171120
+			UPDATE  CS_scoring_base_20171213
 			SET a.HD_VAL = b.HD_VAL	,
 					a.BB_VAL = b.BB_VAL	,
 					a.BK_VAL = b.BK_VAL	,
@@ -953,7 +980,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 					a.SKYQ_PREPREG_VAL = b.SKYQ_PREPREG_VAL	,
 					a.UHD_VAL = b.UHD_VAL	,
 					a.NOWTV_VAL = b.NOWTV_VAL	
-			FROM CS_scoring_base_20171120 as a 
+			FROM CS_scoring_base_20171213 as a 
 			JOIN TECI_current_score as b on a.account_number = b.account_number 
 -------------------------------------------
 --  3.0 Create final tables
@@ -961,7 +988,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 
     --  3.1 Create binning table
         
-        DROP TABLE IF EXISTS CS_scoring_base_20171120_BINNED;
+        DROP TABLE IF EXISTS CS_scoring_base_20171213_BINNED;
         SELECT       account_number
                     ,base_dt
                     ,rand_num
@@ -1100,8 +1127,8 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 					,CASE WHEN BB_Enter_3rd_Party_Ever  = 0 THEN '0'
                           WHEN BB_Enter_3rd_Party_Ever >= 1 THEN '1'
                           WHEN BB_Enter_3rd_Party_Ever >= 2 THEN '2'
-                          WHEN BB_Enter_3rd_Party_Ever >= 3 THEN '3'
-                          WHEN BB_Enter_3rd_Party_Ever >= 4 THEN 'ge4' END AS BB_Enter_3rd_Party_Ever_b
+                          WHEN BB_Enter_3rd_Party_Ever >= 3 THEN '3'  
+                          WHEN BB_Enter_3rd_Party_Ever >= 4 THEN 'ge4' END AS BB_3rdParty_PL_Entry_Ever_b
                     ,CASE WHEN BB_Enter_3rd_Party_In_Last_180D  = 0 THEN '0'
                           WHEN BB_Enter_3rd_Party_In_Last_180D >= 1 THEN '1'
                           WHEN BB_Enter_3rd_Party_In_Last_180D >= 2 THEN '2'
@@ -1841,19 +1868,19 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 					, TA_next_30d
 	
 	
-        INTO        CS_scoring_base_20171120_BINNED
-        FROM        CS_scoring_base_20171120
+        INTO        CS_scoring_base_20171213_BINNED
+        FROM        CS_scoring_base_20171213
         WHERE       country = 'UK'
         --AND         base_dt BETWEEN @start_date AND @end_date_lag; -- Because we don't know upsell for last month
 
-        CREATE HG INDEX id1 ON CS_scoring_base_20171120_BINNED (account_number);
-        CREATE DATE INDEX iddt ON CS_scoring_base_20171120_BINNED (base_dt);
+        CREATE HG INDEX id1 ON CS_scoring_base_20171213_BINNED (account_number);
+        CREATE DATE INDEX iddt ON CS_scoring_base_20171213_BINNED (base_dt);
         
 		MESSAGE CAST(now() as timestamp)||' | 23' TO CLIENT;
 		GO
     --  3.2 Create base table
 
-        DROP TABLE  IF EXISTS CS_scoring_base_20171120_BASE;
+        DROP TABLE  IF EXISTS CS_scoring_base_20171213_BASE;
         SELECT      
                      account_number
                     ,base_dt
@@ -2243,7 +2270,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 					
             CREATE OR REPLACE VIEW cs_rentals_binned AS 
             SELECT      *
-            FROM        CS_scoring_base_20171120_BINNED
+            FROM        CS_scoring_base_20171213_BINNED
             WHERE       Rental_eligible = 1 AND base_dt <='2017-08-01';
 
             CREATE OR REPLACE VIEW cs_rentals_binned_smpl AS 
@@ -2265,7 +2292,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
             
             CREATE OR REPLACE VIEW cs_bak_binned as 
             SELECT      *
-            FROM        CS_scoring_base_20171120_BINNED
+            FROM        CS_scoring_base_20171213_BINNED
             WHERE       Buy_and_keep_eligible = 1 AND base_dt <='2017-08-01';
 
             CREATE OR REPLACE VIEW	cs_bak_binned_smpl as 
@@ -2283,7 +2310,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
             
 			CREATE OR REPLACE VIEW	cs_Q_binned as 
             SELECT      *
-            FROM        CS_scoring_base_20171120_BINNED
+            FROM        CS_scoring_base_20171213_BINNED
             WHERE       SkyQ_eligible = 1;
 
             CREATE OR REPLACE VIEW	cs_Q_binned_rsmpl as 
@@ -2301,7 +2328,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 					
 			CREATE OR REPLACE VIEW	cs_mobile_binned as 
             SELECT      *
-            FROM        CS_scoring_base_20171120_BINNED
+            FROM        CS_scoring_base_20171213_BINNED
             WHERE       mobile_eligible = 1;
 
             CREATE OR REPLACE VIEW	cs_mobile_binned_rsmpl as 
@@ -2318,8 +2345,8 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 			
     --  3.5 Permissions to public
         
-        GRANT SELECT ON CS_scoring_base_20171120 TO PUBLIC;
-        GRANT SELECT ON CS_scoring_base_20171120_BINNED TO PUBLIC;
+        GRANT SELECT ON CS_scoring_base_20171213 TO PUBLIC;
+        GRANT SELECT ON CS_scoring_base_20171213_BINNED TO PUBLIC;
         GRANT SELECT ON cs_base2 TO PUBLIC;
         GRANT SELECT ON cs_mobile_binned TO PUBLIC;
         GRANT SELECT ON cs_mobile_binned_smpl TO PUBLIC;
@@ -2464,5 +2491,8 @@ CREATE VIEW cs_mobile_binned_smpl_REDUCED AS
 ,	SGE_Active
 ,	SGE_Product_Holding
 FROM cs_mobile_binned_smpl
+		
+		
+		
 		
 		

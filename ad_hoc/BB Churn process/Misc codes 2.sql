@@ -58,7 +58,7 @@ SELECT a.subs_week_and_year
 FROM pitteloudj.DTV_FCAST_WEEKLY_BASE AS agg
 INNER JOIN citeam.CUST_FCAST_WEEKLY_BASE AS a ON a.account_number = agg.account_number AND a.end_date = agg.end_date
 LEFT JOIN pitteloudj.BB_SABB_Churn_segments_lookup AS d ON agg.BB_offer_rem_and_end = d.BB_offer_rem_and_end AND agg.BB_tenure = d.BB_tenure AND agg.my_sky_login_3m = d.my_sky_login_3m AND agg.talk_type = d.talk_type AND agg.home_owner_status = d.home_owner_status AND agg.BB_all_calls_1m = d.BB_all_calls_1m
-WHERE end_date BETWEEN '2017-01-01' AND '2017-12-31' 
+WHERE end_date BETWEEN '2017-10-20' AND '2017-12-31' 
 
 
 
@@ -71,6 +71,7 @@ JOIN CUST_SUBS_HIST AS b ON a.account_number= b.account_number AND a.end_date BE
 						
 WHERE 		a.account_number is not null
 			AND        	a.account_number <> '?'
+			 AND end_date BETWEEN '2017-10-20' AND '2017-12-31' 
 GO 
 UPDATE CUST_CONSOLIDATED_2016
 SET sky_plus = 1 

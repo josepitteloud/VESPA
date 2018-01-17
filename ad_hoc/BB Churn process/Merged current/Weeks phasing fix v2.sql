@@ -22,7 +22,7 @@ LEFT JOIN sky_calendar AS b ON x.subs_week_and_year = b.subs_week_and_year  AND 
 WHERE now_v1 = 0 
 GROUP BY a.subs_week_and_year , churn_type , eom, end_date 
 ORDER by churn_type, a.subs_week_and_year 
-
+  
 COMMIT 
 ------ Adding week number within the batch (Quarter)
 
@@ -166,5 +166,5 @@ CREATE OR REPLACE VIEW FORECAST_Looped_Sim_Output_Platform_fixed
 AS 
 SELECT a.*, b.new_week, new_end_date
 FROM FORECAST_Looped_Sim_Output_Platform 	AS a 
-JOIN weeks_fix_draft 						AS b ON a.account_number = b.account_number AND a.subs_week_and_year = b.subs_week_and_year
+LEFT JOIN weeks_fix_draft 						AS b ON a.account_number = b.account_number AND a.subs_week_and_year = b.subs_week_and_year
 COMMIT

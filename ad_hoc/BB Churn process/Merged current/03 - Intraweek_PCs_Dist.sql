@@ -39,44 +39,24 @@ BEGIN
 				WHEN Enter_3rd_Party > 0 THEN '3rd Party' 
 				ELSE NULL END AS Churn_type
 	INTO #Acc_PC_Events_Same_Week
-	FROM citeam.Broadband_Comms_Pipeline AS MoR
-	LEFT JOIN citeam.Offers_Software AS oua ON oua.account_number = mor.account_number AND oua.offer_leg_start_dt_Actual = MoR.PC_Effective_To_Dt AND MoR.PC_Next_Status_Code = 'AC' 
-									AND lower(oua.offer_dim_description) NOT LIKE '%price protection%' AND oua.subs_type = 'Broadband DSL Line'
-	JOIN (	SELECT DISTINCT account_number FROM citeam.CUST_Fcast_Weekly_Base	
+	FROM CITeam.PL_Entries_BB AS MoR
+	LEFT JOIN Decisioning.Offers_Software AS oua ON oua.account_number = mor.account_number 
+									AND oua.offer_leg_start_dt_Actual = MoR.PC_Effective_To_Dt AND MoR.PC_Next_Status_Code = 'AC' 
+									AND oua.offer_leg_start_dt_Actual = oua.Whole_offer_Start_Dt_Actual 
+									AND lower(oua.offer_dim_description) NOT LIKE '%price protection%' 
+									AND oua.subscription_sub_type = 'Broadband DSL Line'
+	LEFT JOIN citeam.nowtv_accounts_ents AS c ON c.account_number = MoR.account_number AND MoR.End_date BETWEEN period_start_date AND period_end_date										
+	JOIN (	SELECT DISTINCT account_number 
+			FROM citeam.Cust_Weekly_Base	
 			WHERE end_date BETWEEN @Lw6dt AND @Hw6dt
-			AND DTV_active = 0 AND bb_active = 1 ) AS y ON y.account_number = MoR.account_number
+				AND DTV_active = 0 
+				AND bb_active = 1 
+				AND skyplus_active = 0) AS y ON y.account_number = MoR.account_number
 	WHERE   mor.event_dt BETWEEN @Lw6dt AND @Hw6dt -- Last 6 Wk PC conversions
-		AND mor.status_code = 'PC';
+		AND mor.status_code = 'PC'
+		AND c.account_number IS NULL		-- Exclude Now TV
+		;
 
-	--------------------------------------------------------------------------------------------------------------------------------------------		
-	
-	
-				
-	SELECT DISTINCT a.account_number, 1 sky_plus
-	INTO #skyplus
-	FROM   CUST_SUBS_HIST 		AS a
-	JOIN   #Acc_PC_Events_Same_Week AS b ON a.account_number = b.account_number 
-	WHERE  subscription_sub_type = 'DTV Sky+'
-		AND        	status_code='AC'
-		AND        	first_activation_dt<=today()               
-		AND        	a.account_number is not null
-		AND        	a.account_number <> '?'
-		AND     	@Hw6dt BETWEEN effective_from_dt AND effective_to_dt ;
-						
-	DELETE FROM #Acc_PC_Events_Same_Week
-	WHERE account_number IN (SELECT account_number FROM #skyplus);
-	DROP TABLE #skyplus;
-	--------------------------------------------------------------------------------------------------------------------------------------------
-	-------------------------------------------------------------------------------------------------------------------------------------------		
-	SELECT DISTINCT a.account_number, 1 nowtv
-	INTO 		#nowtv
-	FROM        citeam.nowtv_accounts_ents   AS csav
-	JOIN 		#Acc_PC_Events_Same_Week AS a ON a.account_number= csav.account_number
-	WHERE       @Hw6dt BETWEEN  period_start_date AND period_end_date;
-						
-	DELETE FROM #Acc_PC_Events_Same_Week
-	WHERE account_number IN (SELECT account_number FROM #nowtv);
-	DROP TABLE #nowtv;
 	--------------------------------------------------------------------------------------------------------------------------------------------	
 		
 	

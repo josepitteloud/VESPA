@@ -25,8 +25,9 @@ BEGIN
 	FROM /*CITeam.*/Subs_Calendar(@ForeCAST_Start_Wk / 100, @ForeCAST_End_Wk / 100)
 
 	UPDATE ForeCAST_Loop_Table AS a
-	SET subs_week_and_year = sc.subs_week_and_year
-		, subs_week_of_year = sc.subs_week_of_year
+	SET a.subs_week_and_year = sc.subs_week_and_year
+		, a.subs_week_of_year = sc.subs_week_of_year
+		, a.subs_year = sc.subs_year
 	FROM ForeCAST_Loop_Table AS a
 	INNER JOIN #Loop_Sky_Calendar AS sc ON sc.calendar_date = a.end_date + 7
 

@@ -469,12 +469,7 @@ SELECT
 	,BB_Enter_CusCan
 	,BB_Enter_HM
 	,BB_Enter_3rd_Party
-	,DTV_PC
-	,DTV_AB
-	,DTV_Churn
-	,Churn_Type
-	,Same_Day_Cancels
-	,Triple_Play_Churn
+	
 	--------- Product Info
 	,DTV_Active
 	,BB_Active
