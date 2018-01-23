@@ -128,3 +128,7 @@ JOIN (SELECT MIN(calendar_date ) - 1 AS dt , subs_week_and_year FROM  sky_calend
 GO
 
 GRANT ALL ON BB_Churn_cancellations_11 to spencerc2
+
+
+
+
