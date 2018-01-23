@@ -23,6 +23,8 @@ BEGIN
 	SET @Lw6dt = (SELECT max(calendar_date - 6 - 5 * 7) FROM #sky_calendar WHERE subs_week_and_year = ForeCAST_Start_Week );
 	SET @Hw6dt = (SELECT max(calendar_date) FROM #sky_calendar WHERE subs_week_and_year = ForeCAST_Start_Week ) ;
 	
+	message cast(now() AS TIMESTAMP) || ' | Intraweek_PCs_Dist - @Lw6dt: '||@Lw6dt TO client;
+	message cast(now() AS TIMESTAMP) || ' | Intraweek_PCs_Dist - @Hw6dt: '||@Hw6dt TO client;
 	
 	SELECT 
 		 mor.subs_week_and_year
@@ -45,7 +47,7 @@ BEGIN
 									AND oua.offer_leg_start_dt_Actual = oua.Whole_offer_Start_Dt_Actual 
 									AND lower(oua.offer_dim_description) NOT LIKE '%price protection%' 
 									AND oua.subscription_sub_type = 'Broadband DSL Line'
-	LEFT JOIN citeam.nowtv_accounts_ents AS c ON c.account_number = MoR.account_number AND MoR.End_date BETWEEN period_start_date AND period_end_date										
+	LEFT JOIN citeam.nowtv_accounts_ents AS c ON c.account_number = MoR.account_number AND MoR.event_dt BETWEEN period_start_date AND period_end_date										
 	JOIN (	SELECT DISTINCT account_number 
 			FROM citeam.Cust_Weekly_Base	
 			WHERE end_date BETWEEN @Lw6dt AND @Hw6dt
@@ -57,6 +59,7 @@ BEGIN
 		AND c.account_number IS NULL		-- Exclude Now TV
 		;
 
+	message cast(now() AS TIMESTAMP) || ' | Intraweek_PCs_Dist - #Acc_PC_Events_Same_Week: '||@@rowcount TO client;
 	--------------------------------------------------------------------------------------------------------------------------------------------	
 		
 	
