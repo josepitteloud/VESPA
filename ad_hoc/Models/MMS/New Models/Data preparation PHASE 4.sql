@@ -106,11 +106,13 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
         CALL Decisioning_procs.Add_Active_Subscriber_Product_Holding('CS_Raw','Base_Dt','MULTISCREEN');
         CALL Decisioning_procs.Add_Active_Subscriber_Product_Holding('CS_Raw','Base_Dt','SGE');
 		CALL Decisioning_Procs.Add_Active_Subscriber_Product_Holding('CS_Raw','Base_Dt','HD');
-
+		
 		MESSAGE CAST(now() as timestamp)||' | 1.2.1' TO CLIENT;
 
 		CALL Decisioning_Procs.Add_Activations_DTV	('CS_Raw','Base_Dt');
         CALL Decisioning_Procs.Add_Activation_BB	('CS_Raw','Base_Dt');
+		CALL Decisioning_Procs.Add_Activations_Prems('CS_Raw','Base_Dt','Sports');
+		CALL Decisioning_Procs.Add_Activations_Prems('CS_Raw','Base_Dt','Movies');
 	
 		MESSAGE CAST(now() as timestamp)||' | 1.2.2' TO CLIENT;
 		
@@ -329,9 +331,11 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
                         ,_1st_TA_save                   = DATEDIFF(DAY, _1st_TA_save_dt, base_dt)
                         ,last_TA_save                   = DATEDIFF(DAY, last_TA_save_dt, base_dt)
                         ,_1st_TA_nonsave                = DATEDIFF(DAY, _1st_TA_nonsave_dt, base_dt)
-                        ,last_TA_nonsave                = DATEDIFF(DAY, last_TA_nonsave_dt, base_dt);
-
-							
+                        ,last_TA_nonsave                = DATEDIFF(DAY, last_TA_nonsave_dt, base_dt)
+						,Last_movies_downgrade	     	= DATEDIFF(DAY, Sports_Last_Activation_Dt, base_dt)
+						,Last_sports_downgrade		    = DATEDIFF(DAY, Movies_Last_Activation_Dt, base_dt)
+						;
+					
 		MESSAGE CAST(now() as timestamp)||' | 2.3' TO CLIENT;
 	 
 	
@@ -571,6 +575,7 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 					AND     (a.bb_active = 0 OR a.bb_product_holding is NULL)
 					AND     (a.skyfibre_enabled = 'Y' 
 						OR   a.skyfibre_estimated_enabled_date BETWEEN a.base_dt AND DATEADD(DAY, 28, a.base_dt))
+					THEN 1 ELSE 0 END 				AS Fibre_eligible
 			, CASE WHEN (Order_BB_FIBRE_CAP_Added_In_Next_30d           > 0
 					OR 	 Order_BB_FIBRE_UNLIMITED_Added_In_Next_30d     > 0
 					OR   Order_BB_FIBRE_UNLIMITED_PRO_Added_In_Next_30d > 0)  THEN 1 ELSE 0 END AS  Up_Fibre 
@@ -905,6 +910,10 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 			AND sports_eligible = 1;
 		
 	
+	
+	
+	
+	
 		CREATE OR REPLACE VIEW CS_sports_over
 		AS
 		SELECT 
@@ -1031,126 +1040,3 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 		--------------------------------------******************************************----------------------------
 		--------------------------------------******************************************----------------------------
 */
-
-		
-CREATE VIEW cs_mobile_binned_smpl_REDUCED AS 	
-	SELECT
-			account_number
-,	UP_movies
-,	Age
-,	BB_Product_Holding
-,	DTV_Product_Holding
-,	Exchange_Status
-,	financial_strategy
-,	Home_Owner_Status
-,	h_affluence
-,	h_family_lifestage
-,	h_household_composition
-,	h_mosaic_group
-,	h_presence_of_child_aged
-,	h_presence_of_child_aged
-,	h_presence_of_child_aged
-,	h_property_type
-,	h_residence_type
-,	h_income_value
-,	p_true_touch_group
-,	skyfibre_enabled
-,	BB_Active
-,	Broadband_Average_Demand
-,	DTV_Active
-,	Prev_Offer_Amount_DTV
-,	Superfast_Available_End_
-,	h_presence_of_young_pers
-,	DTV_Last_cuscan_churn
-,	DTV_Last_Activation
-,	DTV_Curr_Contract_Intend
-,	DTV_Last_SysCan_Churn
-,	Curr_Offer_Start_DTV
-,	Curr_Offer_Actual_End_DT
-,	DTV_1st_Activation
-,	DTV_Last_Active_Block
-,	DTV_Last_Pending_Cancel
-,	BB_Last_Activation
-,	DTV_CusCan_Churns_Ever
-,	Dtv_Package
-,	DTV_product_holding_reco
-,	Curr_Offer_Length_DTV_b
-,	Prev_Offer_Length_DTV_b
-,	Curr_Offer_Amount_DTV_fl
-,	Prev_Offer_Amount_DTV_fl
-,	h_number_of_bedrooms_b
-,	h_number_of_children_in_
-,	h_number_of_adults_b
-,	p_true_touch_type
-,	Curr_Offer_Amount_DTV_b
-,	Prev_Offer_Amount_DTV_b
-,	BB_3rdParty_PL_Entry_Eve
-,	BB_Churns_Last_1Yr_b
-,	BB_Churns_Last_3Yr_b
-,	BB_Enter_CusCan_Ever_
-,	BB_HomeMove_PL_Entry_Las
-,	BB_SysCan_PL_Entry_Last_
-,	DTV_Active_Blocks_Ever_b
-,	DTV_Active_Blocks_Last_1
-,	DTV_Churns_Ever_b
-,	DTV_CusCan_Churns_Last_1
-,	DTV_Pending_Cancels_Last
-,	DTV_PO_Cancellations_Las
-,	Offers_Applied_Lst_12M_D
-,	Offers_Applied_Lst_24M_D
-,	Offers_Applied_Lst_90D_D
-,	dtv_last_tenure
-,	dtv_1st_tenure
-,	bb_last_tenure
-,	MS_Last_Activation
-,	SGE_Last_Activation
-,	DTV_contract_segment
-,	BB_contract_segment
-,	TAs_in_last_60d_b
-,	TA_saves_in_last_90d_b
-,	TA_saves_in_last_12m_b
-,	TA_saves_in_last_36m_b
-,	TA_nonsaves_in_last_24m_
-,	last_TA_b
-,	_1st_TA_save_b
-,	last_TA_save_b
-,	last_TA_nonsave_b
-,	last_TA_reason
-,	last_TA_reason_flag
-,	last_TA_outcome
-,	num_sports_events
-,	sports_downgrade_date
-,	Sports_Tenure
-,	movies_downgrade_date
-,	Movies_Tenure
-,	Movies_Product_Holding
-,	HD_VAL
-,	BB_VAL
-,	BK_VAL
-,	VOD_VAL
-,	FIBRE_VAL
-,	SKYGO_VAL
-,	SERVICEAPP_VAL
-,	CW_VAL
-,	THREED_VAL
-,	MS_VAL
-,	SHIELD_VAL
-,	SKYQ_2TB_VAL
-,	BB_Provider
-,	OD_Last_3M
-,	OD_Months_since_Last
-,	BAK_6M
-,	BAK_time_since_last
-,	rents_12M
-,	rentals_months_since_las
-,	Sports_Product_Holding
-,	Sports_Product_Count
-,	MS_Active
-,	SGE_Active
-,	SGE_Product_Holding
-FROM cs_mobile_binned_smpl
-		
-		
-		
-		
-		
