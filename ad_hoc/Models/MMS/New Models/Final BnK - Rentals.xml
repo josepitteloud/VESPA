@@ -1,0 +1,2388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<_ROOT_ EMVERSION="14.1" ORIENTATION="HORIZONTAL">
+<Workspace>
+<NODES>
+<NODE CLASS="SASHELP.EMUTIL.CONTROLPOINT.CLASS" COMPONENT="ControlPoint" ID="CNTRL2" X="1650" Y="495" DESCRIPTION="Control Point (2)" DIAGRAMID="_ROOT_" PARENTID="">
+<PROPERTIES/>
+</NODE>
+<NODE CLASS="SASHELP.EMUTIL.CONTROLPOINT.CLASS" COMPONENT="ControlPoint" ID="CNTRL3" X="1650" Y="792" DESCRIPTION="Control Point (3)" DIAGRAMID="_ROOT_" PARENTID="">
+<PROPERTIES/>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EMCODETOOL.CLASS" COMPONENT="Decisions" ID="Dec4" X="1056" Y="462" DESCRIPTION="Decisions (4)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODEL" TOOLPREFIX="Dec">
+<PROPERTIES Location="CATALOG" Catalog="SASHELP.EMASSMT.DECISIONS.SOURCE" ApplyDecisions="Y" ResetDecInfo="N" ToolType="MODEL" Decision="CUSTOM" Matrix="NONE" Prior="NONE" ForceRun="N" RunAction="Train" Component="Decisions">
+<VariableProperties/>
+<EmVariableAttributes/>
+<EmTargetAttributes>
+<UP_buy_and_Keep>
+<DecData Table="EMWS4.Dec4_UP_buy_and_Keep_DD">
+<Data>
+<Obs UP_BUY_AND_KEEP="1" COUNT="272394" DATAPRIOR="0.3812681626" TRAINPRIOR="0.704133385" DECPRIOR="0.12" DECISION1="8.3333333333" DECISION2="0"/>
+<Obs UP_BUY_AND_KEEP="0" COUNT="114456" DATAPRIOR="0.6187318374" TRAINPRIOR="0.295866615" DECPRIOR="0.88" DECISION1="0" DECISION2="1.1363636364"/>
+</Data>
+<Metadata>
+<Variable NAME="UP_buy_and_Keep" LABEL="" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="COUNT" LABEL="Level Counts" LENGTH="8" FORMAT="10." TYPE="N"/>
+<Variable NAME="DATAPRIOR" LABEL="Data Proportions" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="TRAINPRIOR" LABEL="Training Proportions" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="DECPRIOR" LABEL="Decision Priors" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="DECISION1" LABEL="1" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="DECISION2" LABEL="0" LENGTH="8" FORMAT="" TYPE="N"/>
+</Metadata>
+</DecData>
+<DecMeta Table="EMWS4.Dec4_UP_buy_and_Keep_DM">
+<Data>
+<Obs _TYPE_="MATRIX" VARIABLE="" LABEL="" LEVEL="PROFIT" EVENT="" ORDER="" FORMAT="" TYPE="" COST="" USE="N"/>
+<Obs _TYPE_="TARGET" VARIABLE="UP_buy_and_Keep" LABEL="UP_buy_and_Keep" LEVEL="BINARY" EVENT="1" ORDER="" FORMAT="1.0" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="DATAPRIOR" VARIABLE="DATAPRIOR" LABEL="Data Prior" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="N"/>
+<Obs _TYPE_="TRAINPRIOR" VARIABLE="TRAINPRIOR" LABEL="Training Prior" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="N"/>
+<Obs _TYPE_="DECPRIOR" VARIABLE="DECPRIOR" LABEL="Decision Prior" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+<Obs _TYPE_="PREDICTED" VARIABLE="P_UP_buy_and_Keep1" LABEL="Predicted: UP_buy_and_Keep=1" LEVEL="1" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="RESIDUAL" VARIABLE="R_UP_buy_and_Keep1" LABEL="Residual: UP_buy_and_Keep=1" LEVEL="1" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="PREDICTED" VARIABLE="P_UP_buy_and_Keep0" LABEL="Predicted: UP_buy_and_Keep=0" LEVEL="0" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="RESIDUAL" VARIABLE="R_UP_buy_and_Keep0" LABEL="Residual: UP_buy_and_Keep=0" LEVEL="0" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="FROM" VARIABLE="F_UP_buy_and_Keep" LABEL="From: UP_buy_and_Keep" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="C" COST="" USE=""/>
+<Obs _TYPE_="INTO" VARIABLE="I_UP_buy_and_Keep" LABEL="Into: UP_buy_and_Keep" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="C" COST="" USE=""/>
+<Obs _TYPE_="DECISION" VARIABLE="DECISION1" LABEL="1" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+<Obs _TYPE_="DECISION" VARIABLE="DECISION2" LABEL="0" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+</Data>
+<Metadata>
+<Variable NAME="_TYPE_" LABEL="Type" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="VARIABLE" LABEL="Variable" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="LABEL" LABEL="Label" LENGTH="256" FORMAT="" TYPE="C"/>
+<Variable NAME="LEVEL" LABEL="Measurement Level" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="EVENT" LABEL="Target Event" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="ORDER" LABEL="Order" LENGTH="10" FORMAT="" TYPE="C"/>
+<Variable NAME="FORMAT" LABEL="Format" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="TYPE" LABEL="Type" LENGTH="1" FORMAT="" TYPE="C"/>
+<Variable NAME="COST" LABEL="Cost" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="USE" LABEL="Use" LENGTH="1" FORMAT="" TYPE="C"/>
+</Metadata>
+</DecMeta>
+</UP_buy_and_Keep>
+</EmTargetAttributes>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EMCODETOOL.CLASS" COMPONENT="Decisions" ID="Dec5" X="1056" Y="759" DESCRIPTION="Decisions (5)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODEL" TOOLPREFIX="Dec">
+<PROPERTIES Location="CATALOG" Catalog="SASHELP.EMASSMT.DECISIONS.SOURCE" ApplyDecisions="Y" ResetDecInfo="N" ToolType="MODEL" Decision="CUSTOM" Matrix="NONE" Prior="NONE" ForceRun="N" RunAction="Train" Component="Decisions">
+<VariableProperties/>
+<EmVariableAttributes/>
+<EmTargetAttributes>
+<UP_buy_and_Keep>
+<DecData Table="EMWS4.Dec5_UP_buy_and_Keep_DD">
+<Data>
+<Obs UP_BUY_AND_KEEP="1" COUNT="53483" DATAPRIOR="0.095416075" TRAINPRIOR="0.095416075" DECPRIOR="0.01" DECISION1="100" DECISION2="0"/>
+<Obs UP_BUY_AND_KEEP="0" COUNT="507041" DATAPRIOR="0.904583925" TRAINPRIOR="0.904583925" DECPRIOR="0.99" DECISION1="0" DECISION2="1.0101010101"/>
+</Data>
+<Metadata>
+<Variable NAME="UP_buy_and_Keep" LABEL="" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="COUNT" LABEL="Level Counts" LENGTH="8" FORMAT="10." TYPE="N"/>
+<Variable NAME="DATAPRIOR" LABEL="Data Proportions" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="TRAINPRIOR" LABEL="Training Proportions" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="DECPRIOR" LABEL="Decision Priors" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="DECISION1" LABEL="1" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="DECISION2" LABEL="0" LENGTH="8" FORMAT="" TYPE="N"/>
+</Metadata>
+</DecData>
+<DecMeta Table="EMWS4.Dec5_UP_buy_and_Keep_DM">
+<Data>
+<Obs _TYPE_="MATRIX" VARIABLE="" LABEL="" LEVEL="PROFIT" EVENT="" ORDER="" FORMAT="" TYPE="" COST="" USE="Y"/>
+<Obs _TYPE_="TARGET" VARIABLE="UP_buy_and_Keep" LABEL="UP_buy_and_Keep" LEVEL="BINARY" EVENT="1" ORDER="" FORMAT="1.0" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="DATAPRIOR" VARIABLE="DATAPRIOR" LABEL="Data Prior" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="N"/>
+<Obs _TYPE_="TRAINPRIOR" VARIABLE="TRAINPRIOR" LABEL="Training Prior" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="N"/>
+<Obs _TYPE_="DECPRIOR" VARIABLE="DECPRIOR" LABEL="Decision Prior" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+<Obs _TYPE_="PREDICTED" VARIABLE="P_UP_buy_and_Keep1" LABEL="Predicted: UP_buy_and_Keep=1" LEVEL="1" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="RESIDUAL" VARIABLE="R_UP_buy_and_Keep1" LABEL="Residual: UP_buy_and_Keep=1" LEVEL="1" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="PREDICTED" VARIABLE="P_UP_buy_and_Keep0" LABEL="Predicted: UP_buy_and_Keep=0" LEVEL="0" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="RESIDUAL" VARIABLE="R_UP_buy_and_Keep0" LABEL="Residual: UP_buy_and_Keep=0" LEVEL="0" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="FROM" VARIABLE="F_UP_buy_and_Keep" LABEL="From: UP_buy_and_Keep" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="C" COST="" USE=""/>
+<Obs _TYPE_="INTO" VARIABLE="I_UP_buy_and_Keep" LABEL="Into: UP_buy_and_Keep" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="C" COST="" USE=""/>
+<Obs _TYPE_="DECISION" VARIABLE="DECISION1" LABEL="1" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+<Obs _TYPE_="DECISION" VARIABLE="DECISION2" LABEL="0" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+<Obs _TYPE_="MODELDECISION" VARIABLE="D_UP_buy_and_Keep" LABEL="Decision: UP_buy_and_Keep" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+<Obs _TYPE_="EXPECTEDPROFIT" VARIABLE="EP_UP_BUY_AND_KEEP" LABEL="Expected Profit: UP_buy_and_Keep" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+<Obs _TYPE_="COMPUTEDPROFIT" VARIABLE="CP_UP_BUY_AND_KEEP" LABEL="Computed Profit: UP_buy_and_Keep" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+<Obs _TYPE_="BESTPROFIT" VARIABLE="BP_UP_BUY_AND_KEEP" LABEL="Best Profit: UP_buy_and_Keep" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+</Data>
+<Metadata>
+<Variable NAME="_TYPE_" LABEL="Type" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="VARIABLE" LABEL="Variable" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="LABEL" LABEL="Label" LENGTH="256" FORMAT="" TYPE="C"/>
+<Variable NAME="LEVEL" LABEL="Measurement Level" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="EVENT" LABEL="Target Event" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="ORDER" LABEL="Order" LENGTH="10" FORMAT="" TYPE="C"/>
+<Variable NAME="FORMAT" LABEL="Format" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="TYPE" LABEL="Type" LENGTH="1" FORMAT="" TYPE="C"/>
+<Variable NAME="COST" LABEL="Cost" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="USE" LABEL="Use" LENGTH="1" FORMAT="" TYPE="C"/>
+</Metadata>
+</DecMeta>
+</UP_buy_and_Keep>
+</EmTargetAttributes>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EMCODETOOL.CLASS" COMPONENT="Decisions" ID="Dec6" X="1056" Y="165" DESCRIPTION="Decisions (6)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODEL" TOOLPREFIX="Dec">
+<PROPERTIES Location="CATALOG" Catalog="SASHELP.EMASSMT.DECISIONS.SOURCE" ApplyDecisions="Y" ResetDecInfo="N" ToolType="MODEL" Decision="CUSTOM" Matrix="NONE" Prior="NONE" ForceRun="N" RunAction="Train" Component="Decisions">
+<VariableProperties/>
+<EmVariableAttributes/>
+<EmTargetAttributes>
+<UP_rental>
+<DecData Table="EMWS4.Dec6_UP_rental_DD">
+<Data>
+<Obs UP_RENTAL="1" COUNT="39920" DATAPRIOR="0.4646464722" TRAINPRIOR="0.0732689477" DECPRIOR="0.0043" DECISION1="232.55813953" DECISION2="0"/>
+<Obs UP_RENTAL="0" COUNT="504922" DATAPRIOR="0.5353535278" TRAINPRIOR="0.9267310523" DECPRIOR="0.9957" DECISION1="0" DECISION2="1.0043185699"/>
+</Data>
+<Metadata>
+<Variable NAME="UP_rental" LABEL="" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="COUNT" LABEL="Level Counts" LENGTH="8" FORMAT="10." TYPE="N"/>
+<Variable NAME="DATAPRIOR" LABEL="Data Proportions" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="TRAINPRIOR" LABEL="Training Proportions" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="DECPRIOR" LABEL="Decision Priors" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="DECISION1" LABEL="1" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="DECISION2" LABEL="0" LENGTH="8" FORMAT="" TYPE="N"/>
+</Metadata>
+</DecData>
+<DecMeta Table="EMWS4.Dec6_UP_rental_DM">
+<Data>
+<Obs _TYPE_="MATRIX" VARIABLE="" LABEL="" LEVEL="PROFIT" EVENT="" ORDER="" FORMAT="" TYPE="" COST="" USE="N"/>
+<Obs _TYPE_="TARGET" VARIABLE="UP_rental" LABEL="UP_rental" LEVEL="BINARY" EVENT="1" ORDER="" FORMAT="1.0" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="DATAPRIOR" VARIABLE="DATAPRIOR" LABEL="Data Prior" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="N"/>
+<Obs _TYPE_="TRAINPRIOR" VARIABLE="TRAINPRIOR" LABEL="Training Prior" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="N"/>
+<Obs _TYPE_="DECPRIOR" VARIABLE="DECPRIOR" LABEL="Decision Prior" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+<Obs _TYPE_="PREDICTED" VARIABLE="P_UP_rental1" LABEL="Predicted: UP_rental=1" LEVEL="1" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="RESIDUAL" VARIABLE="R_UP_rental1" LABEL="Residual: UP_rental=1" LEVEL="1" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="PREDICTED" VARIABLE="P_UP_rental0" LABEL="Predicted: UP_rental=0" LEVEL="0" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="RESIDUAL" VARIABLE="R_UP_rental0" LABEL="Residual: UP_rental=0" LEVEL="0" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="FROM" VARIABLE="F_UP_rental" LABEL="From: UP_rental" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="C" COST="" USE=""/>
+<Obs _TYPE_="INTO" VARIABLE="I_UP_rental" LABEL="Into: UP_rental" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="C" COST="" USE=""/>
+<Obs _TYPE_="DECISION" VARIABLE="DECISION1" LABEL="1" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+<Obs _TYPE_="DECISION" VARIABLE="DECISION2" LABEL="0" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+</Data>
+<Metadata>
+<Variable NAME="_TYPE_" LABEL="Type" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="VARIABLE" LABEL="Variable" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="LABEL" LABEL="Label" LENGTH="256" FORMAT="" TYPE="C"/>
+<Variable NAME="LEVEL" LABEL="Measurement Level" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="EVENT" LABEL="Target Event" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="ORDER" LABEL="Order" LENGTH="10" FORMAT="" TYPE="C"/>
+<Variable NAME="FORMAT" LABEL="Format" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="TYPE" LABEL="Type" LENGTH="1" FORMAT="" TYPE="C"/>
+<Variable NAME="COST" LABEL="Cost" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="USE" LABEL="Use" LENGTH="1" FORMAT="" TYPE="C"/>
+</Metadata>
+</DecMeta>
+</UP_rental>
+</EmTargetAttributes>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EMCODETOOL.CLASS" COMPONENT="Decisions" ID="Dec7" X="1056" Y="297" DESCRIPTION="Decisions (7)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODEL" TOOLPREFIX="Dec">
+<PROPERTIES Location="CATALOG" Catalog="SASHELP.EMASSMT.DECISIONS.SOURCE" ApplyDecisions="Y" ResetDecInfo="N" ToolType="MODEL" Decision="CUSTOM" Matrix="NONE" Prior="NONE" ForceRun="N" RunAction="Train" Component="Decisions">
+<VariableProperties/>
+<EmVariableAttributes/>
+<EmTargetAttributes>
+<UP_rental>
+<DecData Table="EMWS4.Dec7_UP_rental_DD">
+<Data>
+<Obs UP_RENTAL="1" COUNT="612004" DATAPRIOR="0.4646464722" TRAINPRIOR="0.6261775284" DECPRIOR="0.088" DECISION1="11.363636364" DECISION2="0"/>
+<Obs UP_RENTAL="0" COUNT="365361" DATAPRIOR="0.5353535278" TRAINPRIOR="0.3738224716" DECPRIOR="0.912" DECISION1="0" DECISION2="1.0964912281"/>
+</Data>
+<Metadata>
+<Variable NAME="UP_rental" LABEL="" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="COUNT" LABEL="Level Counts" LENGTH="8" FORMAT="10." TYPE="N"/>
+<Variable NAME="DATAPRIOR" LABEL="Data Proportions" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="TRAINPRIOR" LABEL="Training Proportions" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="DECPRIOR" LABEL="Decision Priors" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="DECISION1" LABEL="1" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="DECISION2" LABEL="0" LENGTH="8" FORMAT="" TYPE="N"/>
+</Metadata>
+</DecData>
+<DecMeta Table="EMWS4.Dec7_UP_rental_DM">
+<Data>
+<Obs _TYPE_="MATRIX" VARIABLE="" LABEL="" LEVEL="PROFIT" EVENT="" ORDER="" FORMAT="" TYPE="" COST="" USE="N"/>
+<Obs _TYPE_="TARGET" VARIABLE="UP_rental" LABEL="UP_rental" LEVEL="BINARY" EVENT="1" ORDER="" FORMAT="1.0" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="DATAPRIOR" VARIABLE="DATAPRIOR" LABEL="Data Prior" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="N"/>
+<Obs _TYPE_="TRAINPRIOR" VARIABLE="TRAINPRIOR" LABEL="Training Prior" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="N"/>
+<Obs _TYPE_="DECPRIOR" VARIABLE="DECPRIOR" LABEL="Decision Prior" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+<Obs _TYPE_="PREDICTED" VARIABLE="P_UP_rental1" LABEL="Predicted: UP_rental=1" LEVEL="1" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="RESIDUAL" VARIABLE="R_UP_rental1" LABEL="Residual: UP_rental=1" LEVEL="1" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="PREDICTED" VARIABLE="P_UP_rental0" LABEL="Predicted: UP_rental=0" LEVEL="0" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="RESIDUAL" VARIABLE="R_UP_rental0" LABEL="Residual: UP_rental=0" LEVEL="0" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="FROM" VARIABLE="F_UP_rental" LABEL="From: UP_rental" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="C" COST="" USE=""/>
+<Obs _TYPE_="INTO" VARIABLE="I_UP_rental" LABEL="Into: UP_rental" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="C" COST="" USE=""/>
+<Obs _TYPE_="DECISION" VARIABLE="DECISION1" LABEL="1" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+<Obs _TYPE_="DECISION" VARIABLE="DECISION2" LABEL="0" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+</Data>
+<Metadata>
+<Variable NAME="_TYPE_" LABEL="Type" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="VARIABLE" LABEL="Variable" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="LABEL" LABEL="Label" LENGTH="256" FORMAT="" TYPE="C"/>
+<Variable NAME="LEVEL" LABEL="Measurement Level" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="EVENT" LABEL="Target Event" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="ORDER" LABEL="Order" LENGTH="10" FORMAT="" TYPE="C"/>
+<Variable NAME="FORMAT" LABEL="Format" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="TYPE" LABEL="Type" LENGTH="1" FORMAT="" TYPE="C"/>
+<Variable NAME="COST" LABEL="Cost" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="USE" LABEL="Use" LENGTH="1" FORMAT="" TYPE="C"/>
+</Metadata>
+</DecMeta>
+</UP_rental>
+</EmTargetAttributes>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS" COMPONENT="EMSave" ID="EMSave3" X="1650" Y="363" DESCRIPTION="Save Data (3)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="UTILITY" TOOLPREFIX="EMSave">
+<PROPERTIES Location="CATALOG" Catalog="Sashelp.Emutil.Savext.Source" Type="SAS7BDAT" Replace="Y" AllObs="Y" OutObs="1000" AllRoles="Y" Train="Y" Validate="Y" Test="Y" Score="Y" Transaction="Y" ForceRun="N" RunAction="Train" Component="EMSave" Lib="" DirectorySelector="" Name="Rental_Never">
+<VariableProperties/>
+<EmVariableAttributes>
+<DELTA Variable="F_UP_rental" AttributeName="CREATOR" AttributeValue="Dec6"/>
+<DELTA Variable="I_UP_rental" AttributeName="CREATOR" AttributeValue="Dec6"/>
+<DELTA Variable="LOG_REP_DTV_Pending_cancels_ever" AttributeName="ROLE" AttributeValue="INPUT"/>
+<DELTA Variable="OPT_REP_BAK_time_since_last" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="P_UP_rental0" AttributeName="CREATOR" AttributeValue="HPReg11"/>
+<DELTA Variable="P_UP_rental1" AttributeName="CREATOR" AttributeValue="HPReg11"/>
+<DELTA Variable="REP_Age" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_BB_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_CW_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_FIBRE_TOP_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_FIBRE_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_HD_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_MOB_PREREG_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_MS_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_NOWTV_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_SERVICEAPP_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_SHIELD_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_SKYBOX_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_SKYGO_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_SKYKIDS_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_SKYQAPP_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_SKYQ_2TB_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_SKYQ_ORIGIN_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_SKYQ_PREPREG_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_THREED_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_UHD_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="REP_VOD_VAL" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="R_UP_rental0" AttributeName="CREATOR" AttributeValue="Dec6"/>
+<DELTA Variable="R_UP_rental1" AttributeName="CREATOR" AttributeValue="Dec6"/>
+<DELTA Variable="UP_rental" AttributeName="MODEL" AttributeValue="HPReg11"/>
+<DELTA Variable="U_UP_rental" AttributeName="CREATOR" AttributeValue="Dec6"/>
+<DELTA Variable="_warn_" AttributeName="CREATOR" AttributeValue="HPReg11"/>
+<DELTA Variable="bb_last_tenure" AttributeName="ROLE" AttributeValue="INPUT"/>
+<DELTA Variable="dtv_1st_tenure" AttributeName="ROLE" AttributeValue="REJECTED"/>
+<DELTA Variable="h_presence_of_child_aged_12_17" AttributeName="ROLE" AttributeValue="INPUT"/>
+</EmVariableAttributes>
+<EmTargetAttributes/>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS" COMPONENT="EMSave" ID="EMSave4" X="1650" Y="594" DESCRIPTION="Save Data (4)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="UTILITY" TOOLPREFIX="EMSave">
+<PROPERTIES Location="CATALOG" Catalog="Sashelp.Emutil.Savext.Source" Type="SAS7BDAT" Replace="Y" AllObs="Y" OutObs="1000" AllRoles="Y" Train="Y" Validate="Y" Test="Y" Score="Y" Transaction="Y" ForceRun="N" RunAction="Train" Component="EMSave" Lib="" DirectorySelector="" Name="Rentals_lapsed">
+<VariableProperties/>
+<EmVariableAttributes/>
+<EmTargetAttributes/>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS" COMPONENT="EMSave" ID="EMSave5" X="1650" Y="693" DESCRIPTION="Save Data (5)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="UTILITY" TOOLPREFIX="EMSave">
+<PROPERTIES Location="CATALOG" Catalog="Sashelp.Emutil.Savext.Source" Type="SAS7BDAT" Replace="Y" AllObs="Y" OutObs="1000" AllRoles="Y" Train="Y" Validate="Y" Test="Y" Score="Y" Transaction="Y" ForceRun="N" RunAction="Train" Component="EMSave" Lib="" DirectorySelector="" Name="BAK_Lapsed">
+<VariableProperties/>
+<EmVariableAttributes>
+<DELTA Variable="OPT_REP_DTV_Last_Active_Block" AttributeName="ROLE" AttributeValue="INPUT"/>
+<DELTA Variable="REP_Movies_Active" AttributeName="ROLE" AttributeValue="INPUT"/>
+<DELTA Variable="SQR_REP_Age" AttributeName="ROLE" AttributeValue="INPUT"/>
+</EmVariableAttributes>
+<EmTargetAttributes/>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS" COMPONENT="EMSave" ID="EMSave6" X="1650" Y="891" DESCRIPTION="Save Data (6)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="UTILITY" TOOLPREFIX="EMSave">
+<PROPERTIES Location="CATALOG" Catalog="Sashelp.Emutil.Savext.Source" Type="SAS7BDAT" Replace="Y" AllObs="Y" OutObs="1000" AllRoles="Y" Train="Y" Validate="Y" Test="Y" Score="Y" Transaction="Y" ForceRun="N" RunAction="Train" Component="EMSave" Lib="" DirectorySelector="" Name="BAK_never">
+<VariableProperties/>
+<EmVariableAttributes>
+<DELTA Variable="BP_UP_BUY_AND_KEEP" AttributeName="CREATOR" AttributeValue="Dec5"/>
+<DELTA Variable="CP_UP_BUY_AND_KEEP" AttributeName="CREATOR" AttributeValue="Dec5"/>
+<DELTA Variable="D_UP_buy_and_Keep" AttributeName="CREATOR" AttributeValue="Dec5"/>
+<DELTA Variable="EP_UP_BUY_AND_KEEP" AttributeName="CREATOR" AttributeValue="Dec5"/>
+<DELTA Variable="P_UP_buy_and_Keep0" AttributeName="CREATOR" AttributeValue="Dec5"/>
+<DELTA Variable="P_UP_buy_and_Keep1" AttributeName="CREATOR" AttributeValue="Dec5"/>
+<DELTA Variable="_warn_" AttributeName="CREATOR" AttributeValue="Dec5"/>
+</EmVariableAttributes>
+<EmTargetAttributes/>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMMDFY.FILTERTOOL.CLASS" COMPONENT="Filter" ID="Filter" X="264" Y="429" DESCRIPTION="Filter lapsed" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODIFY" TOOLPREFIX="Filter">
+<PROPERTIES KeepMissingClass="Y" KeepMissingInterval="Y" NormalizeClassValue="Y" ExportTable="FILTERED" TabletoFilter="TRAIN" IntervalFilterMethod="NONE" ClassFilterMethod="NONE" MinFreq="1" MinPercent="0.01" MaxValues="25" MADSCutoff="9" SpacingsCutoff="9" StddevCutoff="3" PercentsCutoff="0.5" PublishScoreCode="Y" CreateDistributionData="Y" UpdateClassLevel="N" ForceRun="N" RunAction="Train" Component="Filter">
+<VariableProperties/>
+<EmVariableAttributes>
+<DELTA Variable="bak_used_before" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+</EmVariableAttributes>
+<EmTargetAttributes/>
+<EmFileProperties>
+<CLASSFILTER Type="DATA">
+<Data>
+<Obs VARIABLE="bak_used_before" VALUE="0" COUNT="800750" PERCENT="59.16606694" FILTER="Y"/>
+</Data>
+<Metadata>
+<Variable NAME="VARIABLE" LABEL="Variable" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="VALUE" LABEL="Value" LENGTH="80" FORMAT="" TYPE="C"/>
+<Variable NAME="COUNT" LABEL="Frequency Count" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="PERCENT" LABEL="Percent" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="Filter" LABEL="" LENGTH="1" FORMAT="" TYPE="C"/>
+</Metadata>
+</CLASSFILTER>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMMDFY.FILTERTOOL.CLASS" COMPONENT="Filter" ID="Filter2" X="264" Y="561" DESCRIPTION="Filter Never" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODIFY" TOOLPREFIX="Filter">
+<PROPERTIES KeepMissingClass="Y" KeepMissingInterval="Y" NormalizeClassValue="Y" ExportTable="FILTERED" TabletoFilter="TRAIN" IntervalFilterMethod="NONE" ClassFilterMethod="NONE" MinFreq="1" MinPercent="0.01" MaxValues="25" MADSCutoff="9" SpacingsCutoff="9" StddevCutoff="3" PercentsCutoff="0.5" PublishScoreCode="Y" CreateDistributionData="Y" UpdateClassLevel="N" ForceRun="N" RunAction="Train" Component="Filter">
+<VariableProperties/>
+<EmVariableAttributes>
+<DELTA Variable="bak_used_before" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+</EmVariableAttributes>
+<EmTargetAttributes/>
+<EmFileProperties>
+<CLASSFILTER Type="DATA">
+<Data>
+<Obs VARIABLE="bak_used_before" VALUE="1" COUNT="552644" PERCENT="40.83393306" FILTER="Y"/>
+</Data>
+<Metadata>
+<Variable NAME="VARIABLE" LABEL="Variable" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="VALUE" LABEL="Value" LENGTH="80" FORMAT="" TYPE="C"/>
+<Variable NAME="COUNT" LABEL="Frequency Count" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="PERCENT" LABEL="Percent" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="Filter" LABEL="" LENGTH="1" FORMAT="" TYPE="C"/>
+</Metadata>
+</CLASSFILTER>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMMDFY.FILTERTOOL.CLASS" COMPONENT="Filter" ID="Filter3" X="660" Y="165" DESCRIPTION="Never used" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODIFY" TOOLPREFIX="Filter">
+<PROPERTIES KeepMissingClass="Y" KeepMissingInterval="Y" NormalizeClassValue="Y" ExportTable="FILTERED" TabletoFilter="TRAIN" IntervalFilterMethod="NONE" ClassFilterMethod="NONE" MinFreq="1" MinPercent="0.01" MaxValues="25" MADSCutoff="9" SpacingsCutoff="9" StddevCutoff="3" PercentsCutoff="0.5" PublishScoreCode="Y" CreateDistributionData="Y" UpdateClassLevel="N" ForceRun="N" RunAction="Train" Component="Filter">
+<VariableProperties/>
+<EmVariableAttributes>
+<DELTA Variable="rentals_used_before" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+</EmVariableAttributes>
+<EmTargetAttributes/>
+<EmFileProperties>
+<CLASSFILTER Type="DATA">
+<Data>
+<Obs VARIABLE="rentals_used_before" VALUE="1" COUNT="1396237" PERCENT="64.207055599" FILTER="Y"/>
+</Data>
+<Metadata>
+<Variable NAME="VARIABLE" LABEL="Variable" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="VALUE" LABEL="Value" LENGTH="80" FORMAT="" TYPE="C"/>
+<Variable NAME="COUNT" LABEL="Frequency Count" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="PERCENT" LABEL="Percent" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="Filter" LABEL="" LENGTH="1" FORMAT="" TYPE="C"/>
+</Metadata>
+</CLASSFILTER>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMMDFY.FILTERTOOL.CLASS" COMPONENT="Filter" ID="Filter4" X="660" Y="297" DESCRIPTION="Lapsed" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODIFY" TOOLPREFIX="Filter">
+<PROPERTIES KeepMissingClass="Y" KeepMissingInterval="Y" NormalizeClassValue="Y" ExportTable="FILTERED" TabletoFilter="TRAIN" IntervalFilterMethod="NONE" ClassFilterMethod="NONE" MinFreq="1" MinPercent="0.01" MaxValues="25" MADSCutoff="9" SpacingsCutoff="9" StddevCutoff="3" PercentsCutoff="0.5" PublishScoreCode="Y" CreateDistributionData="Y" UpdateClassLevel="N" ForceRun="N" RunAction="Train" Component="Filter">
+<VariableProperties/>
+<EmVariableAttributes>
+<DELTA Variable="rentals_used_before" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+</EmVariableAttributes>
+<EmTargetAttributes/>
+<EmFileProperties>
+<CLASSFILTER Type="DATA">
+<Data>
+<Obs VARIABLE="rentals_used_before" VALUE="0" COUNT="778348" PERCENT="35.792944401" FILTER="Y"/>
+</Data>
+<Metadata>
+<Variable NAME="VARIABLE" LABEL="Variable" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="VALUE" LABEL="Value" LENGTH="80" FORMAT="" TYPE="C"/>
+<Variable NAME="COUNT" LABEL="Frequency Count" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="PERCENT" LABEL="Percent" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="Filter" LABEL="" LENGTH="1" FORMAT="" TYPE="C"/>
+</Metadata>
+</CLASSFILTER>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS" COMPONENT="HPDMReg" ID="HPReg10" X="1254" Y="759" DESCRIPTION="Never model" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODEL" TOOLPREFIX="HPReg">
+<PROPERTIES Location="CATALOG" Catalog="SASHELP.HPDM.HPREG.SOURCE" MainEffect="Y" TwoFactor="N" Polynomial="N" PolynomialDegree="2" SuppressIntercept="N" MISSASLVL="Y" Error="LOGISTIC" LinkFunction="LOGIT" SelectMethod="FORWARD" SelectCriterion="DEFAULT" StopCriterion="DEFAULT" SLEntry="0.05" SLStay="0.05" MaxEffects="10" MinEffects="0" Hierarchy="NONE" MaxSteps="0" SuppressOutput="N" ABSCONV="." ABSFCONV="." ABSGCONV="." FCONV="." GCONV="." TECH="NRRIDG" MAXITER="." MAXFUNC="." MAXTIME="." MINITER="." NORMALIZE="Y" EXCLUDEDVARIABLE="REJECT" ForceRun="N" RunAction="Train" Component="HPDMReg" NCPU="Actual" NNode="0" NThreads="Default" Host="Local" Timeout="120" LogDetails="N" Term="Y" Interactions="" SelectUseDefault="Y">
+<VariableProperties/>
+<EmVariableAttributes>
+<DELTA Variable="BB_3rdParty_PL_Entry_Last_3Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_Active" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_Churns_Last_1Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_Churns_Last_3Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_CusCan_PL_Entry_Ever_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_HomeMove_PL_Entry_Ever_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_SysCan_PL_Entry_Last_3Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_contract_segment" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Curr_Offer_Amount_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Curr_Offer_Amount_DTV_flag" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Curr_Offer_Length_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_Active_Blocks_Last_1Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_Active_Blocks_Last_5Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_PO_Cancellations_Last_5Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_Pending_Cancels_Last_1Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_Pending_Cancels_Last_3Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_Product_Holding" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_contract_segment" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_product_holding_recode" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Dtv_Package" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="EXP_REP_SHIELD_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="EXP_REP_Superfast_Available_End1" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="EXP_REP_Superfast_Available_End_" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Exchange_Status" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Home_Owner_Status" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="INV_REP_DTV_Pending_cancels_ever" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="INV_REP_skyfibre_enabled_perc" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="LG10_REP_BB_Last_Activation" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="LG10_REP_DTV_Last_SysCan_Churn" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="LOG_REP_Broadband_Average_Demand" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="MS_Active" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Movies_Product_Holding" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Movies_Tenure" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OD_Months_since_Last" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_BB_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_BK_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_CW_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_Curr_Offer_Actual_End_DT" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_Curr_Offer_Start_DTV" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_1st_Activation" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_Curr_Contract_Intend" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_Curr_Contract_Start" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_CusCan_Churns_Ever" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_Last_Activation" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_Last_Active_Block" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_Last_Pending_Cancel" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_Last_cuscan_churn" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_FIBRE_TOP_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_FIBRE_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_HD_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_MOB_PREREG_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_MS_Last_Activation" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_MS_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_NOWTV_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_OD_Last_12M" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_OD_Last_3M" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_Prev_Offer_Amount_DTV" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_SERVICEAPP_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_SGE_Last_Activation" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_SKYBOX_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_SKYGO_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_SKYKIDS_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_SKYQAPP_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_SKYQ_2TB_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_SKYQ_ORIGIN_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_SKYQ_PREPREG_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_THREED_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_UHD_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_VOD_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_num_sports_events" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_rentals_months_since_las" AttributeName="USE" AttributeValue="Y"/>
+<DELTA Variable="OPT_REP_rents_12M" AttributeName="USE" AttributeValue="Y"/>
+<DELTA Variable="OPT_REP_rents_6M" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_rents_9M" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Offers_Applied_Lst_12M_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Offers_Applied_Lst_36M_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Offers_Applied_Lst_90D_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Prev_Offer_Amount_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Prev_Offer_Amount_DTV_flag" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Prev_Offer_Length_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_BAK_12M" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_BAK_6M" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_BAK_9M" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_BAK_time_since_last" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_BB_Product_Holding" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_BB_Provider" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_Movies_Active" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SGE_Product_Holding" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_h_income_value" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_p_true_touch_type" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_rentals_used_before" AttributeName="USE" AttributeValue="Y"/>
+<DELTA Variable="REP_skyfibre_enabled" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="SGE_Active" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="SQR_REP_Age" AttributeName="USE" AttributeValue="Y"/>
+<DELTA Variable="SQR_REP_Throughput_Speed" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Sports_Tenure" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="TA_nonsaves_in_last_12m_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="TA_nonsaves_in_last_36m_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="TA_saves_in_last_12m_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="TA_saves_in_last_36m_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="TA_saves_in_last_90d_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="TAs_in_last_60d_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="bak_used_before" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="bb_last_tenure" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="dtv_1st_tenure" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="dtv_last_tenure" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="financial_strategy" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_affluence" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_family_lifestage" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_household_composition" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_mosaic_group" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_number_of_adults_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_number_of_bedrooms_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_number_of_children_in_house_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_presence_of_child_aged_0_4" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_presence_of_child_aged_12_17" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_presence_of_child_aged_5_11" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_presence_of_young_person_at_ad" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_property_type" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_residence_type" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="last_TA_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="last_TA_nonsave_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="last_TA_reason_flag" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="last_TA_save_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="p_true_touch_group" AttributeName="USE" AttributeValue="N"/>
+</EmVariableAttributes>
+<EmTargetAttributes/>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS" COMPONENT="HPDMReg" ID="HPReg11" X="1254" Y="66" DESCRIPTION="Never model" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODEL" TOOLPREFIX="HPReg">
+<PROPERTIES Location="CATALOG" Catalog="SASHELP.HPDM.HPREG.SOURCE" MainEffect="Y" TwoFactor="N" Polynomial="N" PolynomialDegree="2" SuppressIntercept="N" MISSASLVL="Y" Error="LOGISTIC" LinkFunction="LOGIT" SelectMethod="STEPWISE" SelectCriterion="DEFAULT" StopCriterion="DEFAULT" SLEntry="0.05" SLStay="0.05" MaxEffects="9" MinEffects="6" Hierarchy="SINGLECLASS" MaxSteps="0" SuppressOutput="N" ABSCONV="." ABSFCONV="." ABSGCONV="." FCONV="." GCONV="." TECH="NRRIDG" MAXITER="." MAXFUNC="." MAXTIME="." MINITER="." NORMALIZE="Y" EXCLUDEDVARIABLE="REJECT" ForceRun="N" RunAction="Train" Component="HPDMReg" NCPU="Actual" NNode="0" NThreads="Default" Host="Local" Timeout="120" LogDetails="N" Term="Y" Interactions="" SelectUseDefault="Y">
+<VariableProperties/>
+<EmVariableAttributes>
+<DELTA Variable="REP_BK_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_number_of_children_in_house_b" AttributeName="USE" AttributeValue="N"/>
+</EmVariableAttributes>
+<EmTargetAttributes/>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS" COMPONENT="HPDMReg" ID="HPReg13" X="1254" Y="858" DESCRIPTION="Never model v2" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODEL" TOOLPREFIX="HPReg">
+<PROPERTIES Location="CATALOG" Catalog="SASHELP.HPDM.HPReg.SOURCE" MainEffect="Y" TwoFactor="N" Polynomial="N" PolynomialDegree="2" SuppressIntercept="N" MISSASLVL="Y" Error="LOGISTIC" LinkFunction="LOGIT" SelectMethod="STEPWISE" SelectCriterion="DEFAULT" StopCriterion="DEFAULT" SLEntry="0.05" SLStay="0.05" MaxEffects="10" MinEffects="6" Hierarchy="NONE" MaxSteps="0" SuppressOutput="N" ABSCONV="." ABSFCONV="." ABSGCONV="." FCONV="." GCONV="." TECH="NRRIDG" MAXITER="." MAXFUNC="." MAXTIME="." MINITER="." NORMALIZE="Y" EXCLUDEDVARIABLE="REJECT" ForceRun="N" RunAction="Train" Component="HPDMReg" NCPU="Actual" NNode="0" NThreads="Default" Host="Local" Timeout="120" LogDetails="N" Term="Y" Interactions="" SelectUseDefault="Y">
+<VariableProperties/>
+<EmTargetAttributes/>
+<EmVariableAttributes>
+<DELTA Variable="BB_3rdParty_PL_Entry_Last_3Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_Active" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_Churns_Last_1Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_Churns_Last_3Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_CusCan_PL_Entry_Ever_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_HomeMove_PL_Entry_Ever_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_SysCan_PL_Entry_Last_3Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_contract_segment" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Curr_Offer_Amount_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Curr_Offer_Amount_DTV_flag" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Curr_Offer_Length_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_Active_Blocks_Last_1Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_Active_Blocks_Last_5Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_PO_Cancellations_Last_5Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_Pending_Cancels_Last_1Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_Pending_Cancels_Last_3Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_Product_Holding" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_contract_segment" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_product_holding_recode" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="EXP_REP_SHIELD_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="EXP_REP_Superfast_Available_End1" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="EXP_REP_Superfast_Available_End_" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Exchange_Status" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Home_Owner_Status" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="INV_REP_DTV_Pending_cancels_ever" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="INV_REP_skyfibre_enabled_perc" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="LG10_REP_BB_Last_Activation" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="LG10_REP_DTV_Last_SysCan_Churn" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="LOG_REP_Broadband_Average_Demand" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Movies_Product_Holding" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Movies_Tenure" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_BB_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_BK_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_CW_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_Curr_Offer_Actual_End_DT" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_Curr_Offer_Start_DTV" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_1st_Activation" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_Curr_Contract_Intend" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_Curr_Contract_Start" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_CusCan_Churns_Ever" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_Last_Activation" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_Last_Active_Block" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_Last_Pending_Cancel" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_Last_cuscan_churn" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_FIBRE_TOP_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_FIBRE_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_HD_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_MOB_PREREG_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_MS_Last_Activation" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_MS_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_NOWTV_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_OD_Last_12M" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_Prev_Offer_Amount_DTV" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_SERVICEAPP_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_SGE_Last_Activation" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_SKYBOX_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_SKYGO_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_SKYKIDS_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_SKYQAPP_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_SKYQ_2TB_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_SKYQ_ORIGIN_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_SKYQ_PREPREG_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_THREED_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_UHD_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_VOD_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_num_sports_events" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_rentals_months_since_las" AttributeName="USE" AttributeValue="Y"/>
+<DELTA Variable="OPT_REP_rents_12M" AttributeName="USE" AttributeValue="Y"/>
+<DELTA Variable="OPT_REP_rents_6M" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_rents_9M" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Offers_Applied_Lst_12M_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Offers_Applied_Lst_36M_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Offers_Applied_Lst_90D_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Prev_Offer_Amount_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Prev_Offer_Amount_DTV_flag" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Prev_Offer_Length_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_BAK_12M" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_BAK_6M" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_BAK_9M" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_BAK_time_since_last" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_BB_Product_Holding" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_BB_Provider" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_h_income_value" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_p_true_touch_type" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_rentals_used_before" AttributeName="USE" AttributeValue="Y"/>
+<DELTA Variable="REP_skyfibre_enabled" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="SQR_REP_Age" AttributeName="USE" AttributeValue="Y"/>
+<DELTA Variable="SQR_REP_Throughput_Speed" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Sports_Tenure" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="TA_nonsaves_in_last_12m_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="TA_nonsaves_in_last_36m_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="TA_saves_in_last_12m_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="TA_saves_in_last_36m_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="TA_saves_in_last_90d_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="TAs_in_last_60d_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="bak_used_before" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="bb_last_tenure" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="dtv_1st_tenure" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="dtv_last_tenure" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="financial_strategy" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_number_of_adults_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_number_of_bedrooms_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_presence_of_child_aged_0_4" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_presence_of_child_aged_12_17" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_presence_of_child_aged_5_11" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_presence_of_young_person_at_ad" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_property_type" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_residence_type" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="last_TA_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="last_TA_nonsave_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="last_TA_reason_flag" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="last_TA_save_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="p_true_touch_group" AttributeName="USE" AttributeValue="N"/>
+</EmVariableAttributes>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS" COMPONENT="HPDMReg" ID="HPReg14" X="1254" Y="363" DESCRIPTION="Lapsed Model v2" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODEL" TOOLPREFIX="HPReg">
+<PROPERTIES Location="CATALOG" Catalog="SASHELP.HPDM.HPReg.SOURCE" MainEffect="Y" TwoFactor="N" Polynomial="N" PolynomialDegree="2" SuppressIntercept="N" MISSASLVL="Y" Error="LOGISTIC" LinkFunction="LOGIT" SelectMethod="STEPWISE" SelectCriterion="DEFAULT" StopCriterion="DEFAULT" SLEntry="0.05" SLStay="0.05" MaxEffects="5" MinEffects="0" Hierarchy="NONE" MaxSteps="0" SuppressOutput="N" ABSCONV="." ABSFCONV="." ABSGCONV="." FCONV="." GCONV="." TECH="NRRIDG" MAXITER="." MAXFUNC="." MAXTIME="." MINITER="." NORMALIZE="Y" EXCLUDEDVARIABLE="REJECT" ForceRun="N" RunAction="Train" Component="HPDMReg" NCPU="Actual" NNode="0" NThreads="Default" Host="Local" Timeout="120" LogDetails="N" Term="Y" Interactions="" SelectUseDefault="Y">
+<VariableProperties/>
+<EmTargetAttributes/>
+<EmVariableAttributes>
+<DELTA Variable="OPT_REP_rents_12M" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_rents_6M" AttributeName="USE" AttributeValue="N"/>
+</EmVariableAttributes>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS" COMPONENT="HPDMReg" ID="HPReg9" X="1254" Y="660" DESCRIPTION="Lapsed model" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODEL" TOOLPREFIX="HPReg">
+<PROPERTIES Location="CATALOG" Catalog="SASHELP.HPDM.HPREG.SOURCE" MainEffect="Y" TwoFactor="N" Polynomial="N" PolynomialDegree="2" SuppressIntercept="N" MISSASLVL="Y" Error="LOGISTIC" LinkFunction="LOGIT" SelectMethod="STEPWISE" SelectCriterion="DEFAULT" StopCriterion="DEFAULT" SLEntry="0.05" SLStay="0.05" MaxEffects="12" MinEffects="0" Hierarchy="NONE" MaxSteps="0" SuppressOutput="N" ABSCONV="." ABSFCONV="." ABSGCONV="." FCONV="." GCONV="." TECH="NRRIDG" MAXITER="." MAXFUNC="." MAXTIME="." MINITER="." NORMALIZE="Y" EXCLUDEDVARIABLE="REJECT" ForceRun="N" RunAction="Train" Component="HPDMReg" NCPU="Actual" NNode="0" NThreads="Default" Host="Local" Timeout="120" LogDetails="N" Term="Y" Interactions="" SelectUseDefault="Y">
+<VariableProperties/>
+<EmVariableAttributes>
+<DELTA Variable="BB_3rdParty_PL_Entry_Last_3Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_Active" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_Churns_Last_1Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_Churns_Last_3Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_CusCan_PL_Entry_Ever_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_HomeMove_PL_Entry_Ever_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_SysCan_PL_Entry_Last_3Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="BB_contract_segment" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Curr_Offer_Amount_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Curr_Offer_Amount_DTV_flag" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Curr_Offer_Length_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_Active_Blocks_Last_1Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_Active_Blocks_Last_5Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_PO_Cancellations_Last_5Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_Pending_Cancels_Last_1Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_Pending_Cancels_Last_3Yr_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_Product_Holding" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_contract_segment" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="DTV_product_holding_recode" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Dtv_Package" AttributeName="USE" AttributeValue="Y"/>
+<DELTA Variable="Exchange_Status" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Home_Owner_Status" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="INV_REP_DTV_Last_SysCan_Churn" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="INV_REP_DTV_Pending_cancels_ever" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="INV_REP_SERVICEAPP_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="MS_Active" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Movies_Product_Holding" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Movies_Tenure" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OD_Months_since_Last" AttributeName="USE" AttributeValue="Y"/>
+<DELTA Variable="OPT_REP_BAK_12M" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_BAK_6M" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_BAK_9M" AttributeName="USE" AttributeValue="Y"/>
+<DELTA Variable="OPT_REP_Curr_Offer_Actual_End_DT" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_1st_Activation" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_Last_Activation" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_Last_Pending_Cancel" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_DTV_Last_cuscan_churn" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_Prev_Offer_Amount_DTV" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_Superfast_Available_End1" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_rentals_months_since_las" AttributeName="USE" AttributeValue="Y"/>
+<DELTA Variable="OPT_REP_rents_12M" AttributeName="USE" AttributeValue="Y"/>
+<DELTA Variable="OPT_REP_rents_6M" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="OPT_REP_rents_9M" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Offers_Applied_Lst_12M_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Offers_Applied_Lst_36M_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Offers_Applied_Lst_90D_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Prev_Offer_Amount_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Prev_Offer_Amount_DTV_flag" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="Prev_Offer_Length_DTV_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_BB_Product_Holding" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_BB_Provider" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_BB_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_BK_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_CW_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_MOB_PREREG_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_MS_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_Movies_Active" AttributeName="USE" AttributeValue="Y"/>
+<DELTA Variable="REP_NOWTV_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SGE_Product_Holding" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SHIELD_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SKYBOX_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SKYGO_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SKYKIDS_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SKYQAPP_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SKYQ_2TB_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SKYQ_ORIGIN_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SKYQ_PREPREG_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_THREED_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_UHD_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_VOD_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_p_true_touch_type" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_rentals_used_before" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_skyfibre_enabled" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="SGE_Active" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="SQR_REP_Age" AttributeName="USE" AttributeValue="Y"/>
+<DELTA Variable="SQR_REP_DTV_Curr_Contract_Intend" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="SQR_REP_Throughput_Speed" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="SQR_REP_h_income_value" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="TA_nonsaves_in_last_12m_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="TA_nonsaves_in_last_36m_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="TA_saves_in_last_12m_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="TA_saves_in_last_36m_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="TA_saves_in_last_90d_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="TAs_in_last_60d_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="bak_used_before" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="bb_last_tenure" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_family_lifestage" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_number_of_adults_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_number_of_bedrooms_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_presence_of_child_aged_0_4" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_presence_of_child_aged_12_17" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_presence_of_child_aged_5_11" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_presence_of_young_person_at_ad" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_property_type" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="h_residence_type" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="last_TA_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="last_TA_nonsave_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="last_TA_reason_flag" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="last_TA_save_b" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="p_true_touch_group" AttributeName="USE" AttributeValue="N"/>
+</EmVariableAttributes>
+<EmTargetAttributes/>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS" COMPONENT="HPTree" ID="HPTree3" X="1254" Y="165" DESCRIPTION="HP Tree (3)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODEL" TOOLPREFIX="HPTree">
+<PROPERTIES Location="CATALOG" Catalog="SASHELP.HPDM.HPDMTREE.SOURCE" ToolType="MODEL" ALPHA="0.2" CVFOLDS="10" MINDIST="0.01" CONFIDENCE="0.25" VALIDATIONPROB="0.15" PARTITIONSEED="12345" CVSEED="12345" MAXDEPTH="10" INTERVALBINS="100" HLEAFSIZE="5" CRITERIONMETHOD="ENTROPY" ICRITERIONMETHOD="VARIANCE" UseVarOnce="N" SUBTREEMIN="N" VARSELECT="Y" VALIDATION="N" BONFERRONI="N" NODEROLE="SEGMENT" PRUNINGMETHOD="COSTCOMPLEXITY" SELMETHOD="AUTOMATIC" PASSESSMENT="ENTROPY" IPASSESSMENT="ASE" PTHRESHOLD="1.0" LIFTFRACT="0.5" NPLEAVES="1" INODECOLOR="AVERAGE" NODECOLOR="ProbEvent" LEVTHRESH1="500000" LEVTHRESH2="1000000" MINCATSIZE="5" MAXBRANCH="2" Nsurrs="0" MissingValue="POPULARITY" MAXLEAVES="1024" DEPTHCONTROL="MAXDEPTHCTRL" MValueMetric="ASE" ForceRun="N" RunAction="Train" Component="HPTree" CCPENALTY="0.8">
+<VariableProperties/>
+<EmVariableAttributes>
+<DELTA Variable="REP_BB_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_BK_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_CW_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_FIBRE_TOP_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_FIBRE_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_HD_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_MOB_PREREG_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_MS_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_NOWTV_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SERVICEAPP_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SHIELD_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SKYBOX_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SKYGO_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SKYKIDS_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SKYQAPP_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SKYQ_2TB_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SKYQ_ORIGIN_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_SKYQ_PREPREG_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_THREED_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_UHD_VAL" AttributeName="USE" AttributeValue="N"/>
+<DELTA Variable="REP_VOD_VAL" AttributeName="USE" AttributeValue="N"/>
+</EmVariableAttributes>
+<EmTargetAttributes/>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMSAMP.IDS.CLASS" COMPONENT="DataSource" ID="Ids" X="66" Y="165" DESCRIPTION="cs_rental_2" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="SAMPLE" TOOLPREFIX="Ids">
+<PROPERTIES DataSource="csrental" Scope="LOCAL" Role="RAW" Library="OLIVUSER" Table="cs_rental_2" NCols="129" NObs="2174585" NBytes="." Segment="" DataSourceRole="RAW" OutputType="VIEW" ForceRun="N" ComputeStatistics="N" DataSelection="DATASOURCE" NewTable="" MetaAdvisor="BASIC" ApplyIntervalLevelLowerLimit="Y" IntervalLowerLimit="20" ApplyMaxPercentMissing="Y" MaxPercentMissing="50" ApplyMaxClassLevels="Y" MaxClassLevels="20" IdentifyEmptyColumns="Y" VariableValidation="STRICT" NewVariableRole="REJECT" DropMapVariables="Y" DsId="csrental" DsSampleName="" DsSampleSizeType="" DsSampleSize="" DsCreatedBy="pitteloj" DsCreateDate="1824991113.5" DsModifiedBy="pitteloj" DsModifyDate="1824991113.6" DsScope="LOCAL" Sample="D" SampleSizeType="PERCENT" SampleSizePercent="20" SampleSizeObs="10000" DBPassThrough="Y" RunAction="Train" Component="DataSource" Description="">
+<VariableProperties/>
+<EmVariableAttributes>
+<DELTA Variable="BB_3rdParty_PL_Entry_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_Active" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_Churns_Last_1Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_Churns_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_CusCan_PL_Entry_Ever_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_HomeMove_PL_Entry_Ever_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_SysCan_PL_Entry_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Curr_Offer_Amount_DTV_flag" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Active_Blocks_Last_1Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Active_Blocks_Last_5Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_PO_Cancellations_Last_5Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Pending_Cancels_Last_1Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Pending_Cancels_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="MS_Active" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Movies_Active" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Offers_Applied_Lst_12M_DTV_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Offers_Applied_Lst_36M_DTV_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Offers_Applied_Lst_90D_DTV_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Prev_Offer_Amount_DTV_flag" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="SGE_Active" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_nonsaves_in_last_12m_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_nonsaves_in_last_36m_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_saves_in_last_12m_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_saves_in_last_36m_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_saves_in_last_90d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TAs_in_last_60d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="UP_rental" AttributeName="ROLE" AttributeValue="TARGET"/>
+<DELTA Variable="UP_rental" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="account_number" AttributeName="ROLE" AttributeValue="ID"/>
+<DELTA Variable="last_TA_reason_flag" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="movies_downgrade_date" AttributeName="DROP" AttributeValue="Y"/>
+<DELTA Variable="p_true_touch_group" AttributeName="ROLE" AttributeValue="INPUT"/>
+<DELTA Variable="p_true_touch_type" AttributeName="ROLE" AttributeValue="INPUT"/>
+<DELTA Variable="p_true_touch_type" AttributeName="FORMATTYPE" AttributeValue="CATEGORY"/>
+<DELTA Variable="rentals_used_before" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="skyfibre_enabled" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="sports_downgrade_date" AttributeName="DROP" AttributeValue="Y"/>
+</EmVariableAttributes>
+<EmTargetAttributes>
+<UP_rental>
+<DecData Table="EMWS4.Ids_UP_rental_DD">
+<Data>
+<Obs UP_RENTAL="1" COUNT="623977" DATAPRIOR="0.4646464722" TRAINPRIOR="0.4646464722" DECPRIOR="0.03" DECISION1="1" DECISION2="0"/>
+<Obs UP_RENTAL="0" COUNT="718930" DATAPRIOR="0.5353535278" TRAINPRIOR="0.5353535278" DECPRIOR="0.97" DECISION1="0" DECISION2="1"/>
+</Data>
+<Metadata>
+<Variable NAME="UP_rental" LABEL="" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="COUNT" LABEL="Level Counts" LENGTH="8" FORMAT="10." TYPE="N"/>
+<Variable NAME="DATAPRIOR" LABEL="Data Proportions" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="TRAINPRIOR" LABEL="Training Proportions" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="DECPRIOR" LABEL="Decision Priors" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="DECISION1" LABEL="1" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="DECISION2" LABEL="0" LENGTH="8" FORMAT="" TYPE="N"/>
+</Metadata>
+</DecData>
+<DecMeta Table="EMWS4.Ids_UP_rental_DM">
+<Data>
+<Obs _TYPE_="MATRIX" VARIABLE="" LABEL="" LEVEL="PROFIT" EVENT="" ORDER="" FORMAT="" TYPE="" COST="" USE="N"/>
+<Obs _TYPE_="TARGET" VARIABLE="UP_rental" LABEL="UP_rental" LEVEL="BINARY" EVENT="1" ORDER="" FORMAT="1.0" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="DATAPRIOR" VARIABLE="DATAPRIOR" LABEL="Data Prior" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="N"/>
+<Obs _TYPE_="TRAINPRIOR" VARIABLE="TRAINPRIOR" LABEL="Training Prior" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="N"/>
+<Obs _TYPE_="DECPRIOR" VARIABLE="DECPRIOR" LABEL="Decision Prior" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+<Obs _TYPE_="PREDICTED" VARIABLE="P_UP_rental1" LABEL="Predicted: UP_rental=1" LEVEL="1" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="RESIDUAL" VARIABLE="R_UP_rental1" LABEL="Residual: UP_rental=1" LEVEL="1" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="PREDICTED" VARIABLE="P_UP_rental0" LABEL="Predicted: UP_rental=0" LEVEL="0" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="RESIDUAL" VARIABLE="R_UP_rental0" LABEL="Residual: UP_rental=0" LEVEL="0" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="FROM" VARIABLE="F_UP_rental" LABEL="From: UP_rental" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="C" COST="" USE=""/>
+<Obs _TYPE_="INTO" VARIABLE="I_UP_rental" LABEL="Into: UP_rental" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="C" COST="" USE=""/>
+<Obs _TYPE_="DECISION" VARIABLE="DECISION1" LABEL="1" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+<Obs _TYPE_="DECISION" VARIABLE="DECISION2" LABEL="0" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+</Data>
+<Metadata>
+<Variable NAME="_TYPE_" LABEL="Type" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="VARIABLE" LABEL="Variable" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="LABEL" LABEL="Label" LENGTH="256" FORMAT="" TYPE="C"/>
+<Variable NAME="LEVEL" LABEL="Measurement Level" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="EVENT" LABEL="Target Event" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="ORDER" LABEL="Order" LENGTH="10" FORMAT="" TYPE="C"/>
+<Variable NAME="FORMAT" LABEL="Format" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="TYPE" LABEL="Type" LENGTH="1" FORMAT="" TYPE="C"/>
+<Variable NAME="COST" LABEL="Cost" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="USE" LABEL="Use" LENGTH="1" FORMAT="" TYPE="C"/>
+</Metadata>
+</DecMeta>
+</UP_rental>
+</EmTargetAttributes>
+<EmFileProperties>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMSAMP.IDS.CLASS" COMPONENT="DataSource" ID="Ids2" X="66" Y="429" DESCRIPTION="cs_bak_3" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="SAMPLE" TOOLPREFIX="Ids">
+<PROPERTIES DataSource="csbak1" Scope="LOCAL" Role="RAW" Library="OLIVUSER" Table="cs_bak_3" NCols="129" NObs="1353394" NBytes="." Segment="" DataSourceRole="RAW" OutputType="VIEW" ForceRun="N" ComputeStatistics="N" DataSelection="DATASOURCE" NewTable="" MetaAdvisor="BASIC" ApplyIntervalLevelLowerLimit="Y" IntervalLowerLimit="20" ApplyMaxPercentMissing="Y" MaxPercentMissing="50" ApplyMaxClassLevels="Y" MaxClassLevels="20" IdentifyEmptyColumns="Y" VariableValidation="STRICT" NewVariableRole="REJECT" DropMapVariables="Y" DsId="csbak1" DsSampleName="" DsSampleSizeType="" DsSampleSize="" DsCreatedBy="pitteloj" DsCreateDate="1825244016.1" DsModifiedBy="pitteloj" DsModifyDate="1825244016.2" DsScope="LOCAL" Sample="D" SampleSizeType="PERCENT" SampleSizePercent="20" SampleSizeObs="10000" DBPassThrough="Y" RunAction="Train" Component="DataSource" Description="">
+<VariableProperties/>
+<EmVariableAttributes>
+<DELTA Variable="BB_3rdParty_PL_Entry_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_Active" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_Churns_Last_1Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_Churns_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_CusCan_PL_Entry_Ever_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_HomeMove_PL_Entry_Ever_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_SysCan_PL_Entry_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Curr_Offer_Amount_DTV_flag" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Active_Blocks_Last_1Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Active_Blocks_Last_5Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_PO_Cancellations_Last_5Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Pending_Cancels_Last_1Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Pending_Cancels_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="MS_Active" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="OD_Months_since_Last" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="Offers_Applied_Lst_12M_DTV_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Offers_Applied_Lst_36M_DTV_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Offers_Applied_Lst_90D_DTV_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Prev_Offer_Amount_DTV_flag" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="SGE_Active" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_nonsaves_in_last_12m_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_nonsaves_in_last_36m_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_saves_in_last_12m_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_saves_in_last_36m_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_saves_in_last_90d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TAs_in_last_60d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="UP_buy_and_Keep" AttributeName="ROLE" AttributeValue="TARGET"/>
+<DELTA Variable="UP_buy_and_Keep" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="account_number" AttributeName="ROLE" AttributeValue="ID"/>
+<DELTA Variable="bak_used_before" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="last_TA_reason_flag" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="p_true_touch_group" AttributeName="ROLE" AttributeValue="INPUT"/>
+<DELTA Variable="p_true_touch_type" AttributeName="ROLE" AttributeValue="INPUT"/>
+<DELTA Variable="skyfibre_enabled" AttributeName="LEVEL" AttributeValue="BINARY"/>
+</EmVariableAttributes>
+<EmTargetAttributes>
+<UP_buy_and_Keep>
+<DecData Table="EMWS4.Ids2_UP_buy_and_Keep_DD">
+<Data>
+<Obs UP_BUY_AND_KEEP="1" COUNT="309894" DATAPRIOR="0.3812681626" TRAINPRIOR="0.3812681626" DECPRIOR="." DECISION1="1" DECISION2="0"/>
+<Obs UP_BUY_AND_KEEP="0" COUNT="502904" DATAPRIOR="0.6187318374" TRAINPRIOR="0.6187318374" DECPRIOR="." DECISION1="0" DECISION2="1"/>
+</Data>
+<Metadata>
+<Variable NAME="UP_buy_and_Keep" LABEL="" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="COUNT" LABEL="Level Counts" LENGTH="8" FORMAT="10." TYPE="N"/>
+<Variable NAME="DATAPRIOR" LABEL="Data Proportions" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="TRAINPRIOR" LABEL="Training Proportions" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="DECPRIOR" LABEL="Decision Priors" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="DECISION1" LABEL="1" LENGTH="8" FORMAT="" TYPE="N"/>
+<Variable NAME="DECISION2" LABEL="0" LENGTH="8" FORMAT="" TYPE="N"/>
+</Metadata>
+</DecData>
+<DecMeta Table="EMWS4.Ids2_UP_buy_and_Keep_DM">
+<Data>
+<Obs _TYPE_="MATRIX" VARIABLE="" LABEL="" LEVEL="PROFIT" EVENT="" ORDER="" FORMAT="" TYPE="" COST="" USE="N"/>
+<Obs _TYPE_="TARGET" VARIABLE="UP_buy_and_Keep" LABEL="UP_buy_and_Keep" LEVEL="BINARY" EVENT="1" ORDER="" FORMAT="1.0" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="DECISION" VARIABLE="DECISION1" LABEL="1" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+<Obs _TYPE_="DECISION" VARIABLE="DECISION2" LABEL="0" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="Y"/>
+<Obs _TYPE_="DATAPRIOR" VARIABLE="DATAPRIOR" LABEL="Data Prior" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="N"/>
+<Obs _TYPE_="TRAINPRIOR" VARIABLE="TRAINPRIOR" LABEL="Training Prior" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="N"/>
+<Obs _TYPE_="DECPRIOR" VARIABLE="DECPRIOR" LABEL="Decision Prior" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE="N"/>
+<Obs _TYPE_="PREDICTED" VARIABLE="P_UP_buy_and_Keep1" LABEL="Predicted: UP_buy_and_Keep=1" LEVEL="1" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="RESIDUAL" VARIABLE="R_UP_buy_and_Keep1" LABEL="Residual: UP_buy_and_Keep=1" LEVEL="1" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="PREDICTED" VARIABLE="P_UP_buy_and_Keep0" LABEL="Predicted: UP_buy_and_Keep=0" LEVEL="0" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="RESIDUAL" VARIABLE="R_UP_buy_and_Keep0" LABEL="Residual: UP_buy_and_Keep=0" LEVEL="0" EVENT="" ORDER="" FORMAT="" TYPE="N" COST="" USE=""/>
+<Obs _TYPE_="FROM" VARIABLE="F_UP_buy_and_Keep" LABEL="From: UP_buy_and_Keep" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="C" COST="" USE=""/>
+<Obs _TYPE_="INTO" VARIABLE="I_UP_buy_and_Keep" LABEL="Into: UP_buy_and_Keep" LEVEL="" EVENT="" ORDER="" FORMAT="" TYPE="C" COST="" USE=""/>
+</Data>
+<Metadata>
+<Variable NAME="_TYPE_" LABEL="Type" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="VARIABLE" LABEL="Variable" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="LABEL" LABEL="Label" LENGTH="256" FORMAT="" TYPE="C"/>
+<Variable NAME="LEVEL" LABEL="Measurement Level" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="EVENT" LABEL="Target Event" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="ORDER" LABEL="Order" LENGTH="10" FORMAT="" TYPE="C"/>
+<Variable NAME="FORMAT" LABEL="Format" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="TYPE" LABEL="Type" LENGTH="1" FORMAT="" TYPE="C"/>
+<Variable NAME="COST" LABEL="Cost" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="USE" LABEL="Use" LENGTH="1" FORMAT="" TYPE="C"/>
+</Metadata>
+</DecMeta>
+</UP_buy_and_Keep>
+</EmTargetAttributes>
+<EmFileProperties>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMSAMP.IDS.CLASS" COMPONENT="DataSource" ID="Ids6" X="1254" Y="561" DESCRIPTION="CS_Raw_test_BINNED_v" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="SAMPLE" TOOLPREFIX="Ids">
+<PROPERTIES DataSource="csrawtestbinnedv" Scope="LOCAL" Role="SCORE" Library="OLIVUSER" Table="CS_Raw_test_BINNED_v" NCols="290" NObs="979" NBytes="." Segment="" DataSourceRole="SCORE" OutputType="VIEW" ForceRun="N" ComputeStatistics="N" DataSelection="DATASOURCE" NewTable="" MetaAdvisor="BASIC" ApplyIntervalLevelLowerLimit="Y" IntervalLowerLimit="20" ApplyMaxPercentMissing="Y" MaxPercentMissing="50" ApplyMaxClassLevels="Y" MaxClassLevels="20" IdentifyEmptyColumns="Y" VariableValidation="STRICT" NewVariableRole="REJECT" DropMapVariables="Y" DsId="csrawtestbinnedv" DsSampleName="" DsSampleSizeType="" DsSampleSize="" DsCreatedBy="pitteloj" DsCreateDate="1832954251.6" DsModifiedBy="pitteloj" DsModifyDate="1832954251.7" DsScope="LOCAL" Sample="D" SampleSizeType="PERCENT" SampleSizePercent="20" SampleSizeObs="10000" DBPassThrough="Y" RunAction="Train" Component="DataSource" Description="">
+<VariableProperties/>
+<EmVariableAttributes>
+<DELTA Variable="ADSL_Enabled" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BAK_12M" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="BAK_6M" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="BAK_9M" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="BAK_time_since_last" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="BB_3rdParty_PL_Entry_Ever_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_3rdParty_PL_Entry_Last_180D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_3rdParty_PL_Entry_Last_1Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_3rdParty_PL_Entry_Last_30D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_3rdParty_PL_Entry_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_3rdParty_PL_Entry_Last_5Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_3rdParty_PL_Entry_Last_90D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_Active" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_Churns_Ever_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_Churns_Last_180D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_Churns_Last_1Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_Churns_Last_30D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_Churns_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_Churns_Last_5Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_Churns_Last_90D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_CusCan_PL_Entry_Ever_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_CusCan_PL_Entry_Last_180D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_CusCan_PL_Entry_Last_1Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_CusCan_PL_Entry_Last_30D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_CusCan_PL_Entry_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_CusCan_PL_Entry_Last_5Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_CusCan_PL_Entry_Last_90D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_HomeMove_PL_Entry_Ever_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_HomeMove_PL_Entry_In_Last_180" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_HomeMove_PL_Entry_Last_1Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_HomeMove_PL_Entry_Last_30D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_HomeMove_PL_Entry_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_HomeMove_PL_Entry_Last_5Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_HomeMove_PL_Entry_Last_90D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_SysCan_PL_Entry_Ever_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_SysCan_PL_Entry_Last_180D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_SysCan_PL_Entry_Last_1Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_SysCan_PL_Entry_Last_30D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_SysCan_PL_Entry_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_SysCan_PL_Entry_Last_5Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_SysCan_PL_Entry_Last_90D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="BB_contract_segment" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="Broadband_Average_Demand" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="Buy_and_keep_eligible" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="Country" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="Curr_Offer_Amount_DTV_flag" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Active" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Active_Blocks_Ever_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Active_Blocks_Last_180D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Active_Blocks_Last_1Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Active_Blocks_Last_30D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Active_Blocks_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Active_Blocks_Last_5Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Active_Blocks_Last_90D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Churns_Ever_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Churns_Last_180D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Churns_Last_1Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Churns_Last_30D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Churns_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Churns_Last_5Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Churns_Last_90D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="DTV_CusCan_Churns_Last_180D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_CusCan_Churns_Last_1Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_CusCan_Churns_Last_30D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_CusCan_Churns_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_CusCan_Churns_Last_5Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_CusCan_Churns_Last_90D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_PO_Cancellations_Ever_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_PO_Cancellations_Last_180D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_PO_Cancellations_Last_1Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_PO_Cancellations_Last_30D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_PO_Cancellations_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_PO_Cancellations_Last_5Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_PO_Cancellations_Last_90D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Pending_Cancels_Last_180D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Pending_Cancels_Last_1Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Pending_Cancels_Last_30D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Pending_Cancels_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Pending_Cancels_Last_5Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Pending_Cancels_Last_90D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_SameDayCancels_Ever_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_SameDayCancels_Last_180D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_SameDayCancels_Last_1Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_SameDayCancels_Last_30D_b" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="DTV_SameDayCancels_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_SameDayCancels_Last_5Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_SameDayCancels_Last_90D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_SysCan_Churns_Ever" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="DTV_SysCan_Churns_In_Last_90D_b" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="DTV_SysCan_Churns_Last_180D_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_SysCan_Churns_Last_1Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_SysCan_Churns_Last_30D_b" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="DTV_SysCan_Churns_Last_3Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="DTV_SysCan_Churns_Last_5Yr_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="MS_Active" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Movies_Active" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Movies_Downgrades_Ever" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="Movies_Downgrades_In_Last_180D" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Movies_Downgrades_In_Last_1D" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="Movies_Downgrades_In_Last_1Yr" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="Movies_Downgrades_In_Last_30D" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Movies_Downgrades_In_Last_3Yr" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="Movies_Downgrades_In_Last_5Yr" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="Movies_Downgrades_In_Last_90D" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Movies_Product_Holding" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Movies_Reinstates_Ever" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="Movies_Reinstates_In_Last_180D" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Movies_Reinstates_In_Last_1D" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="Movies_Reinstates_In_Last_1Yr" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Movies_Reinstates_In_Last_30D" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Movies_Reinstates_In_Last_3Yr" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Movies_Reinstates_In_Last_5Yr" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="Movies_Reinstates_In_Last_90D" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="NTV_Ents_Last_30D" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="NTV_Ents_Last_90D" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Offers_Applied_Lst_12M_DTV_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Offers_Applied_Lst_24M_DTV_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Offers_Applied_Lst_30D_DTV_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Offers_Applied_Lst_36M_DTV_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Offers_Applied_Lst_7D_DTV_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Offers_Applied_Lst_90D_DTV_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Order_Movies_Added_In_Last_30d" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Order_Movies_Added_In_Next_30d" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Order_Movies_Removed_In_Last_30d" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Order_Movies_Removed_In_Next_30d" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Order_Sports_Added_In_Last_30d" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Order_Sports_Added_In_Next_30d" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Order_Sports_Removed_In_Last_30d" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Order_Sports_Removed_In_Next_30d" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Prev_Offer_Amount_DTV_flag" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Rental_eligible" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="SGE_Active" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="SkyQ_eligible" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Sports_Activations_Ever" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="Sports_Activations_In_Last_180D" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="Sports_Activations_In_Last_1D" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="Sports_Activations_In_Last_1Yr" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="Sports_Activations_In_Last_30D" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Sports_Activations_In_Last_3Yr" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="Sports_Activations_In_Last_5Yr" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="Sports_Activations_In_Last_90D" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Sports_Active" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Sports_Downgrades_Ever" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="Sports_Downgrades_In_Last_180D" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="Sports_Downgrades_In_Last_1D" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="Sports_Downgrades_In_Last_1Yr" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="Sports_Downgrades_In_Last_30D" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Sports_Downgrades_In_Last_3Yr" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="Sports_Downgrades_In_Last_5Yr" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="Sports_Downgrades_In_Last_90D" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Sports_Downgrades_In_Next_30D" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Sports_Downgrades_In_Next_7D" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Sports_Product_Count" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="Sports_Product_Holding" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_nonsaves_in_last_12m_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_nonsaves_in_last_14d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_nonsaves_in_last_24hrs_b" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="TA_nonsaves_in_last_24m_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_nonsaves_in_last_30d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_nonsaves_in_last_36m_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_nonsaves_in_last_60d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_nonsaves_in_last_7d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_nonsaves_in_last_90d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_saves_in_last_12m_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_saves_in_last_14d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_saves_in_last_24hrs_b" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="TA_saves_in_last_24m_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_saves_in_last_30d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_saves_in_last_36m_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_saves_in_last_60d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_saves_in_last_7d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TA_saves_in_last_90d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TAs_in_last_12m_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TAs_in_last_14d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TAs_in_last_24hrs_b" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="TAs_in_last_24m_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TAs_in_last_30d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TAs_in_last_36m_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TAs_in_last_60d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TAs_in_last_7d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TAs_in_last_90d_b" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="TAs_in_next_30d" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="_1st_TA_reason_flag" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="account_number" AttributeName="ROLE" AttributeValue="ID"/>
+<DELTA Variable="bak_used_before" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="base_dt" AttributeName="ROLE" AttributeValue="INPUT"/>
+<DELTA Variable="base_dt" AttributeName="LEVEL" AttributeValue="UNARY"/>
+<DELTA Variable="h_presence_of_young_person_at_ad" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="last_TA_reason_flag" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="mobile_eligible" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="movies_eligible" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="num_sports_events" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="p_true_touch_group" AttributeName="ROLE" AttributeValue="INPUT"/>
+<DELTA Variable="p_true_touch_type" AttributeName="ROLE" AttributeValue="INPUT"/>
+<DELTA Variable="rentals_used_before" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="rents_6M" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="rents_9M" AttributeName="LEVEL" AttributeValue="NOMINAL"/>
+<DELTA Variable="skyfibre_enabled" AttributeName="LEVEL" AttributeValue="BINARY"/>
+<DELTA Variable="sports_eligible" AttributeName="LEVEL" AttributeValue="BINARY"/>
+</EmVariableAttributes>
+<EmTargetAttributes/>
+<EmFileProperties>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMASSMT.ASSESS.CLASS" COMPONENT="ModelCompare" ID="MdlComp" X="1452" Y="858" DESCRIPTION="Model Comparison" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="ASSESS" TOOLPREFIX="MdlComp">
+<PROPERTIES NumberOfReportedLevels="1E-6" NormalizeReportingVariables="Y" DecileBin="20" LiftEpsilon="1E-6" ProfitEpsilon="1E-6" RoiEpsilon="1E-6" ScoreDistBin="20" RocChart="Y" RocEpsilon="0.01" AssessAllTargetLevels="N" SelectionData="DEFAULT" HPCriteria="DEFAULT" SelectionTable="TRAIN" SelectionCriteria="DEFAULT" SelectionDepth="10" NumberofBins="20" RecomputeAssess="N" TargetName="UP_buy_and_Keep" ModelId="HPReg10" ModelDescription="Never model" ModelCriteria="Valid: Average Profit" ForceRun="N" RunAction="Train" Component="ModelCompare" StatisticUsed="_VAPROF_" TargetLabel="UP_buy_and_Keep">
+<VariableProperties/>
+<EmVariableAttributes/>
+<EmTargetAttributes/>
+<EmFileProperties>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMASSMT.ASSESS.CLASS" COMPONENT="ModelCompare" ID="MdlComp4" X="1452" Y="165" DESCRIPTION="Model Comparison (4)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="ASSESS" TOOLPREFIX="MdlComp">
+<PROPERTIES NumberOfReportedLevels="1E-6" NormalizeReportingVariables="Y" DecileBin="20" LiftEpsilon="1E-6" ProfitEpsilon="1E-6" RoiEpsilon="1E-6" ScoreDistBin="20" RocChart="Y" RocEpsilon="0.01" AssessAllTargetLevels="N" SelectionData="DEFAULT" HPCriteria="DEFAULT" SelectionTable="TRAIN" SelectionCriteria="DEFAULT" SelectionDepth="10" NumberofBins="20" RecomputeAssess="N" TargetName="UP_rental" ModelId="HPTree3" ModelDescription="HP Tree (3)" ModelCriteria="Valid: Misclassification Rate" ForceRun="N" RunAction="Train" Component="ModelCompare" StatisticUsed="_VMISC_" TargetLabel="UP_rental">
+<VariableProperties/>
+<EmVariableAttributes/>
+<EmTargetAttributes/>
+<EmFileProperties>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMSAMP.EMDPART.CLASS" COMPONENT="Partition" ID="Part4" X="462" Y="429" DESCRIPTION="Data Partition (3)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="SAMPLE" TOOLPREFIX="Part">
+<PROPERTIES Method="STRATIFY" TrainPct="70" ValidatePct="30" TestPct="0" RandomSeed="12345" OutputType="DATA" IntervalDistribution="Y" ClassDistribution="Y" ForceRun="N" RunAction="Train" Component="Partition">
+<VariableProperties/>
+<EmTargetAttributes/>
+<EmVariableAttributes/>
+<EmFileProperties>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMSAMP.EMDPART.CLASS" COMPONENT="Partition" ID="Part5" X="462" Y="561" DESCRIPTION="Data Partition (3)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="SAMPLE" TOOLPREFIX="Part">
+<PROPERTIES Method="STRATIFY" TrainPct="70" ValidatePct="30" TestPct="0" RandomSeed="12345" OutputType="DATA" IntervalDistribution="Y" ClassDistribution="Y" ForceRun="N" RunAction="Train" Component="Partition">
+<VariableProperties/>
+<EmTargetAttributes/>
+<EmVariableAttributes/>
+<EmFileProperties>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMSAMP.EMDPART.CLASS" COMPONENT="Partition" ID="Part6" X="858" Y="165" DESCRIPTION="Data Partition (6)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="SAMPLE" TOOLPREFIX="Part">
+<PROPERTIES Method="STRATIFY" TrainPct="70" ValidatePct="30" TestPct="0" RandomSeed="12345" OutputType="DATA" IntervalDistribution="Y" ClassDistribution="Y" ForceRun="N" RunAction="Train" Component="Partition">
+<VariableProperties/>
+<EmVariableAttributes/>
+<EmTargetAttributes/>
+<EmFileProperties>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMSAMP.EMDPART.CLASS" COMPONENT="Partition" ID="Part7" X="858" Y="297" DESCRIPTION="Data Partition (7)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="SAMPLE" TOOLPREFIX="Part">
+<PROPERTIES Method="STRATIFY" TrainPct="70" ValidatePct="30" TestPct="0" RandomSeed="12345" OutputType="DATA" IntervalDistribution="Y" ClassDistribution="Y" ForceRun="N" RunAction="Train" Component="Partition">
+<VariableProperties/>
+<EmVariableAttributes/>
+<EmTargetAttributes/>
+<EmFileProperties>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS" COMPONENT="Replace" ID="Repl" X="660" Y="429" DESCRIPTION="Replacement  (4)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODIFY" TOOLPREFIX="Repl">
+<PROPERTIES Location="CATALOG" Catalog="SASHELP.EMMDFY.REPLACE.SOURCE" HideVariable="Y" UnknownLevel="NONE" ReplaceMethod="COMPUTED" CalcMethod="STDDEV" MADSCutoff="9.0" SpacingsCutoff="9.0" StddevCutoff="3.0" PercentsCutoff="0.5" CountReport="Y" ForceRun="N" RunAction="Train" Component="Replace" IntervalMethod="NONE" DataNeeded="Y">
+<VariableProperties/>
+<EmTargetAttributes/>
+<EmVariableAttributes>
+<DELTA Variable="Age" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Age" AttributeName="INTERVALMIN" AttributeValue="16.217773"/>
+<DELTA Variable="Age" AttributeName="INTERVALMAX" AttributeValue="92"/>
+<DELTA Variable="Age" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Age" AttributeName="REPLACEMIN" AttributeValue="16.217773"/>
+<DELTA Variable="Age" AttributeName="REPLACEMAX" AttributeValue="92"/>
+<DELTA Variable="Curr_Offer_Actual_End_DTV" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Curr_Offer_Actual_End_DTV" AttributeName="INTERVALMIN" AttributeValue="-6632.683"/>
+<DELTA Variable="Curr_Offer_Actual_End_DTV" AttributeName="INTERVALMAX" AttributeValue="380.5"/>
+<DELTA Variable="Curr_Offer_Actual_End_DTV" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Curr_Offer_Actual_End_DTV" AttributeName="REPLACEMIN" AttributeValue="-6632.683"/>
+<DELTA Variable="Curr_Offer_Actual_End_DTV" AttributeName="REPLACEMAX" AttributeValue="380.5"/>
+<DELTA Variable="Curr_Offer_Start_DTV" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Curr_Offer_Start_DTV" AttributeName="INTERVALMIN" AttributeValue="-11.3125"/>
+<DELTA Variable="Curr_Offer_Start_DTV" AttributeName="INTERVALMAX" AttributeValue="1050.928162"/>
+<DELTA Variable="Curr_Offer_Start_DTV" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Curr_Offer_Start_DTV" AttributeName="REPLACEMIN" AttributeValue="-11.3125"/>
+<DELTA Variable="Curr_Offer_Start_DTV" AttributeName="REPLACEMAX" AttributeValue="1050.928162"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="INTERVALMIN" AttributeValue="-0.46875"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="INTERVALMAX" AttributeValue="6"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="REPLACEMIN" AttributeValue="-0.46875"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="REPLACEMAX" AttributeValue="6"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="INTERVALMIN" AttributeValue="-0.46875"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="INTERVALMAX" AttributeValue="9.904286"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="REPLACEMIN" AttributeValue="-0.46875"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="REPLACEMAX" AttributeValue="9.904286"/>
+<DELTA Variable="MS_Active" AttributeName="CALCMETHOD" AttributeValue="DEFAULT"/>
+<DELTA Variable="OD_Last_12M" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="OD_Last_12M" AttributeName="INTERVALMIN" AttributeValue="-50.125"/>
+<DELTA Variable="OD_Last_12M" AttributeName="INTERVALMAX" AttributeValue="10681.177"/>
+<DELTA Variable="OD_Last_12M" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="OD_Last_12M" AttributeName="REPLACEMIN" AttributeValue="-50.125"/>
+<DELTA Variable="OD_Last_12M" AttributeName="REPLACEMAX" AttributeValue="10681.177"/>
+<DELTA Variable="OD_Last_3M" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="OD_Last_3M" AttributeName="INTERVALMIN" AttributeValue="-15.125"/>
+<DELTA Variable="OD_Last_3M" AttributeName="INTERVALMAX" AttributeValue="5703.28"/>
+<DELTA Variable="OD_Last_3M" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="OD_Last_3M" AttributeName="REPLACEMIN" AttributeValue="-15.125"/>
+<DELTA Variable="OD_Last_3M" AttributeName="REPLACEMAX" AttributeValue="5703.28"/>
+<DELTA Variable="OD_Months_since_Last" AttributeName="INTERVALMIN" AttributeValue="-0.46875"/>
+<DELTA Variable="OD_Months_since_Last" AttributeName="INTERVALMAX" AttributeValue="15.009145"/>
+<DELTA Variable="OD_Months_since_Last" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="OD_Months_since_Last" AttributeName="REPLACEMIN" AttributeValue="-0.46875"/>
+<DELTA Variable="OD_Months_since_Last" AttributeName="REPLACEMAX" AttributeValue="15.009145"/>
+<DELTA Variable="Prev_Offer_Amount_DTV" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Prev_Offer_Amount_DTV" AttributeName="INTERVALMIN" AttributeValue="-43.80257954"/>
+<DELTA Variable="Prev_Offer_Amount_DTV" AttributeName="INTERVALMAX" AttributeValue="0.665625"/>
+<DELTA Variable="Prev_Offer_Amount_DTV" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Prev_Offer_Amount_DTV" AttributeName="REPLACEMIN" AttributeValue="-43.80257954"/>
+<DELTA Variable="Prev_Offer_Amount_DTV" AttributeName="REPLACEMAX" AttributeValue="0.665625"/>
+<DELTA Variable="SGE_Active" AttributeName="CALCMETHOD" AttributeValue="DEFAULT"/>
+<DELTA Variable="Throughput_Speed" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Throughput_Speed" AttributeName="INTERVALMIN" AttributeValue="-1.125"/>
+<DELTA Variable="Throughput_Speed" AttributeName="INTERVALMAX" AttributeValue="52.3464"/>
+<DELTA Variable="Throughput_Speed" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Throughput_Speed" AttributeName="REPLACEMIN" AttributeValue="-1.125"/>
+<DELTA Variable="Throughput_Speed" AttributeName="REPLACEMAX" AttributeValue="52.3464"/>
+<DELTA Variable="bak_used_before" AttributeName="CALCMETHOD" AttributeValue="DEFAULT"/>
+<DELTA Variable="h_income_value" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="h_income_value" AttributeName="INTERVALMIN" AttributeValue="-3881.1875"/>
+<DELTA Variable="h_income_value" AttributeName="INTERVALMAX" AttributeValue="229469.27785"/>
+<DELTA Variable="h_income_value" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="h_income_value" AttributeName="REPLACEMIN" AttributeValue="-3881.1875"/>
+<DELTA Variable="h_income_value" AttributeName="REPLACEMAX" AttributeValue="229469.27785"/>
+</EmVariableAttributes>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<NEWVALUES Type="DATA">
+<Data>
+<Obs NAME="BB_3rdParty_PL_Entry_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_3rdParty_PL_Entry_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Active" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Active" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Churns_Last_1Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Churns_Last_1Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Churns_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Churns_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_CusCan_PL_Entry_Ever_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_CusCan_PL_Entry_Ever_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_HomeMove_PL_Entry_Ever_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_HomeMove_PL_Entry_Ever_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Product_Holding" LEVEL="" TYPE="C" REPLACE_VALUE="No BB"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Unlimited (Legacy)" TYPE="C" REPLACE_VALUE="Unlimited"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Unlimited Fibre" TYPE="C" REPLACE_VALUE="Unlimited"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Unlimited" TYPE="C" REPLACE_VALUE="Unlimited"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Connect" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Unlimited Pro" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Sky Broadband Lite" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Product_Holding" LEVEL="12GB" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Everyday" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Provider" LEVEL="telefo" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Provider" LEVEL="vodafo" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Provider" LEVEL="easyne" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Provider" LEVEL="janet" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Provider" LEVEL="h3g" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Provider" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Provider" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_SysCan_PL_Entry_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_SysCan_PL_Entry_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_contract_segment" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_contract_segment" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Curr_Offer_Amount_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Curr_Offer_Amount_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Curr_Offer_Amount_DTV_flag" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Curr_Offer_Amount_DTV_flag" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Curr_Offer_Length_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Curr_Offer_Length_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Active_Blocks_Last_1Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Active_Blocks_Last_1Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Active_Blocks_Last_5Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Active_Blocks_Last_5Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_PO_Cancellations_Last_5Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_PO_Cancellations_Last_5Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Pending_Cancels_Last_1Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Pending_Cancels_Last_1Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Pending_Cancels_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Pending_Cancels_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_contract_segment" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_contract_segment" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_product_holding_recode" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_product_holding_recode" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Dtv_Package" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Dtv_Package" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Exchange_Status" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Exchange_Status" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Home_Owner_Status" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Home_Owner_Status" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="MS_Active" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="MS_Active" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Movies_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Movies_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Movies_Tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Movies_Tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="OD_Months_since_Last" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="OD_Months_since_Last" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Offers_Applied_Lst_12M_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Offers_Applied_Lst_12M_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Offers_Applied_Lst_36M_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Offers_Applied_Lst_36M_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Offers_Applied_Lst_90D_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Offers_Applied_Lst_90D_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Prev_Offer_Amount_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Prev_Offer_Amount_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Prev_Offer_Amount_DTV_flag" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Prev_Offer_Amount_DTV_flag" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Prev_Offer_Length_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Prev_Offer_Length_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="SGE_Active" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="SGE_Active" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="SGE_Product_Holding" LEVEL="" TYPE="C" REPLACE_VALUE="No SGE"/>
+<Obs NAME="SGE_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="SGE_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Sports_Tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Sports_Tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_nonsaves_in_last_12m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_nonsaves_in_last_12m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_nonsaves_in_last_36m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_nonsaves_in_last_36m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_saves_in_last_12m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_saves_in_last_12m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_saves_in_last_36m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_saves_in_last_36m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_saves_in_last_90d_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_saves_in_last_90d_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TAs_in_last_60d_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TAs_in_last_60d_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="UP_buy_and_Keep" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="UP_buy_and_Keep" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="bak_used_before" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="bak_used_before" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="bb_last_tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="bb_last_tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="dtv_1st_tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="dtv_1st_tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="dtv_last_tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="dtv_last_tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="financial_strategy" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="financial_strategy" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_affluence" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_affluence" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_family_lifestage" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_family_lifestage" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_household_composition" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_household_composition" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_mosaic_group" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_mosaic_group" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_number_of_adults_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_number_of_adults_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_number_of_bedrooms_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_number_of_bedrooms_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_number_of_children_in_house_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_number_of_children_in_house_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_child_aged_0_4" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_child_aged_0_4" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_child_aged_12_17" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_child_aged_12_17" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_child_aged_5_11" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_child_aged_5_11" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_young_person_at_ad" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_young_person_at_ad" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_property_type" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_property_type" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_residence_type" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_residence_type" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_nonsave_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_nonsave_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_reason_flag" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_reason_flag" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_save_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_save_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="p_true_touch_group" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="p_true_touch_group" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="p_true_touch_type" LEVEL="" TYPE="C" REPLACE_VALUE="99"/>
+<Obs NAME="p_true_touch_type" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="p_true_touch_type" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="skyfibre_enabled" LEVEL="" TYPE="C" REPLACE_VALUE="U"/>
+<Obs NAME="skyfibre_enabled" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="skyfibre_enabled" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+</Data>
+<Metadata>
+<Variable NAME="Name" LABEL="Variable" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="LEVEL" LABEL="Formatted Value" LENGTH="80" FORMAT="" TYPE="C"/>
+<Variable NAME="TYPE" LABEL="Type" LENGTH="1" FORMAT="" TYPE="C"/>
+<Variable NAME="REPLACE_VALUE" LABEL="Replacement Value" LENGTH="200" FORMAT="" TYPE="C"/>
+</Metadata>
+</NEWVALUES>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS" COMPONENT="Replace" ID="Repl5" X="660" Y="561" DESCRIPTION="Replacement  (4)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODIFY" TOOLPREFIX="Repl">
+<PROPERTIES Location="CATALOG" Catalog="SASHELP.EMMDFY.REPLACE.SOURCE" HideVariable="Y" UnknownLevel="NONE" ReplaceMethod="COMPUTED" CalcMethod="STDDEV" MADSCutoff="9.0" SpacingsCutoff="9.0" StddevCutoff="3.0" PercentsCutoff="0.5" CountReport="Y" ForceRun="N" RunAction="Train" Component="Replace" IntervalMethod="NONE" DataNeeded="Y">
+<VariableProperties/>
+<EmTargetAttributes/>
+<EmVariableAttributes>
+<DELTA Variable="Age" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Age" AttributeName="INTERVALMIN" AttributeValue="16.217773"/>
+<DELTA Variable="Age" AttributeName="INTERVALMAX" AttributeValue="92"/>
+<DELTA Variable="Age" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Age" AttributeName="REPLACEMIN" AttributeValue="16.217773"/>
+<DELTA Variable="Age" AttributeName="REPLACEMAX" AttributeValue="92"/>
+<DELTA Variable="Curr_Offer_Actual_End_DTV" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Curr_Offer_Actual_End_DTV" AttributeName="INTERVALMIN" AttributeValue="-6632.683"/>
+<DELTA Variable="Curr_Offer_Actual_End_DTV" AttributeName="INTERVALMAX" AttributeValue="380.5"/>
+<DELTA Variable="Curr_Offer_Actual_End_DTV" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Curr_Offer_Actual_End_DTV" AttributeName="REPLACEMIN" AttributeValue="-6632.683"/>
+<DELTA Variable="Curr_Offer_Actual_End_DTV" AttributeName="REPLACEMAX" AttributeValue="380.5"/>
+<DELTA Variable="Curr_Offer_Start_DTV" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Curr_Offer_Start_DTV" AttributeName="INTERVALMIN" AttributeValue="-11.3125"/>
+<DELTA Variable="Curr_Offer_Start_DTV" AttributeName="INTERVALMAX" AttributeValue="1050.928162"/>
+<DELTA Variable="Curr_Offer_Start_DTV" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Curr_Offer_Start_DTV" AttributeName="REPLACEMIN" AttributeValue="-11.3125"/>
+<DELTA Variable="Curr_Offer_Start_DTV" AttributeName="REPLACEMAX" AttributeValue="1050.928162"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="INTERVALMIN" AttributeValue="-0.46875"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="INTERVALMAX" AttributeValue="6"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="REPLACEMIN" AttributeValue="-0.46875"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="REPLACEMAX" AttributeValue="6"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="INTERVALMIN" AttributeValue="-0.46875"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="INTERVALMAX" AttributeValue="9.904286"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="REPLACEMIN" AttributeValue="-0.46875"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="REPLACEMAX" AttributeValue="9.904286"/>
+<DELTA Variable="MS_Active" AttributeName="CALCMETHOD" AttributeValue="DEFAULT"/>
+<DELTA Variable="OD_Last_12M" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="OD_Last_12M" AttributeName="INTERVALMIN" AttributeValue="-50.125"/>
+<DELTA Variable="OD_Last_12M" AttributeName="INTERVALMAX" AttributeValue="10681.177"/>
+<DELTA Variable="OD_Last_12M" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="OD_Last_12M" AttributeName="REPLACEMIN" AttributeValue="-50.125"/>
+<DELTA Variable="OD_Last_12M" AttributeName="REPLACEMAX" AttributeValue="10681.177"/>
+<DELTA Variable="OD_Last_3M" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="OD_Last_3M" AttributeName="INTERVALMIN" AttributeValue="-15.125"/>
+<DELTA Variable="OD_Last_3M" AttributeName="INTERVALMAX" AttributeValue="5703.28"/>
+<DELTA Variable="OD_Last_3M" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="OD_Last_3M" AttributeName="REPLACEMIN" AttributeValue="-15.125"/>
+<DELTA Variable="OD_Last_3M" AttributeName="REPLACEMAX" AttributeValue="5703.28"/>
+<DELTA Variable="OD_Months_since_Last" AttributeName="INTERVALMIN" AttributeValue="-0.46875"/>
+<DELTA Variable="OD_Months_since_Last" AttributeName="INTERVALMAX" AttributeValue="15.009145"/>
+<DELTA Variable="OD_Months_since_Last" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="OD_Months_since_Last" AttributeName="REPLACEMIN" AttributeValue="-0.46875"/>
+<DELTA Variable="OD_Months_since_Last" AttributeName="REPLACEMAX" AttributeValue="15.009145"/>
+<DELTA Variable="Prev_Offer_Amount_DTV" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Prev_Offer_Amount_DTV" AttributeName="INTERVALMIN" AttributeValue="-43.80257954"/>
+<DELTA Variable="Prev_Offer_Amount_DTV" AttributeName="INTERVALMAX" AttributeValue="0.665625"/>
+<DELTA Variable="Prev_Offer_Amount_DTV" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Prev_Offer_Amount_DTV" AttributeName="REPLACEMIN" AttributeValue="-43.80257954"/>
+<DELTA Variable="Prev_Offer_Amount_DTV" AttributeName="REPLACEMAX" AttributeValue="0.665625"/>
+<DELTA Variable="SGE_Active" AttributeName="CALCMETHOD" AttributeValue="DEFAULT"/>
+<DELTA Variable="Throughput_Speed" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Throughput_Speed" AttributeName="INTERVALMIN" AttributeValue="-1.125"/>
+<DELTA Variable="Throughput_Speed" AttributeName="INTERVALMAX" AttributeValue="52.3464"/>
+<DELTA Variable="Throughput_Speed" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Throughput_Speed" AttributeName="REPLACEMIN" AttributeValue="-1.125"/>
+<DELTA Variable="Throughput_Speed" AttributeName="REPLACEMAX" AttributeValue="52.3464"/>
+<DELTA Variable="bak_used_before" AttributeName="CALCMETHOD" AttributeValue="DEFAULT"/>
+<DELTA Variable="h_income_value" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="h_income_value" AttributeName="INTERVALMIN" AttributeValue="-3881.1875"/>
+<DELTA Variable="h_income_value" AttributeName="INTERVALMAX" AttributeValue="229469.27785"/>
+<DELTA Variable="h_income_value" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="h_income_value" AttributeName="REPLACEMIN" AttributeValue="-3881.1875"/>
+<DELTA Variable="h_income_value" AttributeName="REPLACEMAX" AttributeValue="229469.27785"/>
+</EmVariableAttributes>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<NEWVALUES Type="DATA">
+<Data>
+<Obs NAME="BB_3rdParty_PL_Entry_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Active" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Churns_Last_1Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Churns_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_CusCan_PL_Entry_Ever_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_HomeMove_PL_Entry_Ever_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Product_Holding" LEVEL="" TYPE="C" REPLACE_VALUE="No BB"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Unlimited (Legacy)" TYPE="C" REPLACE_VALUE="Unlimited"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Unlimited" TYPE="C" REPLACE_VALUE="Unlimited"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Unlimited Fibre" TYPE="C" REPLACE_VALUE="Unlimited"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Connect" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Sky Broadband Lite" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Unlimited Pro" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Product_Holding" LEVEL="12GB" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Everyday" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Provider" LEVEL="vodafo" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Provider" LEVEL="telefo" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Provider" LEVEL="easyne" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Provider" LEVEL="janet" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Provider" LEVEL="h3g" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Provider" LEVEL="colt" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Provider" LEVEL="softla" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Provider" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_SysCan_PL_Entry_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_contract_segment" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Curr_Offer_Amount_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Curr_Offer_Amount_DTV_flag" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Curr_Offer_Length_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Active_Blocks_Last_1Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Active_Blocks_Last_5Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_PO_Cancellations_Last_5Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Pending_Cancels_Last_1Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Pending_Cancels_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_contract_segment" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_product_holding_recode" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Dtv_Package" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Exchange_Status" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Home_Owner_Status" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="MS_Active" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Movies_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Movies_Tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="OD_Months_since_Last" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Offers_Applied_Lst_12M_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Offers_Applied_Lst_36M_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Offers_Applied_Lst_90D_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Prev_Offer_Amount_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Prev_Offer_Amount_DTV_flag" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Prev_Offer_Length_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="SGE_Active" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="SGE_Product_Holding" LEVEL="" TYPE="C" REPLACE_VALUE="No SGE"/>
+<Obs NAME="SGE_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Sports_Tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_nonsaves_in_last_12m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_nonsaves_in_last_36m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_saves_in_last_12m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_saves_in_last_36m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_saves_in_last_90d_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TAs_in_last_60d_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="UP_buy_and_Keep" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="bak_used_before" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="bb_last_tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="dtv_1st_tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="dtv_last_tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="financial_strategy" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_affluence" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_family_lifestage" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_household_composition" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_mosaic_group" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_number_of_adults_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_number_of_bedrooms_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_number_of_children_in_house_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_child_aged_0_4" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_child_aged_12_17" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_child_aged_5_11" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_young_person_at_ad" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_property_type" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_residence_type" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_nonsave_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_reason_flag" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_save_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="p_true_touch_group" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="p_true_touch_type" LEVEL="" TYPE="C" REPLACE_VALUE="99"/>
+<Obs NAME="p_true_touch_type" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="skyfibre_enabled" LEVEL="" TYPE="C" REPLACE_VALUE="U"/>
+<Obs NAME="skyfibre_enabled" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+</Data>
+<Metadata>
+<Variable NAME="Name" LABEL="Variable" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="LEVEL" LABEL="Formatted Value" LENGTH="80" FORMAT="" TYPE="C"/>
+<Variable NAME="TYPE" LABEL="Type" LENGTH="1" FORMAT="" TYPE="C"/>
+<Variable NAME="REPLACE_VALUE" LABEL="Replacement Value" LENGTH="200" FORMAT="" TYPE="C"/>
+</Metadata>
+</NEWVALUES>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMCORE.EXTENSION.CLASS" COMPONENT="Replace" ID="Repl6" X="264" Y="165" DESCRIPTION="Replacement" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODIFY" TOOLPREFIX="Repl">
+<PROPERTIES Location="CATALOG" Catalog="SASHELP.EMMDFY.REPLACE.SOURCE" HideVariable="Y" UnknownLevel="NONE" ReplaceMethod="COMPUTED" CalcMethod="STDDEV" MADSCutoff="9.0" SpacingsCutoff="9.0" StddevCutoff="3.0" PercentsCutoff="0.5" CountReport="Y" ForceRun="N" RunAction="Train" Component="Replace" IntervalMethod="NONE" DataNeeded="Y">
+<VariableProperties/>
+<EmTargetAttributes/>
+<EmVariableAttributes>
+<DELTA Variable="Broadband_Average_Demand" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Broadband_Average_Demand" AttributeName="INTERVALMIN" AttributeValue="-8.1584375"/>
+<DELTA Variable="Broadband_Average_Demand" AttributeName="INTERVALMAX" AttributeValue="500"/>
+<DELTA Variable="Broadband_Average_Demand" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Broadband_Average_Demand" AttributeName="REPLACEMIN" AttributeValue="-8.1584375"/>
+<DELTA Variable="Broadband_Average_Demand" AttributeName="REPLACEMAX" AttributeValue="500"/>
+<DELTA Variable="Curr_Offer_Actual_End_DTV" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Curr_Offer_Actual_End_DTV" AttributeName="INTERVALMIN" AttributeValue="-1000"/>
+<DELTA Variable="Curr_Offer_Actual_End_DTV" AttributeName="INTERVALMAX" AttributeValue="372.59375"/>
+<DELTA Variable="Curr_Offer_Actual_End_DTV" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Curr_Offer_Actual_End_DTV" AttributeName="REPLACEMIN" AttributeValue="-1000"/>
+<DELTA Variable="Curr_Offer_Actual_End_DTV" AttributeName="REPLACEMAX" AttributeValue="372.59375"/>
+<DELTA Variable="Curr_Offer_Start_DTV" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Curr_Offer_Start_DTV" AttributeName="INTERVALMIN" AttributeValue="-11.3125"/>
+<DELTA Variable="Curr_Offer_Start_DTV" AttributeName="INTERVALMAX" AttributeValue="783.5918"/>
+<DELTA Variable="Curr_Offer_Start_DTV" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Curr_Offer_Start_DTV" AttributeName="REPLACEMIN" AttributeValue="-11.3125"/>
+<DELTA Variable="Curr_Offer_Start_DTV" AttributeName="REPLACEMAX" AttributeValue="783.5918"/>
+<DELTA Variable="DTV_Curr_Contract_Start" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="DTV_Curr_Contract_Start" AttributeName="INTERVALMIN" AttributeValue="-41"/>
+<DELTA Variable="DTV_Curr_Contract_Start" AttributeName="INTERVALMAX" AttributeValue="505.02"/>
+<DELTA Variable="DTV_Curr_Contract_Start" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="DTV_Curr_Contract_Start" AttributeName="REPLACEMIN" AttributeValue="-41"/>
+<DELTA Variable="DTV_Curr_Contract_Start" AttributeName="REPLACEMAX" AttributeValue="505.02"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="INTERVALMIN" AttributeValue="-0.46875"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="INTERVALMAX" AttributeValue="1.4549351"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="REPLACEMIN" AttributeValue="-0.46875"/>
+<DELTA Variable="DTV_CusCan_Churns_Ever" AttributeName="REPLACEMAX" AttributeValue="1.4549351"/>
+<DELTA Variable="DTV_Last_Active_Block" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="DTV_Last_Active_Block" AttributeName="INTERVALMIN" AttributeValue="-145.03125"/>
+<DELTA Variable="DTV_Last_Active_Block" AttributeName="INTERVALMAX" AttributeValue="6443.8190421"/>
+<DELTA Variable="DTV_Last_Active_Block" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="DTV_Last_Active_Block" AttributeName="REPLACEMIN" AttributeValue="-145.03125"/>
+<DELTA Variable="DTV_Last_Active_Block" AttributeName="REPLACEMAX" AttributeValue="6443.8190421"/>
+<DELTA Variable="DTV_Last_Pending_Cancel" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="DTV_Last_Pending_Cancel" AttributeName="INTERVALMIN" AttributeValue="-126.1875"/>
+<DELTA Variable="DTV_Last_Pending_Cancel" AttributeName="INTERVALMAX" AttributeValue="4878.4626"/>
+<DELTA Variable="DTV_Last_Pending_Cancel" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="DTV_Last_Pending_Cancel" AttributeName="REPLACEMIN" AttributeValue="-126.1875"/>
+<DELTA Variable="DTV_Last_Pending_Cancel" AttributeName="REPLACEMAX" AttributeValue="4878.4626"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="INTERVALMIN" AttributeValue="-0.46875"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="INTERVALMAX" AttributeValue="5"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="REPLACEMIN" AttributeValue="-0.46875"/>
+<DELTA Variable="DTV_Pending_cancels_ever" AttributeName="REPLACEMAX" AttributeValue="5"/>
+<DELTA Variable="Movies_Active" AttributeName="CALCMETHOD" AttributeValue="DEFAULT"/>
+<DELTA Variable="OD_Months_since_Last" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Prev_Offer_Amount_DTV" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Prev_Offer_Amount_DTV" AttributeName="INTERVALMIN" AttributeValue="-43.50890704"/>
+<DELTA Variable="Prev_Offer_Amount_DTV" AttributeName="INTERVALMAX" AttributeValue="0.6578125"/>
+<DELTA Variable="Prev_Offer_Amount_DTV" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Prev_Offer_Amount_DTV" AttributeName="REPLACEMIN" AttributeValue="-43.50890704"/>
+<DELTA Variable="Prev_Offer_Amount_DTV" AttributeName="REPLACEMAX" AttributeValue="0.6578125"/>
+<DELTA Variable="Superfast_Available_End_2016" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Superfast_Available_End_2016" AttributeName="INTERVALMIN" AttributeValue="0.2396420925"/>
+<DELTA Variable="Superfast_Available_End_2016" AttributeName="INTERVALMAX" AttributeValue="1.021875"/>
+<DELTA Variable="Superfast_Available_End_2016" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Superfast_Available_End_2016" AttributeName="REPLACEMIN" AttributeValue="0.2396420925"/>
+<DELTA Variable="Superfast_Available_End_2016" AttributeName="REPLACEMAX" AttributeValue="1.021875"/>
+<DELTA Variable="Superfast_Available_End_2017" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Superfast_Available_End_2017" AttributeName="INTERVALMIN" AttributeValue="0.3614236636"/>
+<DELTA Variable="Superfast_Available_End_2017" AttributeName="INTERVALMAX" AttributeValue="1.0171875"/>
+<DELTA Variable="Superfast_Available_End_2017" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Superfast_Available_End_2017" AttributeName="REPLACEMIN" AttributeValue="0.3614236636"/>
+<DELTA Variable="Superfast_Available_End_2017" AttributeName="REPLACEMAX" AttributeValue="1.0171875"/>
+<DELTA Variable="Throughput_Speed" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Throughput_Speed" AttributeName="INTERVALMIN" AttributeValue="-1.125"/>
+<DELTA Variable="Throughput_Speed" AttributeName="INTERVALMAX" AttributeValue="52.02989"/>
+<DELTA Variable="Throughput_Speed" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="Throughput_Speed" AttributeName="REPLACEMIN" AttributeValue="-1.125"/>
+<DELTA Variable="Throughput_Speed" AttributeName="REPLACEMAX" AttributeValue="52.02989"/>
+<DELTA Variable="h_income_value" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="h_income_value" AttributeName="INTERVALMIN" AttributeValue="-3874.4375"/>
+<DELTA Variable="h_income_value" AttributeName="INTERVALMAX" AttributeValue="228852.04783"/>
+<DELTA Variable="h_income_value" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="h_income_value" AttributeName="REPLACEMIN" AttributeValue="-3874.4375"/>
+<DELTA Variable="h_income_value" AttributeName="REPLACEMAX" AttributeValue="228852.04783"/>
+<DELTA Variable="p_true_touch_type" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="rentals_used_before" AttributeName="CALCMETHOD" AttributeValue="DEFAULT"/>
+<DELTA Variable="skyfibre_enabled_perc" AttributeName="CALCMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="skyfibre_enabled_perc" AttributeName="INTERVALMIN" AttributeValue="0"/>
+<DELTA Variable="skyfibre_enabled_perc" AttributeName="INTERVALMAX" AttributeValue="100"/>
+<DELTA Variable="skyfibre_enabled_perc" AttributeName="REPLACEMETHOD" AttributeValue="MANUAL"/>
+<DELTA Variable="skyfibre_enabled_perc" AttributeName="REPLACEMIN" AttributeValue="0"/>
+<DELTA Variable="skyfibre_enabled_perc" AttributeName="REPLACEMAX" AttributeValue="100"/>
+</EmVariableAttributes>
+<EmFileProperties>
+<USERTRAINCODE Type="EXTERNAL" Extension="sas">
+<Data/>
+</USERTRAINCODE>
+<NEWVALUES Type="DATA">
+<Data>
+<Obs NAME="BB_3rdParty_PL_Entry_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_3rdParty_PL_Entry_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Active" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Active" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Churns_Last_1Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Churns_Last_1Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Churns_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Churns_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_CusCan_PL_Entry_Ever_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_CusCan_PL_Entry_Ever_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_HomeMove_PL_Entry_Ever_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_HomeMove_PL_Entry_Ever_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Unlimited (Legacy)" TYPE="C" REPLACE_VALUE="Unlimited"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Unlimited Fibre" TYPE="C" REPLACE_VALUE="Fibre"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Unlimited" TYPE="C" REPLACE_VALUE="Unlimited"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Fibre Max" TYPE="C" REPLACE_VALUE="Fibre"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Connect" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Fibre Unlimited Pro" TYPE="C" REPLACE_VALUE="Fibre"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Sky Fibre" TYPE="C" REPLACE_VALUE="Fibre"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Sky Broadband Lite" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Fibre Lite" TYPE="C" REPLACE_VALUE="Fibre"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Unlimited Pro" TYPE="C" REPLACE_VALUE="Unlimited"/>
+<Obs NAME="BB_Product_Holding" LEVEL="12GB" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Product_Holding" LEVEL="Everyday" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Provider" LEVEL="vodafo" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Provider" LEVEL="telefo" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Provider" LEVEL="easyne" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Provider" LEVEL="janet" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Provider" LEVEL="h3g" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Provider" LEVEL="softla" TYPE="C" REPLACE_VALUE="Other"/>
+<Obs NAME="BB_Provider" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_Provider" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_SysCan_PL_Entry_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_SysCan_PL_Entry_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_contract_segment" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="BB_contract_segment" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Curr_Offer_Amount_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Curr_Offer_Amount_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Curr_Offer_Amount_DTV_flag" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Curr_Offer_Amount_DTV_flag" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Curr_Offer_Length_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Curr_Offer_Length_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Active_Blocks_Last_1Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Active_Blocks_Last_1Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Active_Blocks_Last_5Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Active_Blocks_Last_5Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_PO_Cancellations_Last_5Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_PO_Cancellations_Last_5Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Pending_Cancels_Last_1Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Pending_Cancels_Last_1Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Pending_Cancels_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Pending_Cancels_Last_3Yr_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_contract_segment" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_contract_segment" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_product_holding_recode" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="DTV_product_holding_recode" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Dtv_Package" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Dtv_Package" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Exchange_Status" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Exchange_Status" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Home_Owner_Status" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Home_Owner_Status" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="MS_Active" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="MS_Active" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Movies_Active" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Movies_Active" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Movies_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Movies_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Movies_Tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Movies_Tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Offers_Applied_Lst_12M_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Offers_Applied_Lst_12M_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Offers_Applied_Lst_36M_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Offers_Applied_Lst_36M_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Offers_Applied_Lst_90D_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Offers_Applied_Lst_90D_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Prev_Offer_Amount_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Prev_Offer_Amount_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Prev_Offer_Amount_DTV_flag" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Prev_Offer_Amount_DTV_flag" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Prev_Offer_Length_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Prev_Offer_Length_DTV_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="SGE_Active" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="SGE_Active" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="SGE_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="SGE_Product_Holding" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Sports_Tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="Sports_Tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_nonsaves_in_last_12m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_nonsaves_in_last_12m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_nonsaves_in_last_36m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_nonsaves_in_last_36m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_saves_in_last_12m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_saves_in_last_12m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_saves_in_last_36m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_saves_in_last_36m_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_saves_in_last_90d_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TA_saves_in_last_90d_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TAs_in_last_60d_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="TAs_in_last_60d_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="UP_rental" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="UP_rental" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="bb_last_tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="bb_last_tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="dtv_1st_tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="dtv_1st_tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="dtv_last_tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="dtv_last_tenure" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="financial_strategy" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="financial_strategy" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_affluence" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_affluence" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_family_lifestage" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_family_lifestage" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_household_composition" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_household_composition" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_mosaic_group" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_mosaic_group" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_number_of_adults_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_number_of_adults_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_number_of_bedrooms_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_number_of_bedrooms_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_number_of_children_in_house_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_number_of_children_in_house_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_child_aged_0_4" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_child_aged_0_4" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_child_aged_12_17" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_child_aged_12_17" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_child_aged_5_11" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_child_aged_5_11" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_young_person_at_ad" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_presence_of_young_person_at_ad" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_property_type" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_property_type" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_residence_type" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="h_residence_type" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_nonsave_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_nonsave_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_reason_flag" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_reason_flag" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_save_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="last_TA_save_b" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="p_true_touch_group" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="p_true_touch_group" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="rentals_used_before" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="rentals_used_before" LEVEL="_UNKNOWN_" TYPE="N" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="skyfibre_enabled" LEVEL="" TYPE="C" REPLACE_VALUE="N"/>
+<Obs NAME="skyfibre_enabled" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+<Obs NAME="skyfibre_enabled" LEVEL="_UNKNOWN_" TYPE="C" REPLACE_VALUE="_DEFAULT_"/>
+</Data>
+<Metadata>
+<Variable NAME="Name" LABEL="Variable" LENGTH="32" FORMAT="" TYPE="C"/>
+<Variable NAME="LEVEL" LABEL="Formatted Value" LENGTH="80" FORMAT="" TYPE="C"/>
+<Variable NAME="TYPE" LABEL="Type" LENGTH="1" FORMAT="" TYPE="C"/>
+<Variable NAME="REPLACE_VALUE" LABEL="Replacement Value" LENGTH="200" FORMAT="" TYPE="C"/>
+</Metadata>
+</NEWVALUES>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMUTIL.EMSCORE.CLASS" COMPONENT="Score" ID="Score3" X="1452" Y="660" DESCRIPTION="Score (3)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="ASSESS" TOOLPREFIX="Score">
+<PROPERTIES OutputType="VIEW" FixedOutputNames="Y" HideVariables="N" HideInput="Y" HideTarget="Y" HideRejected="Y" HideAssess="Y" HidePredict="Y" HideFreq="Y" HideClassification="Y" HideResidual="Y" HideOther="Y" ScoreValidate="N" ScoreTest="N" CScore="N" JScore="N" PackageName="DEFAULT" UserPackageName="" PreferenceName="" OptimizedCode="Y" GraphReports="Y" ForceRun="N" RunAction="Train" Component="Score">
+<VariableProperties/>
+<EmVariableAttributes/>
+<EmTargetAttributes/>
+<EmFileProperties>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMUTIL.EMSCORE.CLASS" COMPONENT="Score" ID="Score4" X="1452" Y="759" DESCRIPTION="Score (4)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="ASSESS" TOOLPREFIX="Score">
+<PROPERTIES OutputType="VIEW" FixedOutputNames="Y" HideVariables="N" HideInput="Y" HideTarget="Y" HideRejected="Y" HideAssess="Y" HidePredict="Y" HideFreq="Y" HideClassification="Y" HideResidual="Y" HideOther="Y" ScoreValidate="N" ScoreTest="N" CScore="N" JScore="N" PackageName="DEFAULT" UserPackageName="" PreferenceName="" OptimizedCode="Y" GraphReports="Y" ForceRun="N" RunAction="Train" Component="Score">
+<VariableProperties/>
+<EmVariableAttributes/>
+<EmTargetAttributes/>
+<EmFileProperties>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMUTIL.EMSCORE.CLASS" COMPONENT="Score" ID="Score5" X="1452" Y="495" DESCRIPTION="Score (5)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="ASSESS" TOOLPREFIX="Score">
+<PROPERTIES OutputType="VIEW" FixedOutputNames="Y" HideVariables="N" HideInput="Y" HideTarget="Y" HideRejected="Y" HideAssess="Y" HidePredict="Y" HideFreq="Y" HideClassification="Y" HideResidual="Y" HideOther="Y" ScoreValidate="N" ScoreTest="N" CScore="N" JScore="N" PackageName="DEFAULT" UserPackageName="" PreferenceName="" OptimizedCode="Y" GraphReports="Y" ForceRun="N" RunAction="Train" Component="Score">
+<VariableProperties/>
+<EmVariableAttributes/>
+<EmTargetAttributes/>
+<EmFileProperties>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMUTIL.EMSCORE.CLASS" COMPONENT="Score" ID="Score6" X="1452" Y="363" DESCRIPTION="Score (6)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="ASSESS" TOOLPREFIX="Score">
+<PROPERTIES OutputType="VIEW" FixedOutputNames="Y" HideVariables="N" HideInput="Y" HideTarget="Y" HideRejected="Y" HideAssess="Y" HidePredict="Y" HideFreq="Y" HideClassification="Y" HideResidual="Y" HideOther="Y" ScoreValidate="N" ScoreTest="N" CScore="N" JScore="N" PackageName="DEFAULT" UserPackageName="" PreferenceName="" OptimizedCode="N" GraphReports="Y" ForceRun="N" RunAction="Train" Component="Score">
+<VariableProperties/>
+<EmVariableAttributes/>
+<EmTargetAttributes/>
+<EmFileProperties>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMEXPL.STATEXPLORE.CLASS" COMPONENT="StatExplore" ID="Stat3" X="1254" Y="462" DESCRIPTION="StatExplore (3)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="EXPLORE" TOOLPREFIX="Stat">
+<PROPERTIES BySegment="N" Correlation="Y" Spearman="N" Pearson="Y" ChiSquare="Y" ChiSquareInterval="N" ChiSquareIntervalNBins="5" MaximumVars="1000" HideVariable="Y" DropRejected="Y" UseValidate="N" UseTest="N" UseScore="N" NObs="100000" IntervalDistribution="Y" ClassDistribution="Y" LevelSummary="Y" ForceRun="N" RunAction="Train" Component="StatExplore">
+<VariableProperties/>
+<EmVariableAttributes/>
+<EmTargetAttributes/>
+<EmFileProperties>
+<CROSSTAB Type="DATA">
+<Data/>
+<Metadata/>
+</CROSSTAB>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMEXPL.STATEXPLORE.CLASS" COMPONENT="StatExplore" ID="Stat4" X="1254" Y="957" DESCRIPTION="StatExplore (4)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="EXPLORE" TOOLPREFIX="Stat">
+<PROPERTIES BySegment="N" Correlation="Y" Spearman="N" Pearson="Y" ChiSquare="Y" ChiSquareInterval="N" ChiSquareIntervalNBins="5" MaximumVars="1000" HideVariable="Y" DropRejected="Y" UseValidate="N" UseTest="N" UseScore="N" NObs="100000" IntervalDistribution="Y" ClassDistribution="Y" LevelSummary="Y" ForceRun="N" RunAction="Train" Component="StatExplore">
+<VariableProperties/>
+<EmVariableAttributes/>
+<EmTargetAttributes/>
+<EmFileProperties>
+<CROSSTAB Type="DATA">
+<Data/>
+<Metadata/>
+</CROSSTAB>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMEXPL.STATEXPLORE.CLASS" COMPONENT="StatExplore" ID="Stat5" X="1254" Y="264" DESCRIPTION="StatExplore (5)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="EXPLORE" TOOLPREFIX="Stat">
+<PROPERTIES BySegment="N" Correlation="Y" Spearman="N" Pearson="Y" ChiSquare="Y" ChiSquareInterval="N" ChiSquareIntervalNBins="5" MaximumVars="1000" HideVariable="Y" DropRejected="Y" UseValidate="N" UseTest="N" UseScore="N" NObs="100000" IntervalDistribution="Y" ClassDistribution="Y" LevelSummary="Y" ForceRun="N" RunAction="Train" Component="StatExplore">
+<VariableProperties/>
+<EmVariableAttributes/>
+<EmTargetAttributes/>
+<EmFileProperties>
+<CROSSTAB Type="DATA">
+<Data/>
+<Metadata/>
+</CROSSTAB>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMMDFY.EMTRANS.CLASS" COMPONENT="Transform" ID="Trans" X="858" Y="429" DESCRIPTION="Transform Variables (4)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODIFY" TOOLPREFIX="Trans">
+<PROPERTIES DefaultMethod="BEST" DefaultTargetMethod="NONE" DefaultClassMethod="NONE" DefaultClassTargetMethod="NONE" Offset="1" MinOffset="Y" HideVariable="Y" RejectVariable="Y" GroupCutoff="0.1" GroupMissing="N" EmRandomSeed="12345" EmSampleSize="DEFAULT" EmSampleMethod="FIRSTN" MissingValue="USEINSEARCH" SummaryVariables="TRANSFORMED" SummaryStatistics="Y" UseMetaTransform="Y" MissingAsLevel="Y" NumberofBins="VARIABLES" MaxOptimalBins="4" ForceRun="N" RunAction="Train" Component="Transform">
+<VariableProperties/>
+<EmTargetAttributes/>
+<EmVariableAttributes>
+<DELTA Variable="REP_BB_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_BK_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_CW_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_MS_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_NOWTV_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_SHIELD_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_SKYBOX_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_SKYGO_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_SKYKIDS_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_SKYQAPP_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_SKYQ_2TB_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_SKYQ_ORIGIN_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_SKYQ_PREPREG_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_THREED_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_UHD_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_VOD_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+</EmVariableAttributes>
+<EmFileProperties>
+<INTERACTION Type="DATA">
+<Data/>
+<Metadata/>
+</INTERACTION>
+<FORMULA Type="DATA">
+<Data/>
+<Metadata/>
+</FORMULA>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMMDFY.EMTRANS.CLASS" COMPONENT="Transform" ID="Trans5" X="858" Y="561" DESCRIPTION="Transform Variables (4)" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODIFY" TOOLPREFIX="Trans">
+<PROPERTIES DefaultMethod="BEST" DefaultTargetMethod="NONE" DefaultClassMethod="NONE" DefaultClassTargetMethod="NONE" Offset="1" MinOffset="Y" HideVariable="Y" RejectVariable="Y" GroupCutoff="0.1" GroupMissing="N" EmRandomSeed="12345" EmSampleSize="MAX" EmSampleMethod="RANDOM" MissingValue="USEINSEARCH" SummaryVariables="TRANSFORMED" SummaryStatistics="Y" UseMetaTransform="Y" MissingAsLevel="Y" NumberofBins="VARIABLES" MaxOptimalBins="4" ForceRun="N" RunAction="Train" Component="Transform">
+<VariableProperties/>
+<EmTargetAttributes/>
+<EmVariableAttributes/>
+<EmFileProperties>
+<INTERACTION Type="DATA">
+<Data/>
+<Metadata/>
+</INTERACTION>
+<FORMULA Type="DATA">
+<Data/>
+<Metadata/>
+</FORMULA>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+<NODE CLASS="SASHELP.EMMDFY.EMTRANS.CLASS" COMPONENT="Transform" ID="Trans6" X="462" Y="165" DESCRIPTION="Transform Variables" DIAGRAMID="_ROOT_" PARENTID="" TOOLTYPE="MODIFY" TOOLPREFIX="Trans">
+<PROPERTIES DefaultMethod="NONE" DefaultTargetMethod="NONE" DefaultClassMethod="NONE" DefaultClassTargetMethod="NONE" Offset="1" MinOffset="Y" HideVariable="Y" RejectVariable="Y" GroupCutoff="0.1" GroupMissing="N" EmRandomSeed="12345" EmSampleSize="DEFAULT" EmSampleMethod="RANDOM" MissingValue="USEINSEARCH" SummaryVariables="TRANSFORMED" SummaryStatistics="Y" UseMetaTransform="Y" MissingAsLevel="Y" NumberofBins="VARIABLES" MaxOptimalBins="4" ForceRun="N" RunAction="Train" Component="Transform">
+<VariableProperties/>
+<EmTargetAttributes/>
+<EmVariableAttributes>
+<DELTA Variable="REP_BAK_12M" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_BAK_6M" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_BAK_9M" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_BAK_time_since_last" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_BB_Last_Activation" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_BB_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_BK_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_Broadband_Average_Demand" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_CW_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_Curr_Offer_Actual_End_DTV" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_Curr_Offer_Start_DTV" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_DTV_1st_Activation" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_DTV_Curr_Contract_Intended_E" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_DTV_Curr_Contract_Start" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_DTV_CusCan_Churns_Ever" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_DTV_Last_Activation" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_DTV_Last_Active_Block" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_DTV_Last_Pending_Cancel" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_DTV_Last_SysCan_Churn" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_DTV_Last_cuscan_churn" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_DTV_Pending_cancels_ever" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_FIBRE_TOP_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_MOB_PREREG_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_MS_Last_Activation" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_MS_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_OD_Last_12M" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_OD_Last_3M" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_Prev_Offer_Amount_DTV" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_SERVICEAPP_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_SGE_Last_Activation" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_SHIELD_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_SKYBOX_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_SKYQAPP_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_Superfast_Available_End_2016" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_Superfast_Available_End_2017" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_Throughput_Speed" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_VOD_VAL" AttributeName="METHOD" AttributeValue="NONE"/>
+<DELTA Variable="REP_h_income_value" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_rentals_months_since_last" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_rents_12M" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_rents_6M" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_rents_9M" AttributeName="METHOD" AttributeValue="BEST"/>
+<DELTA Variable="REP_skyfibre_enabled_perc" AttributeName="METHOD" AttributeValue="BEST"/>
+</EmVariableAttributes>
+<EmFileProperties>
+<INTERACTION Type="DATA">
+<Data/>
+<Metadata/>
+</INTERACTION>
+<FORMULA Type="DATA">
+<Data/>
+<Metadata/>
+</FORMULA>
+<EMNOTES Type="EXTERNAL" Extension="txt">
+<Data/>
+</EMNOTES>
+</EmFileProperties>
+</PROPERTIES>
+</NODE>
+</NODES>
+<CONNECTIONS>
+<CONNECTION FROM="Ids" TO="Repl6"/>
+<CONNECTION FROM="Repl6" TO="Trans6"/>
+<CONNECTION FROM="Trans6" TO="Filter4"/>
+<CONNECTION FROM="Trans6" TO="Filter3"/>
+<CONNECTION FROM="Filter3" TO="Part6"/>
+<CONNECTION FROM="Filter4" TO="Part7"/>
+<CONNECTION FROM="Part7" TO="Dec7"/>
+<CONNECTION FROM="Part6" TO="Dec6"/>
+<CONNECTION FROM="Dec6" TO="HPReg11"/>
+<CONNECTION FROM="Dec6" TO="Stat5"/>
+<CONNECTION FROM="Dec6" TO="HPTree3"/>
+<CONNECTION FROM="Dec7" TO="HPReg14"/>
+<CONNECTION FROM="HPReg14" TO="Score5"/>
+<CONNECTION FROM="HPReg14" TO="MdlComp4"/>
+<CONNECTION FROM="HPTree3" TO="MdlComp4"/>
+<CONNECTION FROM="HPTree3" TO="Score6"/>
+<CONNECTION FROM="HPReg11" TO="MdlComp4"/>
+<CONNECTION FROM="Score6" TO="CNTRL2"/>
+<CONNECTION FROM="Score6" TO="EMSave3"/>
+<CONNECTION FROM="Score5" TO="CNTRL2"/>
+<CONNECTION FROM="Score5" TO="EMSave4"/>
+<CONNECTION FROM="Ids2" TO="Filter2"/>
+<CONNECTION FROM="Ids2" TO="Filter"/>
+<CONNECTION FROM="Filter" TO="Part4"/>
+<CONNECTION FROM="Filter2" TO="Part5"/>
+<CONNECTION FROM="Part5" TO="Repl5"/>
+<CONNECTION FROM="Part4" TO="Repl"/>
+<CONNECTION FROM="Repl" TO="Trans"/>
+<CONNECTION FROM="Repl5" TO="Trans5"/>
+<CONNECTION FROM="Trans5" TO="Dec5"/>
+<CONNECTION FROM="Trans" TO="Dec4"/>
+<CONNECTION FROM="Dec4" TO="HPReg9"/>
+<CONNECTION FROM="Dec4" TO="Stat3"/>
+<CONNECTION FROM="Dec5" TO="HPReg10"/>
+<CONNECTION FROM="Dec5" TO="HPReg13"/>
+<CONNECTION FROM="Dec5" TO="Stat4"/>
+<CONNECTION FROM="HPReg13" TO="MdlComp"/>
+<CONNECTION FROM="HPReg10" TO="MdlComp"/>
+<CONNECTION FROM="HPReg10" TO="Score4"/>
+<CONNECTION FROM="HPReg9" TO="MdlComp"/>
+<CONNECTION FROM="HPReg9" TO="Score3"/>
+<CONNECTION FROM="Score3" TO="CNTRL3"/>
+<CONNECTION FROM="Score3" TO="EMSave5"/>
+<CONNECTION FROM="Score4" TO="CNTRL3"/>
+<CONNECTION FROM="Score4" TO="EMSave6"/>
+<CONNECTION FROM="Ids6" TO="Score6"/>
+<CONNECTION FROM="Ids6" TO="Score5"/>
+<CONNECTION FROM="Ids6" TO="Score3"/>
+<CONNECTION FROM="Ids6" TO="Score4"/>
+</CONNECTIONS>
+<NOTES>
+<DATA><![CDATA[
+
+
+]]>
+</DATA>
+</NOTES>
+</Workspace>
+</_ROOT_>

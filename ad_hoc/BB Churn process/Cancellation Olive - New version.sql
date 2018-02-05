@@ -44,3 +44,7 @@ GO
 CREATE HG   INDEX ID1 ON BB_Churn_cancellations_12(account_number)
 CREATE DTTM INDEX ID2 ON BB_Churn_cancellations_12(base_dt)
 GO
+
+
+
+

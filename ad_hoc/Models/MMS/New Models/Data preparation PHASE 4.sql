@@ -118,11 +118,14 @@ MESSAGE CAST(now() as timestamp)||' | Initializing' TO CLIENT
 		
 		CALL Decisioning_Procs.Add_Churn_DTV 		('CS_Raw','Base_Dt');
 		CALL Decisioning_Procs.Add_Churn_BB 		('CS_Raw','Base_Dt');
+		CALL Decisioning_Procs.Add_Churn_Prems		('CS_Raw','Base_Dt','Sports');
+		CALL Decisioning_Procs.Add_Churn_Prems		('CS_Raw','Base_Dt','Movies');
 		CALL Decisioning_Procs.Add_PL_Entries_DTV	('CS_Raw','Base_Dt');
 		CALL Decisioning_Procs.Add_PL_Entries_BB	('CS_Raw','Base_Dt');
 		MESSAGE CAST(now() as timestamp)||' | 1.2.3' TO CLIENT;
 		
-																				 
+		CALL Decisioning_procs.Add_Contract_Details('CS_Raw','Base_Dt','DTV');
+        CALL Decisioning_procs.Add_Contract_Details('CS_Raw','Base_Dt','BB');
         CALL Decisioning_procs.Add_Demographics_To_Base('CS_Raw','Base_Dt');
 		MESSAGE CAST(now() as timestamp)||' | 1.2.4' TO CLIENT;
 		
